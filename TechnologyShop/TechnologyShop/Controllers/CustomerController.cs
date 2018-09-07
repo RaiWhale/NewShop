@@ -12,6 +12,11 @@ namespace TechnologyShop.Controllers
     {
         NewShopEntities db = new NewShopEntities();
 
+
+        public ActionResult Connect()
+        {
+            return View();
+        }
         //chi can post thoi, chu form o layout roi; ok sep tiep di
         [HttpPost]
         public ActionResult Login(string LoginName, string Password)
