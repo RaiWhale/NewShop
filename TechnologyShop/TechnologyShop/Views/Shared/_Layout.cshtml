@@ -62,92 +62,29 @@
                                                 Wish List (0)
                                             </a>
                                         </li>
+                                        <li>
+                                            <a href="@Url.Action("Logout","Customer")">
+                                                <i class="zmdi-fullscreen-exit"></i>
+                                                Log Out
+                                            </a>
+                                        </li>
                                     }
                                     else
                                     {
                                         <li class="dropdown">
-                                            <a href="#" data-toggle="dropdown">
-                                                <i class="zmdi zmdi-lock"></i>
+                                            <a href="@Url.Action("Connect","Customer")">
+                                                <i class="zmdi zmdi-account"></i>
                                                 Login
                                             </a>
-                                            <div class="dropdown-menu">
-                                                <div>
-                                                    <div class="registered-customers" style="width:300px;left:-300px">
-                                                        <div class="registered-customers">
-                                                            <h6 class="widget-title border-left mb-50">REGISTERED CUSTOMERS</h6>
-                                                            <form class="logincustomer" action="/Customer/Login" method="post">
-                                                                <div class="login-account p-30 box-shadow">
-                                                                    <p>If you have an account with us, Please log in.</p>
-                                                                    <input type="text" name="name" placeholder="Login Name">
-                                                                    <input type="password" name="password" placeholder="Password">
-                                                                    <p><small><a href="#">Forgot our password?</a></small></p>
-                                                                    <button class="submit-btn-1 btn-hover-1" type="submit">login</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
 
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </li>
 
                                         <li class="dropdown">
-                                            <a href="#" data-toggle="dropdown">
-                                                <i class="zmdi zmdi-lock"></i>
+                                            <a href="@Url.Action("Connect","Customer")">
+                                                <i class="zmdi zmdi-account-add"></i>
                                                 Register
                                             </a>
-                                            <div class="dropdown-menu">
-                                                <div class="new-customers">
-                                                    <form class="registercustomer" action="/Customer/Register" method="post" enctype="multipart/form-data">
-                                                        <h6 class="widget-title border-left mb-50">NEW CUSTOMERS</h6>
-                                                        <div class="login-account p-30 box-shadow">
-                                                            <div class="row">
-                                                                <div class="col-sm-6">
-                                                                    <input type="text" placeholder="Full Name">
-                                                                </div>
 
-                                                                <div class="col-sm-6">
-                                                                    <select class="custom-select">
-                                                                        <option value="defalt">country</option>
-                                                                        <option value="c-1">Australia</option>
-                                                                        <option value="c-2">Bangladesh</option>
-                                                                        <option value="c-3">Unitd States</option>
-                                                                        <option value="c-4">Unitd Kingdom</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <input type="text" placeholder="Phone here...">
-                                                                </div>
-                                                            </div>
-
-                                                            <input type="text" placeholder="Email address here...">
-                                                            <input type="text" placeholder="Login name here...">
-                                                            <input type="password" placeholder="Password">
-                                                            <input type="password" placeholder="Confirm Password">
-                                                            <div class="checkbox">
-                                                                <label class="mr-10">
-                                                                    <small>
-                                                                        <input type="checkbox" name="signup">Sign up for our newsletter!
-                                                                    </small>
-                                                                </label>
-                                                                <label>
-                                                                    <small>
-                                                                        <input type="checkbox" name="signup">Receive special offers from our partners!
-                                                                    </small>
-                                                                </label>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <button class="submit-btn-1 mt-20 btn-hover-1" type="submit" value="register">Register</button>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <button class="submit-btn-1 mt-20 btn-hover-1 f-right" type="reset">Clear</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
                                         </li>
                                     }
                                 </ul>
@@ -465,7 +402,7 @@
                                                             <a href="order.html">Order</a>
                                                         </li>
                                                         <li>
-                                                            <a href="login.html">Login</a>
+                                                            <a href="@Url.Action("Connect","Customer")">Login</a>
                                                         </li>
                                                         <li>
                                                             <a href="My-account.html">My Account</a>

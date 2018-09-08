@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using TechnologyShop.Models;
 using TechnologyShop.Models.ViewModel;
 
@@ -17,43 +19,80 @@ namespace TechnologyShop.Controllers
         {
             return View();
         }
-        //chi can post thoi, chu form o layout roi; ok sep tiep di
-        [HttpPost]
-        public ActionResult Login(string LoginName, string Password)
-        {
-            string ms = "";
-            var login = db.Users.Where(x => x.LoginName.Equals(LoginName)).SingleOrDefault();
-            if (login != null)
-            {
-                if (login.Password.Equals(MySecurity.EncryptPass(Password)))
-                {
-                    //roi chua ok
-                    //de sau di
 
-                    ms = "OK";
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Login(string loginName, string password)
+        {
+
+               
+                var acc = db.Users.Where(x => x.LoginName.Equals(loginName)).SingleOrDefault();
+                if (acc != null)
+                {
+                    if (acc.Password.Equals(MySecurity.EncryptPass(password)))
+                    {
+                    Response.Cookies["LoginName"].Value = acc.LoginName.ToUpper();
+                    FormsAuthentication.SetAuthCookie(acc.Id.ToString(), false);
+                        return RedirectToAction("Index","Home");
+                        
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Password wrong!";
+                    }
                 }
                 else
                 {
-                    ms = "...";
+                    ViewBag.Message = "Login Name not exist!";
                 }
-            }
-            else
-            {
-                ms = "...";
-            }
+
+
             
-            return Content(ms);
+            return View();
         }
 
+        public ActionResult Register()
+        {
+            return View();
+        }
 
         [HttpPost]
-
-        public ActionResult Register(RegisterVM data)
+        public ActionResult Register(RegisterVM data, HttpPostedFileBase pic)
         {
-            ViewBag.RegisterMS = "bay doi!";
+            var acc = AutoMapper.Mapper.Map<User>(data);
+            try
+            {
+                string filename = DateTime.Now.Ticks + "_" + pic.FileName.Split('/').Last();
 
-            return View("Connect");
+                acc.Password = MySecurity.EncryptPass(acc.Password);
+                acc.Avatar = filename;
+                acc.CreatedDate = DateTime.Now;
+                acc.IsActive = false;
+                db.Users.Add(acc);
+                db.SaveChanges();
+
+                string path = Server.MapPath("~/Uploads/Logo") + "\\" + acc.Id;
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                pic.SaveAs(path + "\\" + filename);
+
+                return View("RegisterSuccess");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+            }
+
+            return View();
         }
 
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

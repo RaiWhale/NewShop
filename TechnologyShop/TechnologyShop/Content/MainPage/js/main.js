@@ -403,7 +403,7 @@ $(document).ready(function () {
             success: function (result) {
                 if (result == "OK") {
                     //chuyen trang customer profile
-                    location.href = "/Customer/Profile";
+                    location.href = "/Customer/Connect";
                 } else {//error
                     alert(result);
                 }

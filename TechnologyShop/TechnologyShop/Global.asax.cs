@@ -6,6 +6,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using TechnologyShop.Models.ViewModel;
+using TechnologyShop.Models;
 
 namespace TechnologyShop
 {
@@ -18,6 +20,12 @@ namespace TechnologyShop
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<RegisterVM, User>();
+                //cfg.CreateMap<CompanyAccount, RegisterVM>();
+            });
         }
     }
 }

@@ -21,6 +21,6 @@ namespace TechnologyShop.Models.ViewModel
         public string Email { get; set; }
         public string Address { get; set; }
 
-        public int AvatarId { get; set; }
+        public string Avatar { get; set; }
     }
 }
