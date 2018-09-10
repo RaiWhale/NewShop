@@ -14,29 +14,23 @@ namespace TechnologyShop.Controllers
     {
         NewShopEntities db = new NewShopEntities();
 
-
-        public ActionResult Connect()
-        {
-            return View();
-        }
-
         public ActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult Login(string loginName, string password)
+        public ActionResult Login(LoginVM data)
         {
 
-               
-                var acc = db.Users.Where(x => x.LoginName.Equals(loginName)).SingleOrDefault();
+            //Code đăng nhập   
+                var acc = db.Users.Where(x => x.LoginName.Equals(data.LoginName)).SingleOrDefault(); //LINQ
                 if (acc != null)
                 {
-                    if (acc.Password.Equals(MySecurity.EncryptPass(password)))
+                    if (acc.Password.Equals(MySecurity.EncryptPass(data.Password)))
                     {
-                    Response.Cookies["LoginName"].Value = acc.LoginName.ToUpper();
+
                     FormsAuthentication.SetAuthCookie(acc.Id.ToString(), false);
-                        return RedirectToAction("Index","Home");
+                    return RedirectToAction("Index","Home");
                         
                     }
                     else
@@ -62,6 +56,7 @@ namespace TechnologyShop.Controllers
         [HttpPost]
         public ActionResult Register(RegisterVM data, HttpPostedFileBase pic)
         {
+            //Code đăng ký
             var acc = AutoMapper.Mapper.Map<User>(data);
             try
             {
@@ -74,7 +69,7 @@ namespace TechnologyShop.Controllers
                 db.Users.Add(acc);
                 db.SaveChanges();
 
-                string path = Server.MapPath("~/Uploads/Logo") + "\\" + acc.Id;
+                string path = Server.MapPath("~/Uploads/Avatars") + "\\" + acc.Id;
                 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
                 pic.SaveAs(path + "\\" + filename);
 

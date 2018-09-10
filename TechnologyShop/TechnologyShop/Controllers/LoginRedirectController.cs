@@ -11,7 +11,7 @@ namespace TechnologyShop.Controllers
         // GET: LoginRedirect
         public ActionResult Index()
         {
-            return Redirect("~/Customer/Connect");
+            return Redirect("~/Customer/Login");
         }
     }
 }

@@ -392,44 +392,44 @@
 
 //la vay doa!!!!
 
-$(document).ready(function () {
+//$(document).ready(function () {
 
-    $('#logincustomer').submit(function () {
+//    $('#logincustomer').submit(function () {
 
-        $.ajax({
-            url: this.action,
-            type: this.method,
-            data: $(this).serialize(),
-            success: function (result) {
-                if (result == "OK") {
-                    //chuyen trang customer profile
-                    location.href = "/Customer/Connect";
-                } else {//error
-                    alert(result);
-                }
-            }
-        });
+//        $.ajax({
+//            url: this.action,
+//            type: this.method,
+//            data: $(this).serialize(),
+//            success: function (result) {
+//                if (result == "OK") {
+//                    //chuyen trang customer profile
+//                    location.href = "/Customer/Connect";
+//                } else {//error
+//                    alert(result);
+//                }
+//            }
+//        });
 
-        return false;
-    });
+//        return false;
+//    });
 
-    $('#registercustomer').submit(function () {
+//    $('#registercustomer').submit(function () {
 
-        $.ajax({
-            url: this.action,
-            type: this.method,
-            data: $(this).serialize(),
-            success: function (result) {
-                if (result == "OK") {
-                    //khac nhau
-                    location.href = "/Customer/Activate";
-                } else {//error
-                    alert(result);
-                }
-            }
-        });
+//        $.ajax({
+//            url: this.action,
+//            type: this.method,
+//            data: $(this).serialize(),
+//            success: function (result) {
+//                if (result == "OK") {
+//                    //khac nhau
+//                    location.href = "/Customer/Activate";
+//                } else {//error
+//                    alert(result);
+//                }
+//            }
+//        });
 
-        return false;
-    });
+//        return false;
+//    });
 
-});
+//});

@@ -266,6 +266,7 @@
     <Compile Include="Models\UserLevelPermission.cs">
       <DependentUpon>NewShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModel\LoginVM.cs" />
     <Compile Include="Models\ViewModel\OrderReportVM.cs" />
     <Compile Include="Models\ViewModel\QuantityReportVM.cs" />
     <Compile Include="Models\ViewModel\RegisterVM.cs" />
@@ -304,6 +305,7 @@
     <Content Include="Content\Admin\js\apps.min.js" />
     <Content Include="Content\Admin\js\demo\dashboard-v2.min.js" />
     <Content Include="Content\Admin\js\demo\table-manage-fixed-header.demo.min.js" />
+    <Content Include="Content\Admin\js\PartialWork.js" />
     <Content Include="Content\Admin\js\theme\default.min.js" />
     <Content Include="Content\Admin\plugins\animate\animate.min.css" />
     <Content Include="Content\Admin\plugins\bootstrap-calendar\css\bootstrap_calendar.css" />
@@ -650,9 +652,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Customer\Connect.cshtml" />
-    <Content Include="Views\Customer\RegisterSuccess.cshtml" />
     <Content Include="Views\Customer\Login.cshtml" />
+    <Content Include="Views\Customer\RegisterSuccess.cshtml" />
     <Content Include="Views\Customer\Register.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Products\Details.cshtml" />

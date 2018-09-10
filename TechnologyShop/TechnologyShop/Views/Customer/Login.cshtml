@@ -1,7 +1,52 @@
-﻿
+﻿@model TechnologyShop.Models.ViewModel.LoginVM
+
 @{
     ViewBag.Title = "Login";
 }
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="wrapper">
 
-<h2>Login</h2>
+        <!-- Start page content -->
+        <div id="page-content" class="page-wrapper">
+            <!-- LOGIN SECTION START -->
+            <div class="login-section mb-80">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="registered-customers">
+                                <h6 class="widget-title border-left mb-50">LOGIN CUSTOMERS</h6>
 
+                                <div class="login-account p-30 box-shadow">
+                                    <div class="row">
+                                        <p>If you have an account with us, Please log in.</p>
+                                        <form>
+                                            <!--LoginName-->
+                                            <div class="col-md-12">
+                                                @Html.EditorFor(model => model.LoginName, new { htmlAttributes = new { @class = "form-control", @placeholder = "User Name", autofocus = "" } })
+                                                @Html.ValidationMessageFor(model => model.LoginName, "", new { @class = "text-danger" })
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password" } })
+                                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                            </div>
+
+                                            <p><small><a href="#">Forgot our password?</a></small></p>
+                                            <button class="submit-btn-1 btn-hover-1" type="submit">login</button>
+                                        </form>
+                                        <p>@ViewBag.Message</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- LOGIN SECTION END -->
+        </div>
+        <!-- End page content -->
+
+    </div>
+}

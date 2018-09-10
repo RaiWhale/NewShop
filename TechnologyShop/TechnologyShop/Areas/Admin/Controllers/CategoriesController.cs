@@ -17,6 +17,8 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // GET: Admin/Categories
         public ActionResult Index()
         {
+            var categories = from u in db.Categories select(u);
+            ViewBag.categories = categories.ToList();
             return View(db.Categories.ToList());
         }
 
@@ -32,13 +34,19 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return PartialView(category);
         }
 
         // GET: Admin/Categories/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            return View();
+            var category = new Category()
+            {
+                ParentId = id != null ? id.Value : 0
+            };
+
+            ViewBag.TopicId = new SelectList(db.Topics, "Id", "TopicName");
+            return PartialView(category);
         }
 
         // POST: Admin/Categories/Create
@@ -50,12 +58,15 @@ namespace TechnologyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var topicname = db.Topics.Select(x => x.TopicName).ToList();
+                category.Topic.TopicName = topicname.ToString();
+
                 db.Categories.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Categories");
             }
 
-            return View(category);
+            return PartialView(category);
         }
 
         // GET: Admin/Categories/Edit/5
@@ -70,7 +81,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return PartialView(category);
         }
 
         // POST: Admin/Categories/Edit/5
@@ -86,7 +97,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return PartialView(category);
         }
 
         // GET: Admin/Categories/Delete/5
@@ -101,7 +112,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return PartialView(category);
         }
 
         // POST: Admin/Categories/Delete/5
