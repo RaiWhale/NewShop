@@ -1,0 +1,19 @@
+﻿@model TechnologyShop.Models.Product
+
+<!-- product-item start -->
+<div class="product-item">
+    <div class="product-img">
+        <a href="~/Products/Details/@Model.Id">
+            <img src="~/Content/home/img/product-2/4.jpg" alt="" />
+        </a>
+    </div>
+    <div class="product-info">
+        <h6 class="product-title">
+            <a href="~/Products/Details/@Model.Id">@Model.ProductName</a><!--Sua-->
+        </h6>
+        <h3 class="pro-price">@Model.OutputPrice.ToString("N0") VND</h3>
+    </div>
+</div>
+
+
+<!-- product-item end -->

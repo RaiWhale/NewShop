@@ -7,7 +7,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CategoryName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="ParentId" Type="int" Nullable="false" />
-    <Property Name="TopicId" Type="int" />
+    <Property Name="TopicId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Customers">
     <Key>
@@ -76,6 +76,14 @@
     <Property Name="Tax" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="Status" Type="tinyint" Nullable="false" />
   </EntityType>
+  <EntityType Name="Pictures">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="Url" Type="varchar" MaxLength="150" />
+  </EntityType>
   <EntityType Name="Products">
     <Key>
       <PropertyRef Name="Id" />
@@ -112,6 +120,13 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
+  <EntityType Name="Topics">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TopicName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="UserLevelPermissions">
     <Key>
       <PropertyRef Name="Id" />
@@ -146,6 +161,18 @@
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="ResetPasswordToken" Type="varchar" MaxLength="100" />
   </EntityType>
+  <Association Name="FK_Categories_ToTopics">
+    <End Role="Topics" Type="Self.Topics" Multiplicity="1" />
+    <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Topics">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Categories">
+        <PropertyRef Name="TopicId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Input_Suppliers">
     <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
     <End Role="Inputs" Type="Self.Inputs" Multiplicity="*" />
@@ -242,6 +269,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Pictures_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="Pictures" Type="Self.Pictures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Pictures">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Products_Categories">
     <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
     <End Role="Products" Type="Self.Products" Multiplicity="*" />
@@ -285,12 +324,18 @@
     <EntitySet Name="Inputs" EntityType="Self.Inputs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Topics" EntityType="Self.Topics" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserLevelPermissions" EntityType="Self.UserLevelPermissions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserLevels" EntityType="Self.UserLevels" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Categories_ToTopics" Association="Self.FK_Categories_ToTopics">
+      <End Role="Topics" EntitySet="Topics" />
+      <End Role="Categories" EntitySet="Categories" />
+    </AssociationSet>
     <AssociationSet Name="FK_Input_Suppliers" Association="Self.FK_Input_Suppliers">
       <End Role="Suppliers" EntitySet="Suppliers" />
       <End Role="Inputs" EntitySet="Inputs" />
@@ -322,6 +367,10 @@
     <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pictures_Products" Association="Self.FK_Pictures_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Pictures" EntitySet="Pictures" />
     </AssociationSet>
     <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
       <End Role="Categories" EntitySet="Categories" />

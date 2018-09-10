@@ -203,6 +203,7 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginRedirectController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -241,6 +242,9 @@
     <Compile Include="Models\OrderDetail.cs">
       <DependentUpon>NewShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Picture.cs">
+      <DependentUpon>NewShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Product.cs">
       <DependentUpon>NewShop.tt</DependentUpon>
     </Compile>
@@ -248,6 +252,9 @@
       <DependentUpon>NewShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>NewShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Topic.cs">
       <DependentUpon>NewShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
@@ -412,6 +419,7 @@
     <Content Include="Content\MainPage\img\product\9.jpg" />
     <Content Include="Content\MainPage\img\product\quickview.jpg" />
     <Content Include="Content\MainPage\img\up-comming\1.jpg" />
+    <Content Include="Content\MainPage\jquery.cookie.js" />
     <Content Include="Content\MainPage\js\bootstrap.min.js" />
     <Content Include="Content\MainPage\js\main.js" />
     <Content Include="Content\MainPage\js\plugins.js" />
@@ -419,6 +427,7 @@
     <Content Include="Content\MainPage\js\vendor\modernizr-2.8.3.min.js" />
     <Content Include="Content\MainPage\lib\css\nivo-slider.css" />
     <Content Include="Content\MainPage\lib\js\jquery.nivo.slider.js" />
+    <Content Include="Content\MainPage\shopping.js" />
     <Content Include="Content\style.css" />
     <Content Include="Content\products\case-jetek-a10.jpg" />
     <Content Include="Content\products\case-jetek-a8.jpg" />
@@ -553,8 +562,8 @@
     <Content Include="Global.asax" />
     <Content Include="Models\NewShop.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>NewShop.Context.cs</LastGenOutput>
       <DependentUpon>NewShop.edmx</DependentUpon>
+      <LastGenOutput>NewShop.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\NewShop.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -585,13 +594,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\NewShop.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>NewShop.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\NewShop.edmx.diagram">
-      <DependentUpon>NewShop.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Content\MainPage\fonts\Material-Design-Iconic-Font.ttf" />
     <Content Include="Content\MainPage\fonts\Material-Design-Iconic-Font.woff" />
@@ -621,6 +623,13 @@
     <Content Include="Content\Admin\plugins\font-awesome\5.0\webfonts\fa-solid-900.woff" />
     <Content Include="Content\Admin\plugins\font-awesome\5.0\webfonts\fa-solid-900.woff2" />
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <EntityDeploy Include="Models\NewShop.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>NewShop.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\NewShop.edmx.diagram">
+      <DependentUpon>NewShop.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -645,6 +654,11 @@
     <Content Include="Views\Customer\RegisterSuccess.cshtml" />
     <Content Include="Views\Customer\Login.cshtml" />
     <Content Include="Views\Customer\Register.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Shared\_PrimaryMenu.cshtml" />
+    <Content Include="Views\Shared\_ProductsItem1.cshtml" />
+    <Content Include="Views\Shared\_ProductsItem2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

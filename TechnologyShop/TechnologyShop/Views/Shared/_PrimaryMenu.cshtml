@@ -1,0 +1,19 @@
+﻿@model IEnumerable<TechnologyShop.Models.Topic>
+
+@foreach (var topic in Model)
+{
+    <ul class="single-mega-item">
+        <li class="menu-title" style="border-color">@topic.TopicName</li>
+        @foreach (var cat in topic.Categories)
+        {
+            <li>
+                @*<a href="@Url.Action("Category","Products",new { id=cat.Id})">@cat.CategoryName</a>*@
+                <a href="~/Products/?cat=@cat.CategoryName">@cat.CategoryName</a>
+            </li>
+        }
+
+
+    </ul>
+}
+
+

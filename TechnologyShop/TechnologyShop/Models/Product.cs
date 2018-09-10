@@ -19,6 +19,7 @@ namespace TechnologyShop.Models
         {
             this.InputDetails = new HashSet<InputDetail>();
             this.OrderDetails = new HashSet<OrderDetail>();
+            this.Pictures = new HashSet<Picture>();
         }
     
         public int Id { get; set; }
@@ -36,5 +37,7 @@ namespace TechnologyShop.Models
         public virtual ICollection<InputDetail> InputDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Picture> Pictures { get; set; }
     }
 }

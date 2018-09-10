@@ -4,19 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b99b78b020d24fa5b5dda30c6323e7a5" Name="Diagram1">
-        <EntityTypeShape EntityType="NewShopModel.Category" Width="1.5" PointX="3.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewShopModel.Customer" Width="1.5" PointX="3.75" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewShopModel.InputDetail" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewShopModel.Input" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewShopModel.OrderDetail" Width="1.5" PointX="11.25" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewShopModel.Order" Width="1.5" PointX="6" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewShopModel.Product" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewShopModel.Supplier" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewShopModel.sysdiagram" Width="1.5" PointX="8.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewShopModel.UserLevelPermission" Width="1.5" PointX="5.25" PointY="13.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewShopModel.UserLevel" Width="1.5" PointX="3" PointY="13.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewShopModel.User" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+      <Diagram DiagramId="3a734d50ddd648e3a57db1e319ee4967" Name="Diagram1">
+        <EntityTypeShape EntityType="NewShopModel.Category" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewShopModel.Customer" Width="1.5" PointX="6" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewShopModel.InputDetail" Width="1.5" PointX="7.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewShopModel.Input" Width="1.5" PointX="5.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewShopModel.OrderDetail" Width="1.5" PointX="10.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewShopModel.Order" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewShopModel.Picture" Width="1.5" PointX="7.5" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewShopModel.Product" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewShopModel.Supplier" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewShopModel.sysdiagram" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewShopModel.Topic" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewShopModel.UserLevelPermission" Width="1.5" PointX="7.5" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewShopModel.UserLevel" Width="1.5" PointX="5.25" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewShopModel.User" Width="1.5" PointX="3" PointY="15" IsExpanded="true" />
+        <AssociationConnector Association="NewShopModel.FK_Categories_ToTopics" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_Products_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_Orders_Customers" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_InputDetails_Inputs" ManuallyRouted="false" />
@@ -26,6 +29,7 @@
         <AssociationConnector Association="NewShopModel.FK_OrderDetails_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_OrderDetails_Products" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_Orders_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="NewShopModel.FK_Pictures_Products" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_UserLevelPermissions_UserLevels" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_UserLevels_Users" ManuallyRouted="false" />
       </Diagram>

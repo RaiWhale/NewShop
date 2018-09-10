@@ -7,7 +7,8 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="ParentId" Type="Int32" Nullable="false" />
-    <Property Name="TopicId" Type="Int32" />
+    <Property Name="TopicId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Topic" Relationship="Self.FK_Categories_ToTopics" FromRole="Categories" ToRole="Topics" />
     <NavigationProperty Name="Products" Relationship="Self.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
   </EntityType>
   <EntityType Name="Customer">
@@ -88,6 +89,15 @@
     <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
     <NavigationProperty Name="User" Relationship="Self.FK_Orders_Users" FromRole="Orders" ToRole="Users" />
   </EntityType>
+  <EntityType Name="Picture">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="Url" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_Pictures_Products" FromRole="Pictures" ToRole="Products" />
+  </EntityType>
   <EntityType Name="Product">
     <Key>
       <PropertyRef Name="Id" />
@@ -104,6 +114,7 @@
     <NavigationProperty Name="Category" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
     <NavigationProperty Name="InputDetails" Relationship="Self.FK_InputDetails_Products" FromRole="Products" ToRole="InputDetails" />
     <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Products" FromRole="Products" ToRole="OrderDetails" />
+    <NavigationProperty Name="Pictures" Relationship="Self.FK_Pictures_Products" FromRole="Products" ToRole="Pictures" />
   </EntityType>
   <EntityType Name="Supplier">
     <Key>
@@ -127,6 +138,14 @@
     <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Topic">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TopicName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Categories" Relationship="Self.FK_Categories_ToTopics" FromRole="Topics" ToRole="Categories" />
   </EntityType>
   <EntityType Name="UserLevelPermission">
     <Key>
@@ -168,6 +187,18 @@
     <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Users" FromRole="Users" ToRole="Orders" />
     <NavigationProperty Name="UserLevels" Relationship="Self.FK_UserLevels_Users" FromRole="Users" ToRole="UserLevels" />
   </EntityType>
+  <Association Name="FK_Categories_ToTopics">
+    <End Role="Topics" Type="Self.Topic" Multiplicity="1" />
+    <End Role="Categories" Type="Self.Category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Topics">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Categories">
+        <PropertyRef Name="TopicId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Products_Categories">
     <End Role="Categories" Type="Self.Category" Multiplicity="1" />
     <End Role="Products" Type="Self.Product" Multiplicity="*" />
@@ -276,6 +307,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Pictures_Products">
+    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="Pictures" Type="Self.Picture" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Pictures">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UserLevelPermissions_UserLevels">
     <End Role="UserLevels" Type="Self.UserLevel" Multiplicity="1" />
     <End Role="UserLevelPermissions" Type="Self.UserLevelPermission" Multiplicity="*" />
@@ -307,12 +350,18 @@
     <EntitySet Name="Inputs" EntityType="Self.Input" />
     <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
     <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="Pictures" EntityType="Self.Picture" />
     <EntitySet Name="Products" EntityType="Self.Product" />
     <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Topics" EntityType="Self.Topic" />
     <EntitySet Name="UserLevelPermissions" EntityType="Self.UserLevelPermission" />
     <EntitySet Name="UserLevels" EntityType="Self.UserLevel" />
     <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Categories_ToTopics" Association="Self.FK_Categories_ToTopics">
+      <End Role="Topics" EntitySet="Topics" />
+      <End Role="Categories" EntitySet="Categories" />
+    </AssociationSet>
     <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
       <End Role="Categories" EntitySet="Categories" />
       <End Role="Products" EntitySet="Products" />
@@ -348,6 +397,10 @@
     <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pictures_Products" Association="Self.FK_Pictures_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Pictures" EntitySet="Pictures" />
     </AssociationSet>
     <AssociationSet Name="FK_UserLevelPermissions_UserLevels" Association="Self.FK_UserLevelPermissions_UserLevels">
       <End Role="UserLevels" EntitySet="UserLevels" />

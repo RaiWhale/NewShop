@@ -83,6 +83,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Pictures">
+      <EntityTypeMapping TypeName="NewShopModel.Picture">
+        <MappingFragment StoreEntitySet="Pictures">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="NewShopModel.Product">
         <MappingFragment StoreEntitySet="Products">
@@ -119,6 +128,14 @@
           <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
           <ScalarProperty Name="version" ColumnName="version" />
           <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Topics">
+      <EntityTypeMapping TypeName="NewShopModel.Topic">
+        <MappingFragment StoreEntitySet="Topics">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TopicName" ColumnName="TopicName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
