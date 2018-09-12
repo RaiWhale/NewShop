@@ -102,10 +102,10 @@ NOTE: This is Header style file. All Header related style included in this file.
   z-index: 2;
 }
 .mega-menu-link {
-  width: 70%;
+  width: 100%;
 }
 .mega-menu-photo {
-  width: 30%;
+  width: 0%;
   padding-right: 15px;
 }
 .mega-menu-photo img {
@@ -117,7 +117,7 @@ NOTE: This is Header style file. All Header related style included in this file.
 .single-mega-item {
   float: left;
   padding: 0 15px;
-  width: 33.3333%;
+  width: 25%;
 }
 .single-mega-item li {
   display: block;

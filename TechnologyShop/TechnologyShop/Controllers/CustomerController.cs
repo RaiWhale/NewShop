@@ -60,7 +60,7 @@ namespace TechnologyShop.Controllers
             var acc = AutoMapper.Mapper.Map<User>(data);
             try
             {
-                string filename = DateTime.Now.Ticks + "_" + pic.FileName.Split('/').Last();
+                string filename = DateTime.Now.Ticks + "_" + pic.FileName.Split('\\').Last();
 
                 acc.Password = MySecurity.EncryptPass(acc.Password);
                 acc.Avatar = filename;

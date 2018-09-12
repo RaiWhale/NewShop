@@ -1,52 +1,74 @@
 ﻿@using TechnologyShop.Models;
 
 @{
-    var categories = ViewBag.categories as List<Category>;
+    var topics = ViewBag.topics as List<Topic>;
     //var products = ViewBag.products as List<Product>;
+    Layout = null;
 
-    string LoadCategory(int pid, string tab)
+    string LoadCategory()
     {
         string s = "";
-        foreach (var item in categories.Where(x => x.ParentId == pid))
+        foreach (var item in topics)
         {
-            s += "<tr class='rcat' catid='" + item.Id + "'>"
-                + "<td>" + tab + "+ " + item.CategoryName + "</td>"
+            s += "<tr>"
+                + "<td>+ " + item.TopicName + "</td>"
                 + "<td>"
                 + Html.ActionLink("Add Sub", "Create", "Categories", new { id = item.Id }, new { @class = "btnmodal" }) + "|"
-                + Html.ActionLink("Edit", "Edit", "Categories", new { id = item.Id }, new { @class = "btnmodal" }) + "|"
-                + Html.ActionLink("Delete", "Delete", "Categories", new { id = item.Id }, new { @class = "btnmodal" })
+                + Html.ActionLink("Edit", "Edit", "Topics", new { id = item.Id }, new { @class = "btnmodal" }) + "|"
+                + Html.ActionLink("Delete", "Delete", "Topics", new { id = item.Id }, new { @class = "btnmodal" })
                 + "</td>"
             + "</tr>" + Environment.NewLine;
 
-            s += LoadCategory(item.Id, tab + "&nbsp; &nbsp; &nbsp; ");//de quy
+            foreach (var cat in item.Categories)
+            {
+                s += "<tr class='rcat' catid='" + cat.Id + "'>"
+                + "<td>&nbsp; &nbsp; &nbsp; + " + cat.CategoryName + "</td>"
+                + "<td>"
+                
+                + Html.ActionLink("Edit", "Edit", "Categories", new { id = cat.Id }, new { @class = "btnmodal" }) + "|"
+                + Html.ActionLink("Delete", "Delete", "Categories", new { id = cat.Id }, new { @class = "btnmodal" })
+                + "</td>"
+            + "</tr>" + Environment.NewLine;
+            }
+
         }
         return s;
     }
 }
 
-<div class="content">
+
     <!-- begin breadcrumb -->
     <h4 class="header text-uppercase">PRODUCTS</h4>
     <hr />
-    <div class="body row"
+    <div class="row">
         <div class="md-col-4 ml-4">
             <p>
-                @Html.ActionLink("Add Category", "Create", "Categories", null, new { @class = "btn btn-danger btnmodal" })
+                @Html.ActionLink("Add Topic", "Create", "Topics", null, new { @class = "btn btn-danger btnmodal" })
             </p>
 
-            <table class="table table-hover table-bordered">
-                <tr>
-                    <th>Category Name</th>
-                    <th>Action</th>
-                    <th></th>
-                </tr>
-                <tr class="rcat" catid="0">
-                    <td>All (*)</td>
-                    <td></td>
-                </tr>
-                @Html.Raw(LoadCategory(0, ""))
+            <div id="tblcat">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Category Name</th>
+                            <th>Action</th>
 
-            </table>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr class="rcat" catid="0">
+                            <td>All (*)</td>
+                            <td></td>
+                        </tr>
+                        @Html.Raw(LoadCategory())
+                    </tbody>
+
+
+                </table>
+            </div>
+
         </div>
         <div class="md-col-8 ml-4" id="lstProducts">
 
@@ -54,4 +76,4 @@
 
         <script src="~/Content/Admin/js/ajax.js"></script>
     </div>
-</div>
+

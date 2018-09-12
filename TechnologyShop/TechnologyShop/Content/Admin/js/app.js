@@ -11,7 +11,7 @@ $(document).ready(function () {
         $('#menu > li').not(_this).each(function () {
             $(this).removeClass('active');
         });
-        var _menu = _this.find("div").eq(0).text();
+        var _menu = _this.find("a").eq(0).attr("title");
         _box = $("#card-anim");
         _box.html("Loading.....");
         _box.show();
@@ -21,6 +21,7 @@ $(document).ready(function () {
         }, 1000);
 
         _cur_menu = "/Admin/" + _menu;
+       
         loadBox(_cur_menu);
 
         return false;

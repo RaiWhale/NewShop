@@ -20,9 +20,9 @@ namespace TechnologyShop.Areas.Admin.Controllers
         public ActionResult Index()
         {
             int user_id = int.Parse(User.Identity.Name);
-            var categories = from u in db.Categories select (u);
+     
             //var products = db.Products.Include(p => p.Category);
-            ViewBag.categories = categories.ToList();
+            ViewBag.topics = db.Topics.ToList();
             return View();
         }
 

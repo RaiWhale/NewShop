@@ -1,9 +1,11 @@
 ﻿@using TechnologyShop.Models.ViewModel;
 
 @{
+    Layout = null;
     var latest_orders_daily = ViewBag.latest_orders_daily as List<OrderReportVM>;
     var quantities_daily = ViewBag.quantities_daily as List<QuantityReportVM>;
-    var from_date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, 00, 01);
+    var tu_ngay = (DateTime)ViewBag.tu_ngay;
+    var den_ngay = (DateTime)ViewBag.den_ngay;
 }
 
 
@@ -16,11 +18,11 @@
     <hr />
 
     <div>
-            <form method="get">
-                Tu ngay: <input type ="datetime-local" id ="tu_ngay" name="tu_ngay" value ="@from_date.ToString("s")" />
-                -Den ngay: <input type ="datetime-local" id ="den_ngay" name="den_ngay" value ="@DateTime.Now.ToString("s")" />
+            <form>
+                Tu ngay: <input type ="datetime-local" id ="tu_ngay" name="tu_ngay" value ="@tu_ngay.ToString("s")" />
+                -Den ngay: <input type ="datetime-local" id ="den_ngay" name="den_ngay" value ="@den_ngay.ToString("s")" />
 
-                <input type ="submit" value ="Filter" />
+                <input type ="button" id="btnFilter" value ="Filter" />
           </form>
     </div>
             <p>LATEST ORDERS DAILY</p>
@@ -122,4 +124,10 @@
 
         <script src="~/Content/Admin/js/ajax.js"></script>
 
-    </div>
+        <script>
+            $(document).ready(function () {
+                $("#btnFilter").click(function () {
+                    loadBox("/Admin/Dashboard/?tu_ngay=" + $("#tu_ngay").val() + "&den_ngay=" + $("#den_ngay").val());
+                });
+            });
+        </script>

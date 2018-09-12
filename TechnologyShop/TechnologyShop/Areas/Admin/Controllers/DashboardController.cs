@@ -43,19 +43,22 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 x.Product.ProductName,
                 x.Order.OrderCode
             })
-        .Select(y => new QuantityReportVM()
-        {
-            ProductId = y.Key.ProductId,
-            ProductName = y.Key.ProductName,
-            OrderCode = y.Key.OrderCode,
-            SumQuantity = y.Sum(x => x.Quantity),
-            SumTotal = y.Sum(x => x.Quantity * x.Price)
-        }).ToList();
+            .Select(y => new QuantityReportVM()
+            {
+                ProductId = y.Key.ProductId,
+                ProductName = y.Key.ProductName,
+                OrderCode = y.Key.OrderCode,
+                SumQuantity = y.Sum(x => x.Quantity),
+                SumTotal = y.Sum(x => x.Quantity * x.Price)
+            }).ToList();
 
 
             ViewBag.latest_orders_daily = orders_daily.OrderByDescending(x => x.OrderDate).Take(10).ToList();
             ViewBag.quantities_daily = quantities_daily.OrderByDescending(x => x.OrderCode).ToList();
             ViewBag.sumtotal = sumtotal;
+
+            ViewBag.tu_ngay = tu_ngay;
+            ViewBag.den_ngay = den_ngay;
 
             return View();
         }

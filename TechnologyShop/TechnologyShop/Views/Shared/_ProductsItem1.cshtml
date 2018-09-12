@@ -6,7 +6,15 @@
         <div class="product-img">
             <a href="~/Products/Details/@Model.Id">
                 <!--Sua-->
-                <img src="~/Content/home/img/product-2/7.jpg" alt="" />
+                @{ 
+                    string src = "/Content/MainPage/img/product/1.jpg";
+                    var pic = Model.Pictures.FirstOrDefault();
+                    if(pic != null)
+                    {
+                        src = "/Content/products/" + pic.Url;
+                    }
+                }
+                <img src="@src" alt="" />
             </a>
         </div>
         <div class="product-info">

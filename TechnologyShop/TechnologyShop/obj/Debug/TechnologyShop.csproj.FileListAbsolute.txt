@@ -209,3 +209,8 @@ E:\NewShop\TechnologyShop\TechnologyShop\bin\System.ValueTuple.xml
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Collections.Immutable.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.IO.FileSystem.dll
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csprojAssemblyReference.cache
+D:\NewShop\TechnologyShop\TechnologyShop\bin\AutoMapper.dll
+D:\NewShop\TechnologyShop\TechnologyShop\bin\System.ValueTuple.dll
+D:\NewShop\TechnologyShop\TechnologyShop\bin\AutoMapper.pdb
+D:\NewShop\TechnologyShop\TechnologyShop\bin\AutoMapper.xml
+D:\NewShop\TechnologyShop\TechnologyShop\bin\System.ValueTuple.xml
