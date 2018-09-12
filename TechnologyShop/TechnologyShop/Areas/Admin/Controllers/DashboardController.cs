@@ -23,7 +23,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
 
 
             //Table Orders + OrderDetails + Sum order
-            var orders_daily = db.Orders.Where(x => x.OrderDate >= tu_ngay && x.OrderDate <= den_ngay && x.User.Id == user_id)
+            var orders_daily = db.Orders.Where(x => x.OrderDate >= tu_ngay && x.OrderDate <= den_ngay)
             .Select(x => new OrderReportVM()
             {
                 OrderId = x.Id,

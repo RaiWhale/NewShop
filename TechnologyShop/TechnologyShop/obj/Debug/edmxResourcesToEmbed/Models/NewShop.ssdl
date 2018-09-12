@@ -8,6 +8,7 @@
     <Property Name="CategoryName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="ParentId" Type="int" Nullable="false" />
     <Property Name="TopicId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Customers">
     <Key>
@@ -173,6 +174,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Categories_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Categories">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Input_Suppliers">
     <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
     <End Role="Inputs" Type="Self.Inputs" Multiplicity="*" />
@@ -334,6 +347,10 @@
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Categories_ToTopics" Association="Self.FK_Categories_ToTopics">
       <End Role="Topics" EntitySet="Topics" />
+      <End Role="Categories" EntitySet="Categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Categories_Users" Association="Self.FK_Categories_Users">
+      <End Role="Users" EntitySet="Users" />
       <End Role="Categories" EntitySet="Categories" />
     </AssociationSet>
     <AssociationSet Name="FK_Input_Suppliers" Association="Self.FK_Input_Suppliers">

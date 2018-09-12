@@ -34,6 +34,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.TopicId = new SelectList(db.Topics, "Id", "TopicName");
             return PartialView(category);
         }
 
@@ -63,10 +64,10 @@ namespace TechnologyShop.Areas.Admin.Controllers
 
                 db.Categories.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index","Categories");
+                return Content("OK");
             }
 
-            return PartialView(category);
+            return View(category);
         }
 
         // GET: Admin/Categories/Edit/5
@@ -81,6 +82,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.TopicId = new SelectList(db.Topics, "Id", "TopicName");
             return PartialView(category);
         }
 
@@ -93,6 +95,8 @@ namespace TechnologyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var topicname = db.Topics.Select(x => x.TopicName).ToList();
+                category.Topic.TopicName = topicname.ToString();
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -112,6 +116,9 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            var topicname = db.Topics.Select(x => x.TopicName).ToList();
+            category.Topic.TopicName = topicname.ToString();
+            ViewBag.TopicId = new SelectList(db.Topics, "Id", "TopicName");
             return PartialView(category);
         }
 

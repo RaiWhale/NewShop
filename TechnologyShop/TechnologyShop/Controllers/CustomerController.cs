@@ -89,5 +89,23 @@ namespace TechnologyShop.Controllers
             Session.Abandon();
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ForgotPassword(string Email)
+        {
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult Index()
+        {
+            return View();
+        }
     }
 }

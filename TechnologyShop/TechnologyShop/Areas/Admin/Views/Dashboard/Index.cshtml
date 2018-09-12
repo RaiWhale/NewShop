@@ -8,124 +8,118 @@
 
 
 
-<div id="content" class="content">
-    <!-- begin breadcrumb -->
-    <ol class="breadcrumb pull-right">
-        <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
-        <li class="breadcrumb-item"><a href="javascript:;">Dashboard</a></li>
-        <li class="breadcrumb-item active">Dashboard v2</li>
-    </ol>
-    <!-- end breadcrumb -->
+
+
     <!-- begin row -->
 
     <h4 class="header text-uppercase">DASHBOARD</h4>
     <hr />
 
-    <div class="body">
+    <div>
+            <form method="get">
+                Tu ngay: <input type ="datetime-local" id ="tu_ngay" name="tu_ngay" value ="@from_date.ToString("s")" />
+                -Den ngay: <input type ="datetime-local" id ="den_ngay" name="den_ngay" value ="@DateTime.Now.ToString("s")" />
 
-            <form class="filter"  action="/Admin/Dashboard/Index" method="post">
-                Tu ngay: <input type="datetime-local" id="tu_ngay" value="@from_date.ToString("s")" />
-                -  Den ngay: <input type="datetime-local" id="den_ngay" value="@DateTime.Now.ToString("s")" />
-                <input type="button" id="btnFilter" value="Filter" />
-            </form> 
+                <input type ="submit" value ="Filter" />
+          </form>
+    </div>
+            <p>LATEST ORDERS DAILY</p>
 
-        <p>LATEST ORDERS DAILY</p>
-
-        <table class="table table-hover">
-            <tr>
-                <th>
-                    #
-                </th>
-                <th>
-                    Order Code
-                </th>
-                <th>
-                    Date
-                </th>
-                <th>
-                    Employee
-                </th>
-                <th>
-                    Customer
-                </th>
-                <th>
-                    Total
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in latest_orders_daily)
-            {
+            <table class="table table-hover">
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderCode)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Employee)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Customer)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Total)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Details", "Details", "Orders", null, new { baction = "" })
-                    </td>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Order Code
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Employee
+                    </th>
+                    <th>
+                        Customer
+                    </th>
+                    <th>
+                        Total
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </table>
 
-        <p>DAILY SALES: BY QUANTITY</p>
-        <table class="table table-hover">
-            <tr>
-                <th>
-                    #
-                </th>
-                <th>
-                    Product Name
-                </th>
-                <th>
-                    Sum Quantity
-                </th>
-                <th>
-                    Sum Total
-                </th>
-                <th>
-                    Order Code
-                </th>
-            </tr>
+                @foreach (var item in latest_orders_daily)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Employee)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Total)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", "Orders", null, new { baction = "" })
+                        </td>
+                    </tr>
+                }
+            </table>
 
-            @foreach (var item in quantities_daily)
-            {
+            <p>DAILY SALES: BY QUANTITY</p>
+            <table class="table table-hover">
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProductId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProductName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SumQuantity)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SumTotal)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderCode)
-                    </td>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Product Name
+                    </th>
+                    <th>
+                        Sum Quantity
+                    </th>
+                    <th>
+                        Sum Total
+                    </th>
+                    <th>
+                        Order Code
+                    </th>
                 </tr>
-            }
-        </table>
+
+                @foreach (var item in quantities_daily)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SumQuantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SumTotal)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderCode)
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        <!-- end row -->
+
+        <script src="~/Content/Admin/js/ajax.js"></script>
 
     </div>
-
-    <!-- end row -->
-
-</div>

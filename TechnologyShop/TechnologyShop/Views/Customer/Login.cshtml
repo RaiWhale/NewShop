@@ -1,9 +1,5 @@
-﻿@model TechnologyShop.Models.ViewModel.LoginVM
-
-@{
-    ViewBag.Title = "Login";
-}
-@using (Html.BeginForm())
+﻿
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "login-validation" }))
 {
     @Html.AntiForgeryToken()
     <div class="wrapper">
@@ -24,19 +20,26 @@
                                         <form>
                                             <!--LoginName-->
                                             <div class="col-md-12">
-                                                @Html.EditorFor(model => model.LoginName, new { htmlAttributes = new { @class = "form-control", @placeholder = "User Name", autofocus = "" } })
-                                                @Html.ValidationMessageFor(model => model.LoginName, "", new { @class = "text-danger" })
+                                                <input type="text" class="form-control" name="LoginName" id="LoginName" placeholder="Login name" required />
                                             </div>
 
                                             <div class="col-md-12">
-                                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password" } })
-                                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                                <input type="password" class="form-control" name="Password" id="Password" placeholder="Password" autocomplete="off" required />
                                             </div>
-
-                                            <p><small><a href="#">Forgot our password?</a></small></p>
-                                            <button class="submit-btn-1 btn-hover-1" type="submit">login</button>
+                                            <div class="checkbox-primary pull-right">
+                                                <label>
+                                                    <input type="checkbox" id="loginCheckbox1" class="custom-checkbox">
+                                                    Remember me
+                                                </label>
+                                            </div>
+                                            <p><strong><a href="@Url.Action("ForgotPassword", "Customer")">Forgot our password?</a></strong></p>
+                                            <button class="submit-btn-1 btn-hover-1 center-block" type="submit">login</button>
                                         </form>
                                         <p>@ViewBag.Message</p>
+                                        <div class="form-group text-center">
+                                            Need to Signup?
+                                            <a href="@Url.Action("Register", "Customer")"><strong>Register now</strong></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

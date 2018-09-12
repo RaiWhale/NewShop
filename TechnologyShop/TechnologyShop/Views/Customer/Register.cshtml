@@ -14,11 +14,11 @@
                     <!-- new-customers -->
                     <div class="col-md-6 col-md-offset-3">
                         <div class="new-customers">
-                            @using (Html.BeginForm("Register", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
                                 @Html.AntiForgeryToken()
                                 <h6 class="widget-title border-left mb-50">NEW CUSTOMERS</h6>
-                                <div class="login-account p-30 box-shadow">
+                                <div class="login-account p-30 box-shadow" id="register-form">
                                     <!--Register-->
 
                                     <div class="row">
@@ -34,7 +34,7 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            @Html.EditorFor(model => model.RePassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Re-Password" } })
+                                            @Html.EditorFor(model => model.RePassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Retype-Password" } })
                                             @Html.ValidationMessageFor(model => model.RePassword, "", new { @class = "text-danger" })
                                         </div>
 
@@ -61,7 +61,10 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            <input type="file" name="Avatar" id="Avatar" multiple />
+                                            <label for="Logo">Avatar:</label>
+                                            <div class="input-group">
+                                                <input type="file" class="form-control" name="pic" id="pic" placeholder="Avatar" required />
+                                            </div>
                                         </div>
 
                                         <div class="row">

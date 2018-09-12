@@ -302,6 +302,8 @@
     <Content Include="Content\Admin\img\user\user-6.jpg" />
     <Content Include="Content\Admin\img\user\user-8.jpg" />
     <Content Include="Content\Admin\img\user\user-9.jpg" />
+    <Content Include="Content\Admin\js\ajax.js" />
+    <Content Include="Content\Admin\js\app.js" />
     <Content Include="Content\Admin\js\apps.min.js" />
     <Content Include="Content\Admin\js\demo\dashboard-v2.min.js" />
     <Content Include="Content\Admin\js\demo\table-manage-fixed-header.demo.min.js" />
@@ -632,6 +634,7 @@
     <Content Include="Models\NewShop.edmx.diagram">
       <DependentUpon>NewShop.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\Products\Category.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -660,6 +663,9 @@
     <Content Include="Views\Shared\_PrimaryMenu.cshtml" />
     <Content Include="Views\Shared\_ProductsItem1.cshtml" />
     <Content Include="Views\Shared\_ProductsItem2.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutUser.cshtml" />
+    <Content Include="Views\Customer\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

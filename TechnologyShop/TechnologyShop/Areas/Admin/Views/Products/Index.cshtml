@@ -1,75 +1,57 @@
-﻿@model IEnumerable<TechnologyShop.Models.Product>
+﻿@using TechnologyShop.Models;
 
 @{
-    ViewBag.Title = "Index";
+    var categories = ViewBag.categories as List<Category>;
+    //var products = ViewBag.products as List<Product>;
+
+    string LoadCategory(int pid, string tab)
+    {
+        string s = "";
+        foreach (var item in categories.Where(x => x.ParentId == pid))
+        {
+            s += "<tr class='rcat' catid='" + item.Id + "'>"
+                + "<td>" + tab + "+ " + item.CategoryName + "</td>"
+                + "<td>"
+                + Html.ActionLink("Add Sub", "Create", "Categories", new { id = item.Id }, new { @class = "btnmodal" }) + "|"
+                + Html.ActionLink("Edit", "Edit", "Categories", new { id = item.Id }, new { @class = "btnmodal" }) + "|"
+                + Html.ActionLink("Delete", "Delete", "Categories", new { id = item.Id }, new { @class = "btnmodal" })
+                + "</td>"
+            + "</tr>" + Environment.NewLine;
+
+            s += LoadCategory(item.Id, tab + "&nbsp; &nbsp; &nbsp; ");//de quy
+        }
+        return s;
+    }
 }
 
-<h2>Index</h2>
+<div class="content">
+    <!-- begin breadcrumb -->
+    <h4 class="header text-uppercase">PRODUCTS</h4>
+    <hr />
+    <div class="body row"
+        <div class="md-col-4 ml-4">
+            <p>
+                @Html.ActionLink("Add Category", "Create", "Categories", null, new { @class = "btn btn-danger btnmodal" })
+            </p>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BarCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Unit)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.InputPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OutputPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category.CategoryName)
-        </th>
-        <th></th>
-    </tr>
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th>Category Name</th>
+                    <th>Action</th>
+                    <th></th>
+                </tr>
+                <tr class="rcat" catid="0">
+                    <td>All (*)</td>
+                    <td></td>
+                </tr>
+                @Html.Raw(LoadCategory(0, ""))
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BarCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Unit)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InputPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OutputPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.CategoryName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+            </table>
+        </div>
+        <div class="md-col-8 ml-4" id="lstProducts">
 
-</table>
+        </div>
+
+        <script src="~/Content/Admin/js/ajax.js"></script>
+    </div>
+</div>

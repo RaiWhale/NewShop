@@ -10,19 +10,35 @@ using TechnologyShop.Models;
 
 namespace TechnologyShop.Areas.Admin.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private NewShopEntities db = new NewShopEntities();
+        System.Net.Http.HttpClient http = new System.Net.Http.HttpClient();
 
         // GET: Admin/Products
         public ActionResult Index()
         {
-            var products = db.Products.Include(p => p.Category);
-            return View(products.ToList());
+            int user_id = int.Parse(User.Identity.Name);
+            var categories = from u in db.Categories select (u);
+            //var products = db.Products.Include(p => p.Category);
+            ViewBag.categories = categories.ToList();
+            return View();
         }
 
-        // GET: Admin/Products/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Category(int? cat)
+        {
+            int user_id = int.Parse(User.Identity.Name);
+            var products = from p in db.Products select (p);
+            if (cat > 0)
+            {
+                products = products.Where(x => x.CategoryId == cat);
+                ViewBag.cat = cat;
+            }
+            return PartialView(products.ToList());
+        }
+            // GET: Admin/Products/Details/5
+            public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -33,14 +49,14 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(product);
+            return PartialView(product);
         }
 
         // GET: Admin/Products/Create
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName");
-            return View();
+            return PartialView();
         }
 
         // POST: Admin/Products/Create
@@ -58,7 +74,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             }
 
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", product.CategoryId);
-            return View(product);
+            return PartialView(product);
         }
 
         // GET: Admin/Products/Edit/5
@@ -74,7 +90,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", product.CategoryId);
-            return View(product);
+            return PartialView(product);
         }
 
         // POST: Admin/Products/Edit/5
@@ -91,7 +107,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", product.CategoryId);
-            return View(product);
+            return PartialView(product);
         }
 
         // GET: Admin/Products/Delete/5
@@ -106,7 +122,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(product);
+            return PartialView(product);
         }
 
         // POST: Admin/Products/Delete/5
