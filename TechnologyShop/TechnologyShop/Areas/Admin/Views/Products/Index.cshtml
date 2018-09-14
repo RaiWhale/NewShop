@@ -13,9 +13,9 @@
             s += "<tr>"
                 + "<td>+ " + item.TopicName + "</td>"
                 + "<td>"
-                + Html.ActionLink("Add Sub", "Create", "Categories", new { id = item.Id }, new { @class = "btnmodal" }) + "|"
-                + Html.ActionLink("Edit", "Edit", "Topics", new { id = item.Id }, new { @class = "btnmodal" }) + "|"
-                + Html.ActionLink("Delete", "Delete", "Topics", new { id = item.Id }, new { @class = "btnmodal" })
+                + Html.ActionLink("Add Sub", "Create", "Categories", new { id = item.Id }, new { baction = "" }) + "|"
+                + Html.ActionLink("Edit", "Edit", "Topics", new { id = item.Id }, new { baction = "" }) + "|"
+                + Html.ActionLink("Delete", "Delete", "Topics", new { id = item.Id }, new { baction = "" })
                 + "</td>"
             + "</tr>" + Environment.NewLine;
 
@@ -25,8 +25,8 @@
                 + "<td>&nbsp; &nbsp; &nbsp; + " + cat.CategoryName + "</td>"
                 + "<td>"
                 
-                + Html.ActionLink("Edit", "Edit", "Categories", new { id = cat.Id }, new { @class = "btnmodal" }) + "|"
-                + Html.ActionLink("Delete", "Delete", "Categories", new { id = cat.Id }, new { @class = "btnmodal" })
+                + Html.ActionLink("Edit", "Edit", "Categories", new { id = cat.Id }, new { baction = "" }) + "|"
+                + Html.ActionLink("Delete", "Delete", "Categories", new { id = cat.Id }, new { baction = "" })
                 + "</td>"
             + "</tr>" + Environment.NewLine;
             }
@@ -43,7 +43,7 @@
     <div class="row">
         <div class="md-col-4 ml-4">
             <p>
-                @Html.ActionLink("Add Topic", "Create", "Topics", null, new { @class = "btn btn-danger btnmodal" })
+                @Html.ActionLink("Add Topic", "Create", "Topics", null, new { baction = "", @class = "btn btn-danger" })
             </p>
 
             <div id="tblcat">
