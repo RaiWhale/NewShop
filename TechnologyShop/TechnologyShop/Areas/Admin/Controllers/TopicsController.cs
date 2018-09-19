@@ -38,7 +38,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // GET: Admin/Topics/Create
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Admin/Topics/Create
@@ -52,7 +52,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 db.Topics.Add(topic);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Content("OK");
             }
 
             return View(topic);
@@ -70,7 +70,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(topic);
+            return PartialView(topic);
         }
 
         // POST: Admin/Topics/Edit/5
@@ -86,7 +86,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(topic);
+            return PartialView(topic);
         }
 
         // GET: Admin/Topics/Delete/5
@@ -101,7 +101,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(topic);
+            return PartialView(topic);
         }
 
         // POST: Admin/Topics/Delete/5
@@ -112,7 +112,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             Topic topic = db.Topics.Find(id);
             db.Topics.Remove(topic);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Content("OK");
         }
 
         protected override void Dispose(bool disposing)

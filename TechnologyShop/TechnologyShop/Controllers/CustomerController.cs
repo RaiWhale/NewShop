@@ -23,13 +23,13 @@ namespace TechnologyShop.Controllers
         {
 
             //Code đăng nhập   
-                var acc = db.Users.Where(x => x.LoginName.Equals(data.LoginName)).SingleOrDefault(); //LINQ
-                if (acc != null)
+                var email = db.Customers.Where(x => x.Email.Equals(data.Email)).SingleOrDefault(); //LINQ
+                if (email != null)
                 {
-                    if (acc.Password.Equals(MySecurity.EncryptPass(data.Password)))
+                    if (email.Password.Equals(MySecurity.EncryptPass(data.Password)))
                     {
 
-                    FormsAuthentication.SetAuthCookie(acc.Id.ToString(), false);
+                    FormsAuthentication.SetAuthCookie(email.Id.ToString(), false);
                     return RedirectToAction("Index","Home");
                         
                     }
@@ -40,7 +40,7 @@ namespace TechnologyShop.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = "Login Name not exist!";
+                    ViewBag.Message = "Email not exist!";
                 }
 
 
@@ -50,29 +50,22 @@ namespace TechnologyShop.Controllers
 
         public ActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("UpdateProfile");
+            };
             return View();
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterVM data, HttpPostedFileBase pic)
+        public ActionResult Register(RegisterVM data)
         {
             //Code đăng ký
-            var acc = AutoMapper.Mapper.Map<User>(data);
+            var acc = AutoMapper.Mapper.Map<Customer>(data);
             try
             {
-                string filename = DateTime.Now.Ticks + "_" + pic.FileName.Split('\\').Last();
-
-                acc.Password = MySecurity.EncryptPass(acc.Password);
-                acc.Avatar = filename;
-                acc.CreatedDate = DateTime.Now;
-                acc.IsActive = false;
-                db.Users.Add(acc);
+                db.Customers.Add(acc);
                 db.SaveChanges();
-
-                string path = Server.MapPath("~/Uploads/Avatars") + "\\" + acc.Id;
-                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-                pic.SaveAs(path + "\\" + filename);
-
                 return View("RegisterSuccess");
             }
             catch (Exception ex)
@@ -97,8 +90,32 @@ namespace TechnologyShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ForgotPassword(string Email)
+        public ActionResult ForgotPassword(ForgetPasswordVM data, string NewPassword, string Email)
         {
+            var email = db.Customers.Where(x => x.Email.Equals(data.Email)).SingleOrDefault();
+
+
+            if (email != null)
+            {
+                if ((email.Phone.Equals(data.Phone)) && email.CustomerName.Equals(data.CustomerName))
+                {
+                    NewPassword = RandomString2(6);
+                    email.Password = NewPassword;
+                    db.SaveChanges();
+                    ViewBag.Message = email.Password;
+                    return RedirectToAction("Login", "Customer");
+                }
+                else
+                {
+                    ViewBag.Message = "Phone or Customer name Invalid!";
+                }
+            }
+            else
+            {
+                ViewBag.Message = "Email invalid!";
+            }
+
+
             return View();
         }
 
@@ -106,6 +123,42 @@ namespace TechnologyShop.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [Authorize]
+        public ActionResult UpdateProfile()
+        {
+            var email = db.Customers.Find(int.Parse(User.Identity.Name));
+            var data = AutoMapper.Mapper.Map<UpdateProfileVM>(email);
+            return View(data);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateProfile(UpdateProfileVM data)
+        {
+    
+            try
+            {
+                var email = db.Customers.Find(int.Parse(User.Identity.Name));
+                data.Id = email.Id;
+                AutoMapper.Mapper.Map(data, email);
+                db.SaveChanges();
+                ViewBag.Message = "Update Successfully";
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Message = ex.Message;
+            }
+            return View();
+        }
+
+        static Random rnd = new Random();
+        public string RandomString2(int length)
+        {
+            const string chars = "abcdef0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[rnd.Next(s.Length)]).ToArray());
         }
     }
 }

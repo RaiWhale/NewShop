@@ -45,7 +45,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 ParentId = id != null ? id.Value : 0
             };
-
+            
             ViewBag.TopicId = new SelectList(db.Topics, "Id", "TopicName");
             return PartialView(category);
         }
@@ -59,8 +59,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var topicname = db.Topics.Select(x => x.TopicName).ToList();
-                category.Topic.TopicName = topicname.ToString();
+     
 
                 db.Categories.Add(category);
                 db.SaveChanges();

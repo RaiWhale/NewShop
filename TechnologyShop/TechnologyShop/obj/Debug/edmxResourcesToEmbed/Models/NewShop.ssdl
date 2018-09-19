@@ -19,7 +19,8 @@
     <Property Name="Gender" Type="tinyint" Nullable="false" />
     <Property Name="Birthday" Type="datetime" />
     <Property Name="Phone" Type="varchar" MaxLength="30" />
-    <Property Name="Email" Type="nvarchar" MaxLength="150" />
+    <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Address" Type="nvarchar" MaxLength="250" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>

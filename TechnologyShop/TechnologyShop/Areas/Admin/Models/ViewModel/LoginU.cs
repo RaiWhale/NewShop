@@ -4,16 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace TechnologyShop.Models.ViewModel
+namespace TechnologyShop.Areas.Admin.Models.ViewModel
 {
-    public class LoginVM
+    public class LoginU
     {
         [Key]
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-        [Required]
+        public string LoginName { get; set; }
         [DataType(DataType.Password)]
+        [Required]
         public string Password { get; set; }
     }
 }

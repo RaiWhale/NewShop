@@ -25,7 +25,6 @@ namespace TechnologyShop.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<InputDetail> InputDetails { get; set; }
         public virtual DbSet<Input> Inputs { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
@@ -39,5 +38,6 @@ namespace TechnologyShop.Models
         public virtual DbSet<UserLevel> UserLevels { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
     }
 }

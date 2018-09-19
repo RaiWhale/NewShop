@@ -23,8 +23,9 @@ namespace TechnologyShop
 
             AutoMapper.Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<RegisterVM, User>();
-                //cfg.CreateMap<CompanyAccount, RegisterVM>();
+                cfg.CreateMap<RegisterVM, Customer>();
+                cfg.CreateMap<UpdateProfileVM, Customer>();
+                cfg.CreateMap<ForgetPasswordVM, Customer>();
             });
         }
     }

@@ -4,14 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace TechnologyShop.Models.ViewModel
+namespace TechnologyShop.Areas.Admin.Models.ViewModel
 {
-    public class RegisterVM
+    public class RegisterUVM
     {
         [Key]
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string LoginName { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -20,11 +19,14 @@ namespace TechnologyShop.Models.ViewModel
         [DataType(DataType.Password)]
         public string RePassword { get; set; }
         [Required]
-        public string CustomerName { get; set; }
-        public Gender Gender { get; set; }
+        public string FullName { get; set; }
+
+        [Required]
+        public DateTime Birthday { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
-
-
     }
 }

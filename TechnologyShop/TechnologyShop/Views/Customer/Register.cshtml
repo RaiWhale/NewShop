@@ -24,8 +24,8 @@
                                     <div class="row">
 
                                         <div class="col-md-12">
-                                            @Html.EditorFor(model => model.LoginName, new { htmlAttributes = new { @class = "form-control", @placeholder = "User Name" } })
-                                            @Html.ValidationMessageFor(model => model.LoginName, "", new { @class = "text-danger" })
+                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email"} })
+                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                         </div>
 
                                         <div class="col-md-12">
@@ -39,16 +39,13 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Full Name" } })
-                                            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                                            @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Name" } })
+                                            @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
                                         </div>
-
-
-                                        <div class="col-md-6">
-                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email", @type = "text" } })
-                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                        <div class="col-md-12">
+                                            @Html.EnumDropDownListFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control", @placeholder = "Gender" } })
+                                            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                                         </div>
-
                                         <div class="col-md-6">
                                             @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Phone here....." } })
                                             @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
@@ -60,12 +57,6 @@
                                             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                                         </div>
 
-                                        <div class="col-md-12">
-                                            <label for="Logo">Avatar:</label>
-                                            <div class="input-group">
-                                                <input type="file" class="form-control" name="pic" id="pic" placeholder="Avatar" required />
-                                            </div>
-                                        </div>
 
                                         <div class="row">
                                             <div class="col-md-6">
