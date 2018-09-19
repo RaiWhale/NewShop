@@ -196,7 +196,6 @@ D:\NewShop\TechnologyShop\TechnologyShop\bin\Microsoft.AI.DependencyCollector.xm
 D:\NewShop\TechnologyShop\TechnologyShop\bin\Microsoft.AI.WindowsServer.xml
 D:\NewShop\TechnologyShop\TechnologyShop\bin\Microsoft.AI.Web.xml
 D:\NewShop\TechnologyShop\TechnologyShop\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csprojAssemblyReference.cache
 D:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csproj.CoreCompileInputs.cache
 D:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csproj.CopyComplete
 D:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.dll
@@ -213,3 +212,4 @@ D:\NewShop\TechnologyShop\TechnologyShop\bin\System.ValueTuple.dll
 D:\NewShop\TechnologyShop\TechnologyShop\bin\AutoMapper.pdb
 D:\NewShop\TechnologyShop\TechnologyShop\bin\AutoMapper.xml
 D:\NewShop\TechnologyShop\TechnologyShop\bin\System.ValueTuple.xml
+D:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csprojAssemblyReference.cache

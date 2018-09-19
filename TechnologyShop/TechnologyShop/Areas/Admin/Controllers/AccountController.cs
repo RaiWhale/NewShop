@@ -5,12 +5,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using TechnologyShop.Areas.Admin.Models.ViewModel;
 using TechnologyShop.Models;
+using TechnologyShop.Models.ViewModel;
 
 namespace TechnologyShop.Areas.Admin.Controllers
 {
-    public class AccountsController : Controller
+    public class AccountController : Controller
     {
         NewShopEntities db = new NewShopEntities();
         // GET: Admin/Accounts
@@ -33,7 +33,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                         Response.Cookies["UserName"].Value = acc.LoginName.ToUpper();
 
                         FormsAuthentication.SetAuthCookie(acc.Id.ToString(), false);
-                        return RedirectToAction("Index","Dashboard");
+                        return RedirectToAction("Index","Home");
                     }
                     else
                     {
@@ -60,38 +60,6 @@ namespace TechnologyShop.Areas.Admin.Controllers
             return RedirectToAction("Login");
         }
 
-        public ActionResult Register()
-        {
-            return View();
-        }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterUVM data, HttpPostedFileBase pic)
-        {
-            var acc = AutoMapper.Mapper.Map<User>(data);
-            try
-            {
-                string filename = DateTime.Now.Ticks + "_" + pic.FileName.Split('/').Last();
-
-                acc.Password = MySecurity.EncryptPass(data.Password);
-                acc.Avatar = filename;
-                acc.CreatedDate = DateTime.Now;
-                acc.IsActive = false;
-                db.Users.Add(acc);
-                db.SaveChanges();
-
-                string path = Server.MapPath("~/Uploads/Logo") + "\\" + acc.Id;
-                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-                pic.SaveAs(path + "\\" + filename);
-
-                return View("RegisterSuccess","Customer");
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-            }
-            return View();
-        }
     }
 }

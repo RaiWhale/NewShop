@@ -20,7 +20,7 @@ $(document).ready(function () {
             _box.removeClass('animated bounceInDown')
         }, 1000);
 
-        _cur_menu = "/Admin/" + _menu;
+        _cur_menu = "/" + $("#menu").att("tag") + "/" + _menu;
        
         loadBox(_cur_menu);
 

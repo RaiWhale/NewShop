@@ -11,122 +11,114 @@ using TechnologyShop.Models;
 namespace TechnologyShop.Areas.Admin.Controllers
 {
     [Authorize]
-    public class CategoriesController : Controller
+    public class UserLevelsController : Controller
     {
         private NewShopEntities db = new NewShopEntities();
 
-        // GET: Admin/Categories
+        // GET: Admin/UserLevels
         public ActionResult Index()
         {
-            var categories = from u in db.Categories select(u);
-            ViewBag.categories = categories.ToList();
-            return View(db.Categories.ToList());
+            var userLevels = db.UserLevels.Include(u => u.User);
+            return View(userLevels.ToList());
         }
 
-        // GET: Admin/Categories/Details/5
+        // GET: Admin/UserLevels/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            UserLevel userLevel = db.UserLevels.Find(id);
+            if (userLevel == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TopicId = new SelectList(db.Topics, "Id", "TopicName");
-            return PartialView(category);
+            return View(userLevel);
         }
 
-        // GET: Admin/Categories/Create
-        public ActionResult Create(int? id)
+        // GET: Admin/UserLevels/Create
+        public ActionResult Create()
         {
-            var category = new Category()
-            {
-                TopicId = id != null ? id.Value : 0
-            };
-            
-            ViewBag.TopicId = new SelectList(db.Topics, "Id", "TopicName", id);
-            return PartialView(category);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName");
+            return View();
         }
 
-        // POST: Admin/Categories/Create
+        // POST: Admin/UserLevels/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CategoryName,TopicId")] Category category)
+        public ActionResult Create([Bind(Include = "Id,UserLevelName,UserId")] UserLevel userLevel)
         {
             if (ModelState.IsValid)
             {
-     
-
-                db.Categories.Add(category);
+                db.UserLevels.Add(userLevel);
                 db.SaveChanges();
-                return Content("OK");
+                return RedirectToAction("Index");
             }
 
-            return View(category);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", userLevel.UserId);
+            return View(userLevel);
         }
 
-        // GET: Admin/Categories/Edit/5
+        // GET: Admin/UserLevels/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            UserLevel userLevel = db.UserLevels.Find(id);
+            if (userLevel == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TopicId = new SelectList(db.Topics, "Id", "TopicName", category.TopicId);
-            return PartialView(category);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", userLevel.UserId);
+            return View(userLevel);
         }
 
-        // POST: Admin/Categories/Edit/5
+        // POST: Admin/UserLevels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CategoryName,TopicId")] Category category)
+        public ActionResult Edit([Bind(Include = "Id,UserLevelName,UserId")] UserLevel userLevel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
+                db.Entry(userLevel).State = EntityState.Modified;
                 db.SaveChanges();
-                return Content("OK");
+                return RedirectToAction("Index");
             }
-            return PartialView(category);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", userLevel.UserId);
+            return View(userLevel);
         }
 
-        // GET: Admin/Categories/Delete/5
+        // GET: Admin/UserLevels/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            UserLevel userLevel = db.UserLevels.Find(id);
+            if (userLevel == null)
             {
                 return HttpNotFound();
             }
-     
-            return PartialView(category);
+            return View(userLevel);
         }
 
-        // POST: Admin/Categories/Delete/5
+        // POST: Admin/UserLevels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
+            UserLevel userLevel = db.UserLevels.Find(id);
+            db.UserLevels.Remove(userLevel);
             db.SaveChanges();
-            return Content("OK");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

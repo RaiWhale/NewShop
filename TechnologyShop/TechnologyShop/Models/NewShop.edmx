@@ -11,9 +11,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ParentId" Type="int" Nullable="false" />
           <Property Name="TopicId" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -180,18 +178,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Categories_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Categories">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Input_Suppliers">
           <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
           <End Role="Inputs" Type="Self.Inputs" Multiplicity="*" />
@@ -353,10 +339,6 @@
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Categories_ToTopics" Association="Self.FK_Categories_ToTopics">
             <End Role="Topics" EntitySet="Topics" />
-            <End Role="Categories" EntitySet="Categories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Categories_Users" Association="Self.FK_Categories_Users">
-            <End Role="Users" EntitySet="Users" />
             <End Role="Categories" EntitySet="Categories" />
           </AssociationSet>
           <AssociationSet Name="FK_Input_Suppliers" Association="Self.FK_Input_Suppliers">
@@ -573,7 +555,6 @@
           <NavigationProperty Name="Inputs" Relationship="Self.FK_Input_Users" FromRole="Users" ToRole="Inputs" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Users" FromRole="Users" ToRole="Orders" />
           <NavigationProperty Name="UserLevels" Relationship="Self.FK_UserLevels_Users" FromRole="Users" ToRole="UserLevels" />
-          <NavigationProperty Name="Categories" Relationship="NewShopModel.FK_Categories_Users" FromRole="User" ToRole="Category" />
         </EntityType>
         <Association Name="FK_InputDetails_Inputs">
           <End Role="Inputs" Type="Self.Input" Multiplicity="1" />
@@ -748,74 +729,21 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UserLevels" EntitySet="UserLevels" />
           </AssociationSet>
+          <EntitySet Name="Customers" EntityType="NewShopModel.Customer" />
+          <AssociationSet Name="FK_Orders_Customers" Association="NewShopModel.FK_Orders_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
           <EntitySet Name="Categories" EntityType="NewShopModel.Category" />
           <AssociationSet Name="FK_Categories_ToTopics" Association="NewShopModel.FK_Categories_ToTopics">
             <End Role="Topic" EntitySet="Topics" />
-            <End Role="Category" EntitySet="Categories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Categories_Users" Association="NewShopModel.FK_Categories_Users">
-            <End Role="User" EntitySet="Users" />
             <End Role="Category" EntitySet="Categories" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_Categories" Association="NewShopModel.FK_Products_Categories">
             <End Role="Category" EntitySet="Categories" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <EntitySet Name="Customers" EntityType="NewShopModel.Customer" />
-          <AssociationSet Name="FK_Orders_Customers" Association="NewShopModel.FK_Orders_Customers">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ParentId" Type="Int32" Nullable="false" />
-          <Property Name="TopicId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Topic" Relationship="NewShopModel.FK_Categories_ToTopics" FromRole="Category" ToRole="Topic" />
-          <NavigationProperty Name="User" Relationship="NewShopModel.FK_Categories_Users" FromRole="Category" ToRole="User" />
-          <NavigationProperty Name="Products" Relationship="NewShopModel.FK_Products_Categories" FromRole="Category" ToRole="Product" />
-        </EntityType>
-        <Association Name="FK_Categories_ToTopics">
-          <End Type="NewShopModel.Topic" Role="Topic" Multiplicity="1" />
-          <End Type="NewShopModel.Category" Role="Category" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Topic">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Category">
-              <PropertyRef Name="TopicId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Categories_Users">
-          <End Type="NewShopModel.User" Role="User" Multiplicity="1" />
-          <End Type="NewShopModel.Category" Role="Category" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Category">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Products_Categories">
-          <End Type="NewShopModel.Category" Role="Category" Multiplicity="1" />
-          <End Type="NewShopModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
@@ -848,6 +776,40 @@
           <Member Name="Women" Value="2" />
           <Member Name="Gay" Value="3" />
         </EnumType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TopicId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Topic" Relationship="NewShopModel.FK_Categories_ToTopics" FromRole="Category" ToRole="Topic" />
+          <NavigationProperty Name="Products" Relationship="NewShopModel.FK_Products_Categories" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Categories_ToTopics">
+          <End Type="NewShopModel.Topic" Role="Topic" Multiplicity="1" />
+          <End Type="NewShopModel.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topic">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="TopicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Categories">
+          <End Type="NewShopModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="NewShopModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1005,17 +967,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="NewShopModel.Category">
-              <MappingFragment StoreEntitySet="Categories">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="TopicId" ColumnName="TopicId" />
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="NewShopModel.Customer">
               <MappingFragment StoreEntitySet="Customers">
@@ -1027,6 +978,15 @@
                 <ScalarProperty Name="Birthday" ColumnName="Birthday" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="NewShopModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="TopicId" ColumnName="TopicId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

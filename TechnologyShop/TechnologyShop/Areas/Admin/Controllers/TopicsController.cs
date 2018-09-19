@@ -10,6 +10,7 @@ using TechnologyShop.Models;
 
 namespace TechnologyShop.Areas.Admin.Controllers
 {
+    [Authorize]
     public class TopicsController : Controller
     {
         private NewShopEntities db = new NewShopEntities();
@@ -110,6 +111,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Topic topic = db.Topics.Find(id);
+            db.Categories.RemoveRange(topic.Categories); //remove 1 mang
             db.Topics.Remove(topic);
             db.SaveChanges();
             return Content("OK");

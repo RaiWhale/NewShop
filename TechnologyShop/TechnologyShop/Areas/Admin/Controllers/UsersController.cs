@@ -11,122 +11,109 @@ using TechnologyShop.Models;
 namespace TechnologyShop.Areas.Admin.Controllers
 {
     [Authorize]
-    public class CategoriesController : Controller
+    public class UsersController : Controller
     {
         private NewShopEntities db = new NewShopEntities();
 
-        // GET: Admin/Categories
+        // GET: Admin/Users
         public ActionResult Index()
         {
-            var categories = from u in db.Categories select(u);
-            ViewBag.categories = categories.ToList();
-            return View(db.Categories.ToList());
+            return View(db.Users.ToList());
         }
 
-        // GET: Admin/Categories/Details/5
+        // GET: Admin/Users/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TopicId = new SelectList(db.Topics, "Id", "TopicName");
-            return PartialView(category);
+            return View(user);
         }
 
-        // GET: Admin/Categories/Create
-        public ActionResult Create(int? id)
+        // GET: Admin/Users/Create
+        public ActionResult Create()
         {
-            var category = new Category()
-            {
-                TopicId = id != null ? id.Value : 0
-            };
-            
-            ViewBag.TopicId = new SelectList(db.Topics, "Id", "TopicName", id);
-            return PartialView(category);
+            return View();
         }
 
-        // POST: Admin/Categories/Create
+        // POST: Admin/Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CategoryName,TopicId")] Category category)
+        public ActionResult Create([Bind(Include = "Id,LoginName,Password,FullName,Phone,Email,Address,Avatar,UserLevelId,CreatedDate,IsActive,ResetPasswordToken")] User user)
         {
             if (ModelState.IsValid)
             {
-     
-
-                db.Categories.Add(category);
+                db.Users.Add(user);
                 db.SaveChanges();
-                return Content("OK");
+                return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(user);
         }
 
-        // GET: Admin/Categories/Edit/5
+        // GET: Admin/Users/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TopicId = new SelectList(db.Topics, "Id", "TopicName", category.TopicId);
-            return PartialView(category);
+            return View(user);
         }
 
-        // POST: Admin/Categories/Edit/5
+        // POST: Admin/Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CategoryName,TopicId")] Category category)
+        public ActionResult Edit([Bind(Include = "Id,LoginName,Password,FullName,Phone,Email,Address,Avatar,UserLevelId,CreatedDate,IsActive,ResetPasswordToken")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return Content("OK");
+                return RedirectToAction("Index");
             }
-            return PartialView(category);
+            return View(user);
         }
 
-        // GET: Admin/Categories/Delete/5
+        // GET: Admin/Users/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-     
-            return PartialView(category);
+            return View(user);
         }
 
-        // POST: Admin/Categories/Delete/5
+        // POST: Admin/Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
             db.SaveChanges();
-            return Content("OK");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

@@ -42,11 +42,11 @@
                                             @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Name" } })
                                             @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
                                         </div>
-                                        <div class="col-md-12">
-                                            @Html.EnumDropDownListFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control", @placeholder = "Gender" } })
+                                        <div class="col-md-6">
+                                            @Html.EnumDropDownListFor(model => model.Gender, "Please select gender", new { htmlAttributes = new { @class = "form-control"} })
                                             @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Phone here....." } })
                                             @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
                                         </div>
