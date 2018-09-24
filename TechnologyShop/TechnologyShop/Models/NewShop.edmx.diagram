@@ -16,22 +16,22 @@
         <EntityTypeShape EntityType="NewShopModel.Topic" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="NewShopModel.UserLevelPermission" Width="1.5" PointX="7.5" PointY="18" IsExpanded="true" />
         <EntityTypeShape EntityType="NewShopModel.UserLevel" Width="1.5" PointX="5.25" PointY="18" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewShopModel.User" Width="1.5" PointX="3" PointY="15" IsExpanded="true" />
         <AssociationConnector Association="NewShopModel.FK_InputDetails_Inputs" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_InputDetails_Products" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_Input_Suppliers" ManuallyRouted="false" />
-        <AssociationConnector Association="NewShopModel.FK_Input_Users" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_OrderDetails_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_OrderDetails_Products" ManuallyRouted="false" />
-        <AssociationConnector Association="NewShopModel.FK_Orders_Users" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_Pictures_Products" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_UserLevelPermissions_UserLevels" ManuallyRouted="false" />
-        <AssociationConnector Association="NewShopModel.FK_UserLevels_Users" ManuallyRouted="false" />
         <EntityTypeShape EntityType="NewShopModel.Customer" Width="1.5" PointX="3.375" PointY="1" />
         <AssociationConnector Association="NewShopModel.FK_Orders_Customers" />
         <EntityTypeShape EntityType="NewShopModel.Category" Width="1.5" PointX="3" PointY="6.25" />
         <AssociationConnector Association="NewShopModel.FK_Categories_ToTopics" />
         <AssociationConnector Association="NewShopModel.FK_Products_Categories" />
+        <EntityTypeShape EntityType="NewShopModel.User" Width="1.5" PointX="7.5" PointY="21" />
+        <AssociationConnector Association="NewShopModel.FK_Input_Users" />
+        <AssociationConnector Association="NewShopModel.FK_Orders_Users" />
+        <AssociationConnector Association="NewShopModel.FK_Users_UserLevels" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

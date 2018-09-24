@@ -36,8 +36,8 @@ namespace TechnologyShop.Models
         public virtual DbSet<Topic> Topics { get; set; }
         public virtual DbSet<UserLevelPermission> UserLevelPermissions { get; set; }
         public virtual DbSet<UserLevel> UserLevels { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

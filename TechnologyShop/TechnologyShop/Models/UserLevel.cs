@@ -18,6 +18,7 @@ namespace TechnologyShop.Models
         public UserLevel()
         {
             this.UserLevelPermissions = new HashSet<UserLevelPermission>();
+            this.Users = new HashSet<User>();
         }
     
         public int Id { get; set; }
@@ -26,6 +27,7 @@ namespace TechnologyShop.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserLevelPermission> UserLevelPermissions { get; set; }
-        public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

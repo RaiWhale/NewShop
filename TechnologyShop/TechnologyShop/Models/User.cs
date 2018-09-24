@@ -19,7 +19,6 @@ namespace TechnologyShop.Models
         {
             this.Inputs = new HashSet<Input>();
             this.Orders = new HashSet<Order>();
-            this.UserLevels = new HashSet<UserLevel>();
         }
     
         public int Id { get; set; }
@@ -39,7 +38,6 @@ namespace TechnologyShop.Models
         public virtual ICollection<Input> Inputs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserLevel> UserLevels { get; set; }
+        public virtual UserLevel UserLevel { get; set; }
     }
 }

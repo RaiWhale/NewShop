@@ -1,10 +1,82 @@
-﻿@model IEnumerable<TechnologyShop.Models.User>
+﻿@using TechnologyShop.Models;
 
 @{
-    ViewBag.Title = "Index";
+    var user_levels = ViewBag.user_levels as List<UserLevel>;
+    var users = ViewBag.users as List<User>;
 }
 
-<h2>Index</h2>
+<h4 class="header text-uppercase">USERS</h4>
+<hr />
+<div class="body row">
+
+    <div class="md-col-4 ml-4">
+        <p>
+            @Html.ActionLink("Add Level", "Create", "UserLevels", null, new { baction = "", @class = "btn btn-danger" })
+        </p>
+        <table class="table table-hover table-bordered">
+            <tr>
+                <th>Level Name</th>
+                <th>Action</th>
+            </tr>
+
+            @foreach (var item in user_levels)
+            {
+                <tr>
+                    <td>@item.UserLevelName</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "UserLevels", new { id = item.Id }, new { baction = "" }) |
+                        @Html.ActionLink("Delete", "Delete", "UserLevels", new { id = item.Id }, new { baction = "" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+    <div class="md-col-8 ml-4">
+        <p>
+            @Html.ActionLink("Add User", "Create", "Users", null, new { baction = "", @class = "btn btn-danger" })
+        </p>
+        <table class="table table-hover table-bordered">
+            <tr>
+                <th>Login Name</th>
+                <th>Full Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Level</th>
+                <th>Action</th>
+            </tr>
+
+            @foreach (var item in users)
+            {
+                <tr>
+                    <td>@item.LoginName</td>
+                    <td>@item.FullName</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Email</td>
+                    <td>@item.Address</td>
+                    <td>@item.UserLevel.UserLevelName</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Users", new { id = item.Id }, new { baction = "" }) |
+                        @Html.ActionLink("Delete", "Delete", "Users", new { id = item.Id }, new { baction = "" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+    <script src="~/Content/Admin/js/ajax.js"></script>
+
+</div>
+
+
+
+
+
+
+
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -47,47 +119,48 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.LoginName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Avatar)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserLevelId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ResetPasswordToken)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoginName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Avatar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserLevelId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResetPasswordToken)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>

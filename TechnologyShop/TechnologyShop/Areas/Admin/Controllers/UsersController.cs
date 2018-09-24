@@ -18,6 +18,10 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // GET: Admin/Users
         public ActionResult Index()
         {
+            var user_levels = db.UserLevels;
+            var users = db.Users.Include(u => u.UserLevel);
+            ViewBag.user_levels = user_levels.ToList();
+            ViewBag.users = users.ToList();
             return View(db.Users.ToList());
         }
 
@@ -51,9 +55,11 @@ namespace TechnologyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.CreatedDate = DateTime.Now;
+                user.ResetPasswordToken = "";
                 db.Users.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Content("OK");
             }
 
             return View(user);
@@ -71,7 +77,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return PartialView(user);
         }
 
         // POST: Admin/Users/Edit/5

@@ -213,3 +213,4 @@ D:\NewShop\TechnologyShop\TechnologyShop\bin\AutoMapper.pdb
 D:\NewShop\TechnologyShop\TechnologyShop\bin\AutoMapper.xml
 D:\NewShop\TechnologyShop\TechnologyShop\bin\System.ValueTuple.xml
 D:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csprojAssemblyReference.cache
+E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csprojAssemblyReference.cache
