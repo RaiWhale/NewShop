@@ -18,8 +18,10 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // GET: Admin/UserLevels
         public ActionResult Index()
         {
-            var userLevels = db.UserLevels.Include(u => u.User);
-            return View(userLevels.ToList());
+            int user_id = int.Parse(User.Identity.Name);
+            var user_levels = db.UserLevels;
+            var userLevels = db.UserLevels.Include(u => u.Users);
+            return PartialView(user_levels);
         }
 
         // GET: Admin/UserLevels/Details/5
@@ -34,14 +36,14 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(userLevel);
+            return PartialView(userLevel);
         }
 
         // GET: Admin/UserLevels/Create
         public ActionResult Create()
         {
             ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName");
-            return View();
+            return PartialView();
         }
 
         // POST: Admin/UserLevels/Create
@@ -49,17 +51,17 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserLevelName,UserId")] UserLevel userLevel)
+        public ActionResult Create(UserLevel userLevel)
         {
             if (ModelState.IsValid)
             {
                 db.UserLevels.Add(userLevel);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Content("OK");
             }
 
             ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", userLevel.UserId);
-            return View(userLevel);
+            return PartialView(userLevel);
         }
 
         // GET: Admin/UserLevels/Edit/5
@@ -75,7 +77,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", userLevel.UserId);
-            return View(userLevel);
+            return PartialView(userLevel);
         }
 
         // POST: Admin/UserLevels/Edit/5
@@ -83,16 +85,17 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserLevelName,UserId")] UserLevel userLevel)
+        public ActionResult Edit(UserLevel data)
         {
+            var userLevel = db.UserLevels.Find(data.Id);
             if (ModelState.IsValid)
             {
-                db.Entry(userLevel).State = EntityState.Modified;
+                userLevel.UserLevelName = data.UserLevelName;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Content("OK");
             }
             ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", userLevel.UserId);
-            return View(userLevel);
+            return PartialView(userLevel);
         }
 
         // GET: Admin/UserLevels/Delete/5
@@ -107,7 +110,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(userLevel);
+            return PartialView(userLevel);
         }
 
         // POST: Admin/UserLevels/Delete/5
@@ -118,7 +121,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             UserLevel userLevel = db.UserLevels.Find(id);
             db.UserLevels.Remove(userLevel);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Content("OK");
         }
 
         protected override void Dispose(bool disposing)

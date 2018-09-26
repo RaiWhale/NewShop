@@ -22,7 +22,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             var users = db.Users.Include(u => u.UserLevel);
             ViewBag.user_levels = user_levels.ToList();
             ViewBag.users = users.ToList();
-            return View(db.Users.ToList());
+            return PartialView();
         }
 
         // GET: Admin/Users/Details/5
@@ -43,6 +43,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // GET: Admin/Users/Create
         public ActionResult Create()
         {
+            ViewBag.UserLevelId = new SelectList(db.UserLevels, "Id", "UserLevelName");
             return View();
         }
 
@@ -51,7 +52,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,LoginName,Password,FullName,Phone,Email,Address,Avatar,UserLevelId,CreatedDate,IsActive,ResetPasswordToken")] User user)
+        public ActionResult Create(User user)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +63,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 return Content("OK");
             }
 
-            return View(user);
+            return PartialView(user);
         }
 
         // GET: Admin/Users/Edit/5
@@ -93,7 +94,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(user);
+            return PartialView(user);
         }
 
         // GET: Admin/Users/Delete/5
@@ -108,7 +109,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return PartialView(user);
         }
 
         // POST: Admin/Users/Delete/5
