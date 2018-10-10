@@ -1,0 +1,23 @@
+﻿@model TechnologyShop.Models.Product
+
+<div class="col-xs-12">
+    <div class="single-brand-product">
+        <div class="product-img">
+            <a href="~/Products/Details/@Model.Id">
+                <!--Sua-->
+                @{
+                    string src = "/Content/MainPage/img/product/1.jpg";
+                    var pic = Model.Pictures.FirstOrDefault();
+                    if (pic != null)
+                    {
+                        src = "/Content/products/" + pic.Url;
+                    }
+                }
+                <img src="@src" alt="" />
+            </a>
+        </div>
+        <h3 class="brand-title text-gray">
+            <a href="~/Products/Details/@Model.ProductName">@Model.ProductName</a><!--Sua-->
+        </h3>
+    </div>
+</div>
