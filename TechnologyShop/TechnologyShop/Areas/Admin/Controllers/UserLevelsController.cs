@@ -60,7 +60,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 return Content("OK");
             }
 
-            ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", userLevel.UserId);
+    
             return PartialView(userLevel);
         }
 
@@ -76,7 +76,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", userLevel.UserId);
+
             return PartialView(userLevel);
         }
 
@@ -94,7 +94,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 db.SaveChanges();
                 return Content("OK");
             }
-            ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", userLevel.UserId);
+      
             return PartialView(userLevel);
         }
 

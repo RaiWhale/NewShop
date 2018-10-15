@@ -6,7 +6,9 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CategoryName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ParentId" Type="int" Nullable="false" />
     <Property Name="TopicId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Customers">
     <Key>
@@ -95,7 +97,7 @@
     <Property Name="Unit" Type="nvarchar" MaxLength="20" />
     <Property Name="InputPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="OutputPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
-    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Description" Type="ntext" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Suppliers">
@@ -109,16 +111,6 @@
     <Property Name="Address" Type="nvarchar" MaxLength="250" />
     <Property Name="Description" Type="nvarchar" MaxLength="250" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="Topics">
     <Key>
@@ -142,7 +134,6 @@
     </Key>
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="UserLevelName" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="UserId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -170,6 +161,18 @@
       </Principal>
       <Dependent Role="Categories">
         <PropertyRef Name="TopicId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Categories_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Categories">
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -327,13 +330,16 @@
     <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Topics" EntityType="Self.Topics" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserLevelPermissions" EntityType="Self.UserLevelPermissions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserLevels" EntityType="Self.UserLevels" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Categories_ToTopics" Association="Self.FK_Categories_ToTopics">
       <End Role="Topics" EntitySet="Topics" />
+      <End Role="Categories" EntitySet="Categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Categories_Users" Association="Self.FK_Categories_Users">
+      <End Role="Users" EntitySet="Users" />
       <End Role="Categories" EntitySet="Categories" />
     </AssociationSet>
     <AssociationSet Name="FK_Input_Suppliers" Association="Self.FK_Input_Suppliers">

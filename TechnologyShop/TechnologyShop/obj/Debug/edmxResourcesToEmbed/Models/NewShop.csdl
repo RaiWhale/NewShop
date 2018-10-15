@@ -104,16 +104,6 @@
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Inputs" Relationship="Self.FK_Input_Suppliers" FromRole="Suppliers" ToRole="Inputs" />
   </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
   <EntityType Name="Topic">
     <Key>
       <PropertyRef Name="Id" />
@@ -130,17 +120,7 @@
     <Property Name="UserLevelId" Type="Int32" Nullable="false" />
     <Property Name="ControllerName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="PermissionCode" Type="Byte" Nullable="false" />
-    <NavigationProperty Name="UserLevel" Relationship="Self.FK_UserLevelPermissions_UserLevels" FromRole="UserLevelPermissions" ToRole="UserLevels" />
-  </EntityType>
-  <EntityType Name="UserLevel">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="UserLevelName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="UserId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="UserLevelPermissions" Relationship="Self.FK_UserLevelPermissions_UserLevels" FromRole="UserLevels" ToRole="UserLevelPermissions" />
-    <NavigationProperty Name="Users" Relationship="NewShopModel.FK_Users_UserLevels" FromRole="UserLevel" ToRole="User" />
+    <NavigationProperty Name="UserLevel" Relationship="NewShopModel.FK_UserLevelPermissions_UserLevels" FromRole="UserLevelPermission" ToRole="UserLevel" />
   </EntityType>
   <Association Name="FK_InputDetails_Inputs">
     <End Role="Inputs" Type="Self.Input" Multiplicity="1" />
@@ -214,18 +194,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserLevelPermissions_UserLevels">
-    <End Role="UserLevels" Type="Self.UserLevel" Multiplicity="1" />
-    <End Role="UserLevelPermissions" Type="Self.UserLevelPermission" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UserLevels">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="UserLevelPermissions">
-        <PropertyRef Name="UserLevelId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="NewShopEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="InputDetails" EntityType="Self.InputDetail" />
     <EntitySet Name="Inputs" EntityType="Self.Input" />
@@ -234,10 +202,8 @@
     <EntitySet Name="Pictures" EntityType="Self.Picture" />
     <EntitySet Name="Products" EntityType="Self.Product" />
     <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Topics" EntityType="Self.Topic" />
     <EntitySet Name="UserLevelPermissions" EntityType="Self.UserLevelPermission" />
-    <EntitySet Name="UserLevels" EntityType="Self.UserLevel" />
     <AssociationSet Name="FK_InputDetails_Inputs" Association="Self.FK_InputDetails_Inputs">
       <End Role="Inputs" EntitySet="Inputs" />
       <End Role="InputDetails" EntitySet="InputDetails" />
@@ -262,10 +228,6 @@
       <End Role="Products" EntitySet="Products" />
       <End Role="Pictures" EntitySet="Pictures" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserLevelPermissions_UserLevels" Association="Self.FK_UserLevelPermissions_UserLevels">
-      <End Role="UserLevels" EntitySet="UserLevels" />
-      <End Role="UserLevelPermissions" EntitySet="UserLevelPermissions" />
-    </AssociationSet>
     <EntitySet Name="Customers" EntityType="NewShopModel.Customer" />
     <AssociationSet Name="FK_Orders_Customers" Association="NewShopModel.FK_Orders_Customers">
       <End Role="Customer" EntitySet="Customers" />
@@ -288,6 +250,15 @@
     <AssociationSet Name="FK_Orders_Users" Association="NewShopModel.FK_Orders_Users">
       <End Role="User" EntitySet="Users" />
       <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <EntitySet Name="UserLevels" EntityType="NewShopModel.UserLevel" />
+    <AssociationSet Name="FK_Categories_Users" Association="NewShopModel.FK_Categories_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Category" EntitySet="Categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserLevelPermissions_UserLevels" Association="NewShopModel.FK_UserLevelPermissions_UserLevels">
+      <End Role="UserLevel" EntitySet="UserLevels" />
+      <End Role="UserLevelPermission" EntitySet="UserLevelPermissions" />
     </AssociationSet>
     <AssociationSet Name="FK_Users_UserLevels" Association="NewShopModel.FK_Users_UserLevels">
       <End Role="UserLevel" EntitySet="UserLevels" />
@@ -335,6 +306,9 @@
     <Property Name="TopicId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Topic" Relationship="NewShopModel.FK_Categories_ToTopics" FromRole="Category" ToRole="Topic" />
     <NavigationProperty Name="Products" Relationship="NewShopModel.FK_Products_Categories" FromRole="Category" ToRole="Product" />
+    <Property Name="ParentId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="NewShopModel.FK_Categories_Users" FromRole="Category" ToRole="User" />
   </EntityType>
   <Association Name="FK_Categories_ToTopics">
     <End Type="NewShopModel.Topic" Role="Topic" Multiplicity="1" />
@@ -378,6 +352,7 @@
     <Property Name="ResetPasswordToken" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Inputs" Relationship="NewShopModel.FK_Input_Users" FromRole="User" ToRole="Input" />
     <NavigationProperty Name="Orders" Relationship="NewShopModel.FK_Orders_Users" FromRole="User" ToRole="Order" />
+    <NavigationProperty Name="Categories" Relationship="NewShopModel.FK_Categories_Users" FromRole="User" ToRole="Category" />
     <NavigationProperty Name="UserLevel" Relationship="NewShopModel.FK_Users_UserLevels" FromRole="User" ToRole="UserLevel" />
   </EntityType>
   <Association Name="FK_Input_Users">
@@ -401,6 +376,39 @@
       </Principal>
       <Dependent Role="Order">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="UserLevel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="UserLevelName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserLevelPermissions" Relationship="NewShopModel.FK_UserLevelPermissions_UserLevels" FromRole="UserLevel" ToRole="UserLevelPermission" />
+    <NavigationProperty Name="Users" Relationship="NewShopModel.FK_Users_UserLevels" FromRole="UserLevel" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Categories_Users">
+    <End Type="NewShopModel.User" Role="User" Multiplicity="1" />
+    <End Type="NewShopModel.Category" Role="Category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Category">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserLevelPermissions_UserLevels">
+    <End Type="NewShopModel.UserLevel" Role="UserLevel" Multiplicity="1" />
+    <End Type="NewShopModel.UserLevelPermission" Role="UserLevelPermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLevel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserLevelPermission">
+        <PropertyRef Name="UserLevelId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

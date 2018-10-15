@@ -44,7 +44,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.UserLevelId = new SelectList(db.UserLevels, "Id", "UserLevelName");
-            return View();
+            return PartialView();
         }
 
         // POST: Admin/Users/Create

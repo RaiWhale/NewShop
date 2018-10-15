@@ -262,9 +262,6 @@
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>NewShop.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>NewShop.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Topic.cs">
       <DependentUpon>NewShop.tt</DependentUpon>
     </Compile>
