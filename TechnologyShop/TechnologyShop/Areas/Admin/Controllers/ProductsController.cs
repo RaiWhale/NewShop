@@ -21,7 +21,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         public ActionResult Index()
         {
             int user_id = int.Parse(User.Identity.Name);
-     
+
             //var products = db.Products.Include(p => p.Category);
             ViewBag.topics = db.Topics.ToList();
             return View();
@@ -38,8 +38,8 @@ namespace TechnologyShop.Areas.Admin.Controllers
             }
             return PartialView(products.ToList());
         }
-            // GET: Admin/Products/Details/5
-            public ActionResult Details(int? id)
+        // GET: Admin/Products/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -65,7 +65,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Product product)
+        public ActionResult Create([Bind(Include = "Id,BarCode,CategoryId,ProductName,Unit,InputPrice,OutputPrice,Discount,Description,IsActive")] Product product)
         {
             //dùng multiple thì khỏi khai bảo tham số
             if (ModelState.IsValid)
@@ -101,7 +101,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
 
                     return RedirectToAction("Index");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     ViewBag.Message = ex.Message;
                 }
@@ -133,12 +133,36 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,BarCode,CategoryId,ProductName,Unit,InputPrice,OutputPrice,Description,IsActive")] Product product)
+        public ActionResult Edit([Bind(Include = "Id,BarCode,CategoryId,ProductName,Unit,InputPrice,OutputPrice,Discount,Description,IsActive")] Product product)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
+
+                //Pictures
+                //try catch chỗ này để lỡ hình bị lỗi thì không bung
+                for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
+                {
+                    try
+                    {
+                        HttpPostedFileBase file = Request.Files[i];
+                        string filename = DateTime.Now.Ticks + "_" + file.FileName.Split('/').Last();
+                        Picture picture = new Picture()
+                        {
+                            Url = filename,
+                            ProductId = product.Id
+                        };
+                        string path = Server.MapPath("~/Uploads/Picture") + "\\" + product.Id;
+                        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                        file.SaveAs(path + "\\" + filename);//lệnh này nếu ko lưu đc sẽ bung catch, nên ko add -> ok
+                        db.Pictures.Add(picture);
+                        //nếu save chỗ đây thì dư
+                    }
+                    catch { }
+                }
+                db.SaveChanges();//savechange 1 lần cho  tất cả các hình->đc hok? ok -> nếu ở trên ko add dc thì dưới ko save.
+                                 //xong 
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", product.CategoryId);

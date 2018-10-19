@@ -18,50 +18,61 @@
                         <!-- imgs-zoom-area start -->
                         <div class="col-md-5 col-sm-5 col-xs-12">
                             <div class="imgs-zoom-area">
-                                <img id="zoom_03" src="~/Content/home/img/product/6.jpg" data-zoom-image="~/Content/home/img/product/6.jpg" alt="">
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div id="gallery_01" class="carousel-btn slick-arrow-3 mt-30">
-                                            <div class="p-c">
-                                                <a href="#" data-image="~/Content/home/img/product/2.jpg" data-zoom-image="~/Content/home/img/product/2.jpg">
-                                                    <img class="zoom_03" src="~/Content/home/img/product/2.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="p-c">
-                                                <a href="#" data-image="~/Content/home/img/product/3.jpg" data-zoom-image="~/Content/home/img/product/3.jpg">
-                                                    <img class="zoom_03" src="~/Content/home/img/product/3.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="p-c">
-                                                <a href="#" data-image="~/Content/home/img/product/4.jpg" data-zoom-image="~/Content/home/img/product/4.jpg">
-                                                    <img class="zoom_03" src="~/Content/home/img/product/4.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="p-c">
-                                                <a href="#" data-image="~/Content/home/img/product/5.jpg" data-zoom-image="~/Content/home/img/product/5.jpg">
-                                                    <img class="zoom_03" src="~/Content/home/img/product/5.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="p-c">
-                                                <a href="#" data-image="~/Content/home/img/product/6.jpg" data-zoom-image="~/Content/home/img/product/6.jpg">
-                                                    <img class="zoom_03" src="~/Content/home/img/product/6.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="p-c">
-                                                <a href="#" data-image="~/Content/home/img/product/7.jpg" data-zoom-image="~/Content/home/img/product/7.jpg">
-                                                    <img class="zoom_03" src="~/Content/home/img/product/7.jpg" alt="">
-                                                </a>
+                                <a href="~/Products/Details/@Model.Id">
+                                    <!--Sua-->
+                                    @{
+                                        var db = new NewShopEntities();
+                                        string src = "/Content/MainPage/img/product/1.jpg";
+                                        var pic = db.Pictures.FirstOrDefault();
+                                        if (pic != null)
+                                        {
+                                            src = "/Content/products/" + pic.Url;
+                                        }
+                                    }
+                                    <img src="@src" alt="" />
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div id="gallery_01" class="carousel-btn slick-arrow-3 mt-30">
+                                                <div class="p-c">
+                                                    <a href="#" data-image="~/Content/home/img/product/2.jpg" data-zoom-image="~/Content/home/img/product/2.jpg">
+                                                        <img class="zoom_03" src="~/Content/home/img/product/2.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="p-c">
+                                                    <a href="#" data-image="~/Content/home/img/product/3.jpg" data-zoom-image="~/Content/home/img/product/3.jpg">
+                                                        <img class="zoom_03" src="~/Content/home/img/product/3.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="p-c">
+                                                    <a href="#" data-image="~/Content/home/img/product/4.jpg" data-zoom-image="~/Content/home/img/product/4.jpg">
+                                                        <img class="zoom_03" src="~/Content/home/img/product/4.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="p-c">
+                                                    <a href="#" data-image="~/Content/home/img/product/5.jpg" data-zoom-image="~/Content/home/img/product/5.jpg">
+                                                        <img class="zoom_03" src="~/Content/home/img/product/5.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="p-c">
+                                                    <a href="#" data-image="~/Content/home/img/product/6.jpg" data-zoom-image="~/Content/home/img/product/6.jpg">
+                                                        <img class="zoom_03" src="~/Content/home/img/product/6.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="p-c">
+                                                    <a href="#" data-image="~/Content/home/img/product/7.jpg" data-zoom-image="~/Content/home/img/product/7.jpg">
+                                                        <img class="zoom_03" src="~/Content/home/img/product/7.jpg" alt="">
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                         <!-- imgs-zoom-area end -->
                         <!-- single-product-info start -->
                         <div class="col-md-7 col-sm-7 col-xs-12">
                             <div class="single-product-info">
-                                <h3 class="text-black-1">Dummy Product Name </h3>
+                                <h3 class="text-black-1"><a href="~/Products/Details/@Model.ProductName">@Model.ProductName</a><!--Sua--></h3>
                                 <h6 class="brand-name-2">brand name</h6>
                                 <!--  hr -->
                                 <hr>

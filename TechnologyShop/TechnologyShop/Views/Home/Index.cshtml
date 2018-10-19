@@ -4,7 +4,7 @@
     var products_hot = ViewBag.products_hot as List<Product>;
     var topic_items = ViewBag.topic_items as List<Topic>;
     var products_topic = ViewBag.products_topic as List<Product>;
-
+    var products_old = ViewBag.products_old as List<Product>;
 }
 
 <!-- FEATURED PRODUCT SECTION START -->
@@ -38,7 +38,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-title text-center mb-50">
-                    <h2 class="uppercase">By Brands</h2>
+                    <h2 class="uppercase">Discount</h2>
     
                 </div>
             </div>
@@ -46,10 +46,10 @@
         <div class="by-brand-product">
             <div class="row active-by-brand slick-arrow-2">
                 <!-- single-brand-product start -->
-                @*@foreach (var item in products_topic)
+                @foreach (var item in products_old)
                 {
                     @Html.Partial("_ProductsItem3", item)
-                }*@
+                }
                 <!-- single-brand-product end -->
 
             </div>
