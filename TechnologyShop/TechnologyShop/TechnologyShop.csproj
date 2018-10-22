@@ -176,6 +176,7 @@
     <Compile Include="Areas\Admin\Controllers\SuppliersController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserLevelsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Models\ViewModel\ForgetPasswordVM.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
@@ -679,7 +680,9 @@
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\shopping.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -706,6 +709,7 @@
     <Content Include="Views\Customer\ForgotPassword.cshtml" />
     <Content Include="Views\Shared\_ProductsItem3.cshtml" />
     <Content Include="Views\Shared\_ProductsItem4.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -713,6 +717,7 @@
     <Folder Include="Content\MainPage\css\github.com\necolas\" />
     <Folder Include="Content\MainPage\css\plugins\images\" />
     <Folder Include="Content\MainPage\images\pattern\" />
+    <Folder Include="Uploads\Pictures\" />
     <Folder Include="Views\LoginRedirect\" />
   </ItemGroup>
   <ItemGroup>

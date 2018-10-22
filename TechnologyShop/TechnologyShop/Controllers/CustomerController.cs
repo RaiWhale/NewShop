@@ -58,12 +58,13 @@ namespace TechnologyShop.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterVM data)
+        public ActionResult Register(RegisterVM data, HttpPostedFileBase pic)
         {
             //Code đăng ký
             var acc = AutoMapper.Mapper.Map<Customer>(data);
             try
             {
+
                 db.Customers.Add(acc);
                 db.SaveChanges();
                 return View("RegisterSuccess");

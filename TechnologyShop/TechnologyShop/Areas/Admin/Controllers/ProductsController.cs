@@ -27,6 +27,14 @@ namespace TechnologyShop.Areas.Admin.Controllers
             return View();
         }
 
+        static Random rnd = new Random();
+        public string RandomString2(int length)
+        {
+            const string chars = "0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[rnd.Next(s.Length)]).ToArray());
+        }
+
         public ActionResult Category(int? cat)
         {
             int user_id = int.Parse(User.Identity.Name);
@@ -54,7 +62,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Products/Create
-        public ActionResult Create()
+        public ActionResult Create( )
         {
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName");
             return PartialView();
@@ -72,6 +80,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 try
                 {
+                    product.BarCode = RandomString2(6);
                     db.Products.Add(product);
                     db.SaveChanges();
 
@@ -88,7 +97,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                                 Url = filename,
                                 ProductId = product.Id
                             };
-                            string path = Server.MapPath("~/Uploads/Picture") + "\\" + product.Id;
+                            string path = Server.MapPath("~/Uploads/Pictures") + "\\" + product.Id;
                             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
                             file.SaveAs(path + "\\" + filename);//lệnh này nếu ko lưu đc sẽ bung catch, nên ko add -> ok
                             db.Pictures.Add(picture);
@@ -99,7 +108,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                     db.SaveChanges();//savechange 1 lần cho  tất cả các hình->đc hok? ok -> nếu ở trên ko add dc thì dưới ko save.
                     //xong 
 
-                    return RedirectToAction("Index");
+                    return Content("OK");
                 }
                 catch (Exception ex)
                 {
@@ -163,7 +172,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 }
                 db.SaveChanges();//savechange 1 lần cho  tất cả các hình->đc hok? ok -> nếu ở trên ko add dc thì dưới ko save.
                                  //xong 
-                return RedirectToAction("Index");
+                return Content("OK");
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", product.CategoryId);
             return PartialView(product);
@@ -192,7 +201,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             Product product = db.Products.Find(id);
             db.Products.Remove(product);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Content("OK");
         }
 
         protected override void Dispose(bool disposing)
