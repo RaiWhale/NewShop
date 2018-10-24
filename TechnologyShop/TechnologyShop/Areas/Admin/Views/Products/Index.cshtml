@@ -24,9 +24,9 @@
                 s += "<tr class='rcat' catid='" + cat.Id + "'>"
                 + "<td>&nbsp; &nbsp; &nbsp; + " + cat.CategoryName + "</td>"
                 + "<td>"
-                
+
                 + Html.ActionLink("Edit", "Edit", "Categories", new { id = cat.Id }, new { baction = "" }) + "|"
-                + Html.ActionLink("Delete", "Delete", "Categories", new { id = cat.Id }, new { baction = "" })
+                + Html.ActionLink("Delete", "Delete", "Categories", new { id = cat.Id }, new { baction = "" }) 
                 + "</td>"
             + "</tr>" + Environment.NewLine;
             }

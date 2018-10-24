@@ -114,6 +114,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             db.Customers.Remove(customer);
             db.SaveChanges();
             return Content("OK");
+
         }
 
         protected override void Dispose(bool disposing)

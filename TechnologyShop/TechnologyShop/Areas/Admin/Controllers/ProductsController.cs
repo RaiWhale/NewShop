@@ -86,26 +86,26 @@ namespace TechnologyShop.Areas.Admin.Controllers
 
                     //Pictures
                     //try catch chỗ này để lỡ hình bị lỗi thì không bung
-                    for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
-                    {
-                        try
-                        {
-                            HttpPostedFileBase file = Request.Files[i];
-                            string filename = DateTime.Now.Ticks + "_" + file.FileName.Split('/').Last();
-                            Picture picture = new Picture()
-                            {
-                                Url = filename,
-                                ProductId = product.Id
-                            };
-                            string path = Server.MapPath("~/Uploads/Pictures") + "\\" + product.Id;
-                            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-                            file.SaveAs(path + "\\" + filename);//lệnh này nếu ko lưu đc sẽ bung catch, nên ko add -> ok
-                            db.Pictures.Add(picture);
+                    //for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
+                    //{
+                    //    try
+                    //    {
+                    //        HttpPostedFileBase file = Request.Files[i];
+                    //        string filename = DateTime.Now.Ticks + "_" + file.FileName.Split('/').Last();
+                    //        Picture picture = new Picture()
+                    //        {
+                    //            Url = filename,
+                    //            ProductId = product.Id
+                    //        };
+                    //        string path = Server.MapPath("~/Uploads/Pictures") + "\\" + product.Id;
+                    //        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                    //        file.SaveAs(path + "\\" + filename);//lệnh này nếu ko lưu đc sẽ bung catch, nên ko add -> ok
+                            //db.Pictures.Add(picture);
                             //nếu save chỗ đây thì dư
-                        }
-                        catch { }
-                    }
-                    db.SaveChanges();//savechange 1 lần cho  tất cả các hình->đc hok? ok -> nếu ở trên ko add dc thì dưới ko save.
+                    //    }
+                    //    catch { }
+                    //}
+                    //db.SaveChanges();//savechange 1 lần cho  tất cả các hình->đc hok? ok -> nếu ở trên ko add dc thì dưới ko save.
                     //xong 
 
                     return Content("OK");
@@ -148,30 +148,6 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
-
-                //Pictures
-                //try catch chỗ này để lỡ hình bị lỗi thì không bung
-                for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
-                {
-                    try
-                    {
-                        HttpPostedFileBase file = Request.Files[i];
-                        string filename = DateTime.Now.Ticks + "_" + file.FileName.Split('/').Last();
-                        Picture picture = new Picture()
-                        {
-                            Url = filename,
-                            ProductId = product.Id
-                        };
-                        string path = Server.MapPath("~/Uploads/Picture") + "\\" + product.Id;
-                        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-                        file.SaveAs(path + "\\" + filename);//lệnh này nếu ko lưu đc sẽ bung catch, nên ko add -> ok
-                        db.Pictures.Add(picture);
-                        //nếu save chỗ đây thì dư
-                    }
-                    catch { }
-                }
-                db.SaveChanges();//savechange 1 lần cho  tất cả các hình->đc hok? ok -> nếu ở trên ko add dc thì dưới ko save.
-                                 //xong 
                 return Content("OK");
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", product.CategoryId);
