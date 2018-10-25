@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using TechnologyShop.Areas.Admin.Models.ViewModel;
 using TechnologyShop.Models;
 
 namespace TechnologyShop.Areas.Admin.Controllers
@@ -15,7 +16,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         private NewShopEntities db = new NewShopEntities();
-        System.Net.Http.HttpClient http = new System.Net.Http.HttpClient();
+
 
         // GET: Admin/Products
         public ActionResult Index()
@@ -60,6 +61,69 @@ namespace TechnologyShop.Areas.Admin.Controllers
             }
             return PartialView(product);
         }
+        // GET: Admin/Products/UploadFile/5
+        public ActionResult UploadFile(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Product product = db.Products.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView();
+        }
+        // POST: Admin/Products/FileUpload
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UploadFile(UploadFileVM data, HttpPostedFileBase pic, int? id)
+        {
+            var product_pic = AutoMapper.Mapper.Map<Picture>(data);
+            Product product_id = db.Products.Find(id);
+
+
+            //Pictures
+            //try catch chỗ này để lỡ hình bị lỗi thì không bung
+            //for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
+            //{
+
+
+
+            //        pic = Request.Files[i];
+            //        string filename = DateTime.Now.Ticks + "_" + pic.FileName.Split('/').Last();
+            //        data.Url = filename;
+            //        data.ProductId = product_id.Id;
+
+            //        string path = Server.MapPath("~/Uploads/Pictures") + "\\" + data.ProductId;
+            //        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            //        pic.SaveAs(path + "\\" + filename);//lệnh này nếu ko lưu đc sẽ bung catch, nên ko add -> ok
+
+            //        nếu save chỗ đây thì dư
+
+            string filename = DateTime.Now.Ticks + "_" + pic.FileName.Split('/').Last();
+
+            product_pic.Url = filename;
+
+
+
+
+            string path = Server.MapPath("~/Uploads/Pictures") + "\\" + data.ProductId;
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            pic.SaveAs(path + "\\" + filename);
+            db.Pictures.Add(product_pic);
+                
+              //savechange 1 lần cho  tất cả các hình->đc hok? ok -> nếu ở trên ko add dc thì dưới ko save.
+              
+                //}
+
+            db.SaveChanges();
+            return Content("OK");
+            //xong 
+        }
 
         // GET: Admin/Products/Create
         public ActionResult Create( )
@@ -72,7 +136,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+
         public ActionResult Create([Bind(Include = "Id,BarCode,CategoryId,ProductName,Unit,InputPrice,OutputPrice,Discount,Description,IsActive")] Product product)
         {
             //dùng multiple thì khỏi khai bảo tham số
@@ -83,31 +147,6 @@ namespace TechnologyShop.Areas.Admin.Controllers
                     product.BarCode = RandomString2(6);
                     db.Products.Add(product);
                     db.SaveChanges();
-
-                    //Pictures
-                    //try catch chỗ này để lỡ hình bị lỗi thì không bung
-                    //for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
-                    //{
-                    //    try
-                    //    {
-                    //        HttpPostedFileBase file = Request.Files[i];
-                    //        string filename = DateTime.Now.Ticks + "_" + file.FileName.Split('/').Last();
-                    //        Picture picture = new Picture()
-                    //        {
-                    //            Url = filename,
-                    //            ProductId = product.Id
-                    //        };
-                    //        string path = Server.MapPath("~/Uploads/Pictures") + "\\" + product.Id;
-                    //        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-                    //        file.SaveAs(path + "\\" + filename);//lệnh này nếu ko lưu đc sẽ bung catch, nên ko add -> ok
-                            //db.Pictures.Add(picture);
-                            //nếu save chỗ đây thì dư
-                    //    }
-                    //    catch { }
-                    //}
-                    //db.SaveChanges();//savechange 1 lần cho  tất cả các hình->đc hok? ok -> nếu ở trên ko add dc thì dưới ko save.
-                    //xong 
-
                     return Content("OK");
                 }
                 catch (Exception ex)

@@ -8,6 +8,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using TechnologyShop.Models.ViewModel;
 using TechnologyShop.Models;
+using TechnologyShop.Areas.Admin.Models;
+using TechnologyShop.Areas.Admin.Models.ViewModel;
 
 namespace TechnologyShop
 {
@@ -26,6 +28,8 @@ namespace TechnologyShop
                 cfg.CreateMap<RegisterVM, Customer>();
                 cfg.CreateMap<UpdateProfileVM, Customer>();
                 cfg.CreateMap<ForgetPasswordVM, Customer>();
+                cfg.CreateMap<UploadFileVM, Picture>();
+                cfg.CreateMap<Picture,UploadFileVM>();
             });
         }
     }

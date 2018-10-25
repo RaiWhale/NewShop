@@ -173,11 +173,10 @@
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomersController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\Admin\Controllers\FileUploadController.cs" />
     <Compile Include="Areas\Admin\Controllers\SuppliersController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserLevelsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
-    <Compile Include="Areas\Admin\Models\FilesViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModel\UploadFileVM.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\ImageHandler.cs" />
@@ -686,8 +685,7 @@
     <Content Include="Areas\Admin\Views\Suppliers\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Suppliers\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Error.cshtml" />
-    <Content Include="Areas\Admin\Views\FileUpload\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\FileUpload\_File.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\UploadFile.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -726,7 +724,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\ViewModel\" />
     <Folder Include="Content\MainPage\css\github.com\necolas\" />
     <Folder Include="Content\MainPage\css\plugins\images\" />
     <Folder Include="Content\MainPage\images\pattern\" />

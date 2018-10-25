@@ -1,0 +1,23 @@
+﻿@model TechnologyShop.Areas.Admin.Models.ViewModel.UploadFileVM
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "register-validation", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Add New Pictures</h4>
+        <hr />
+        <div class="form-group">
+            @Html.Label("Pictures", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" class="form-control" id="pic" placeholder="Pictures" name="pic" multiple />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="button" value="Cancel" class="btn btn-danger ml-2" data-dismiss="modal" />
+            </div>
+        </div>
+    </div>
+}
