@@ -29,6 +29,7 @@ namespace TechnologyShop.Models
         public string Unit { get; set; }
         public decimal InputPrice { get; set; }
         public decimal OutputPrice { get; set; }
+        public string Picture { get; set; }
         public decimal Discount { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }

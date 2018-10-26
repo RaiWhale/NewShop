@@ -39,7 +39,7 @@
                     <div class="tab-content">
                         <!-- shopping-cart start -->
                         <div class="tab-pane active" id="shopping-cart">
-                            <div class="shopping-cart-content" >
+                            <div class="shopping-cart-content">
                                 <form action="#">
                                     <div class="table-content table-responsive mb-50" id="cart">
                                         <table class="text-center table">
@@ -53,8 +53,8 @@
                                                     <td class="product-subtotal">Total</td>
                                                     <td class="product-remove">remove</td>
                                                 </tr>
-                                             </thead>
-                                            <tbody id="carts">
+                                            </thead>
+                                            <tbody id="cart_items">
                                                 <!-- tr -->
                                                 <!-- tr -->
 
@@ -455,7 +455,7 @@
     <!-- SHOP SECTION END -->
 
 </section>
-
+<script src="~/Scripts/shopping.js"></script>
 <script>
     $(document).ready(function () {
         loadCartItems();

@@ -181,6 +181,10 @@
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\ImageHandler.cs" />
     <Compile Include="Helpers\StoreHelpers.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\Table.cs">
+      <DependentUpon>NewShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ViewModel\ForgetPasswordVM.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
@@ -594,7 +598,6 @@
     <Content Include="Models\NewShop.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>NewShop.edmx</DependentUpon>
-      <LastGenOutput>NewShop.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

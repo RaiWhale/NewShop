@@ -102,6 +102,7 @@
           <Property Name="Unit" Type="nvarchar" MaxLength="20" />
           <Property Name="InputPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="OutputPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Picture" Type="varchar" MaxLength="150" />
           <Property Name="Discount" Type="decimal" Precision="5" Scale="2" Nullable="false" />
           <Property Name="Description" Type="ntext" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -117,6 +118,12 @@
           <Property Name="Address" Type="nvarchar" MaxLength="250" />
           <Property Name="Description" Type="nvarchar" MaxLength="250" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Topics">
           <Key>
@@ -336,6 +343,7 @@
           <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Topics" EntityType="Self.Topics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLevelPermissions" EntityType="Self.UserLevelPermissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLevels" EntityType="Self.UserLevels" Schema="dbo" store:Type="Tables" />
@@ -595,6 +603,7 @@
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
           <EntitySet Name="Products" EntityType="NewShopModel.Product" />
+          <EntitySet Name="Tables" EntityType="NewShopModel.Table" />
           <AssociationSet Name="FK_Products_Categories" Association="NewShopModel.FK_Products_Categories">
             <End Role="Category" EntitySet="Categories" />
             <End Role="Product" EntitySet="Products" />
@@ -770,6 +779,7 @@
           <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="InputPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="OutputPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Picture" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Discount" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
@@ -777,6 +787,12 @@
           <NavigationProperty Name="InputDetails" Relationship="NewShopModel.FK_InputDetails_Products" FromRole="Product" ToRole="InputDetail" />
           <NavigationProperty Name="OrderDetails" Relationship="NewShopModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
           <NavigationProperty Name="Pictures" Relationship="NewShopModel.FK_Pictures_Products" FromRole="Product" ToRole="Picture" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Products_Categories">
           <End Type="NewShopModel.Category" Role="Category" Multiplicity="1" />
@@ -988,12 +1004,20 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="OutputPrice" ColumnName="OutputPrice" />
                 <ScalarProperty Name="InputPrice" ColumnName="InputPrice" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tables">
+            <EntityTypeMapping TypeName="NewShopModel.Table">
+              <MappingFragment StoreEntitySet="Table">
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

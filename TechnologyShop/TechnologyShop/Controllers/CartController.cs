@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TechnologyShop.Models;
 
 namespace TechnologyShop.Controllers
 {
@@ -13,5 +14,7 @@ namespace TechnologyShop.Controllers
         {
             return View();
         }
+
+   
     }
 }

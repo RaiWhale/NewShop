@@ -97,6 +97,7 @@
     <Property Name="Unit" Type="nvarchar" MaxLength="20" />
     <Property Name="InputPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="OutputPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Picture" Type="varchar" MaxLength="150" />
     <Property Name="Discount" Type="decimal" Precision="5" Scale="2" Nullable="false" />
     <Property Name="Description" Type="ntext" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -112,6 +113,12 @@
     <Property Name="Address" Type="nvarchar" MaxLength="250" />
     <Property Name="Description" Type="nvarchar" MaxLength="250" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Table">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Topics">
     <Key>
@@ -331,6 +338,7 @@
     <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Topics" EntityType="Self.Topics" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserLevelPermissions" EntityType="Self.UserLevelPermissions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserLevels" EntityType="Self.UserLevels" Schema="dbo" store:Type="Tables" />

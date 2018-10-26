@@ -157,12 +157,20 @@
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Picture" ColumnName="Picture" />
           <ScalarProperty Name="OutputPrice" ColumnName="OutputPrice" />
           <ScalarProperty Name="InputPrice" ColumnName="InputPrice" />
           <ScalarProperty Name="Unit" ColumnName="Unit" />
           <ScalarProperty Name="ProductName" ColumnName="ProductName" />
           <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
           <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tables">
+      <EntityTypeMapping TypeName="NewShopModel.Table">
+        <MappingFragment StoreEntitySet="Table">
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

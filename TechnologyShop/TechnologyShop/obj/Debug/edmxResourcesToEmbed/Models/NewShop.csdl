@@ -194,6 +194,7 @@
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
     <EntitySet Name="Products" EntityType="NewShopModel.Product" />
+    <EntitySet Name="Tables" EntityType="NewShopModel.Table" />
     <AssociationSet Name="FK_Products_Categories" Association="NewShopModel.FK_Products_Categories">
       <End Role="Category" EntitySet="Categories" />
       <End Role="Product" EntitySet="Products" />
@@ -369,6 +370,7 @@
     <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="InputPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="OutputPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Picture" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
     <Property Name="Discount" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
@@ -376,6 +378,12 @@
     <NavigationProperty Name="InputDetails" Relationship="NewShopModel.FK_InputDetails_Products" FromRole="Product" ToRole="InputDetail" />
     <NavigationProperty Name="OrderDetails" Relationship="NewShopModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
     <NavigationProperty Name="Pictures" Relationship="NewShopModel.FK_Pictures_Products" FromRole="Product" ToRole="Picture" />
+  </EntityType>
+  <EntityType Name="Table">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
   </EntityType>
   <Association Name="FK_Products_Categories">
     <End Type="NewShopModel.Category" Role="Category" Multiplicity="1" />
