@@ -143,24 +143,43 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
 
-        public ActionResult Create(Product product, HttpPostedFileBase pic)
+        public ActionResult Create(Product product)
         {
             //dùng multiple thì khỏi khai bảo tham số
             if (ModelState.IsValid)
             {
-       
-                    product.BarCode = RandomString2(6);
-                    string filename = DateTime.Now.Ticks + "_" + pic.FileName;
-                    product.Picture = filename;
 
-                    db.Products.Add(product);
-                    db.SaveChanges();
+                product.BarCode = RandomString2(6);
+                product.IsActive = true;
+                db.Products.Add(product);
+                db.SaveChanges();
 
-                    string path = Server.MapPath("~/Uploads/Pictures") + "\\" + product.Id;
-                    if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-                    pic.SaveAs(path + "\\" + filename);
+                for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
+                {
+                    try
+                    {
+                        HttpPostedFileBase file = Request.Files[i];
 
-                    return Content("OK");
+                        string filename = DateTime.Now.Ticks + "_" + file.FileName.Split('/').Last();
+
+                        string path = Server.MapPath("~/Uploads/Pictures") + "\\" + product.Id;
+                        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+                        file.SaveAs(path + "\\" + filename);
+
+                        Picture p = new Picture()
+                        {
+                            ProductId = product.Id,
+                            Url = filename
+                        };
+
+                        db.Pictures.Add(p);
+                    }
+                    catch { }
+                }
+                db.SaveChanges();
+
+                return Content("OK");
 
 
             }
@@ -235,6 +254,34 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [HttpPost]
+        public ActionResult RemovePicture(int picid)
+        {
+            //...
+            var pic = db.Pictures.Find(picid);
+            if(pic != null){
+                db.Pictures.Remove(pic);
+                db.SaveChanges();
+                return Content("OK");
+            }
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        public ActionResult SetPictureDefault(int picid)
+        {
+            //...
+            var pic = db.Pictures.Find(picid);
+            if (pic != null)
+            {
+                var product = db.Products.Find(pic.ProductId);
+                product.PictureId = pic.Id; // hinh dai dien
+                db.SaveChanges();
+                return Content("OK");
+            }
+            return HttpNotFound();
         }
     }
 }

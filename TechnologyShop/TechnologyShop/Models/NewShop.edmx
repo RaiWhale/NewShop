@@ -102,7 +102,7 @@
           <Property Name="Unit" Type="nvarchar" MaxLength="20" />
           <Property Name="InputPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="OutputPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Picture" Type="varchar" MaxLength="150" />
+          <Property Name="PictureId" Type="int" />
           <Property Name="Discount" Type="decimal" Precision="5" Scale="2" Nullable="false" />
           <Property Name="Description" Type="ntext" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -309,6 +309,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Products_Pictures">
+          <End Role="Pictures" Type="Self.Pictures" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pictures">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserLevelPermissions_UserLevels">
           <End Role="UserLevels" Type="Self.UserLevels" Multiplicity="1" />
           <End Role="UserLevelPermissions" Type="Self.UserLevelPermissions" Multiplicity="*" />
@@ -396,6 +408,10 @@
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="FK_Products_Pictures" Association="Self.FK_Products_Pictures">
+            <End Role="Pictures" EntitySet="Pictures" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserLevelPermissions_UserLevels" Association="Self.FK_UserLevelPermissions_UserLevels">
             <End Role="UserLevels" EntitySet="UserLevels" />
             <End Role="UserLevelPermissions" EntitySet="UserLevelPermissions" />
@@ -481,6 +497,7 @@
           <Property Name="ProductId" Type="Int32" />
           <Property Name="Url" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Product" Relationship="NewShopModel.FK_Pictures_Products" FromRole="Picture" ToRole="Product" />
+          <NavigationProperty Name="Products" Relationship="NewShopModel.FK_Products_Pictures" FromRole="Picture" ToRole="Product" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -602,8 +619,8 @@
             <End Role="UserLevel" EntitySet="UserLevels" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <EntitySet Name="Products" EntityType="NewShopModel.Product" />
           <EntitySet Name="Tables" EntityType="NewShopModel.Table" />
+          <EntitySet Name="Products" EntityType="NewShopModel.Product" />
           <AssociationSet Name="FK_Products_Categories" Association="NewShopModel.FK_Products_Categories">
             <End Role="Category" EntitySet="Categories" />
             <End Role="Product" EntitySet="Products" />
@@ -619,6 +636,10 @@
           <AssociationSet Name="FK_Pictures_Products" Association="NewShopModel.FK_Pictures_Products">
             <End Role="Product" EntitySet="Products" />
             <End Role="Picture" EntitySet="Pictures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Pictures" Association="NewShopModel.FK_Products_Pictures">
+            <End Role="Picture" EntitySet="Pictures" />
+            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Customer">
@@ -768,6 +789,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="Id" />
@@ -779,7 +806,7 @@
           <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="InputPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="OutputPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Picture" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PictureId" Type="Int32" />
           <Property Name="Discount" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
@@ -787,12 +814,7 @@
           <NavigationProperty Name="InputDetails" Relationship="NewShopModel.FK_InputDetails_Products" FromRole="Product" ToRole="InputDetail" />
           <NavigationProperty Name="OrderDetails" Relationship="NewShopModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
           <NavigationProperty Name="Pictures" Relationship="NewShopModel.FK_Pictures_Products" FromRole="Product" ToRole="Picture" />
-        </EntityType>
-        <EntityType Name="Table">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Picture" Relationship="NewShopModel.FK_Products_Pictures" FromRole="Product" ToRole="Picture" />
         </EntityType>
         <Association Name="FK_Products_Categories">
           <End Type="NewShopModel.Category" Role="Category" Multiplicity="1" />
@@ -839,6 +861,18 @@
             </Principal>
             <Dependent Role="Picture">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Pictures">
+          <End Type="NewShopModel.Picture" Role="Picture" Multiplicity="0..1" />
+          <End Type="NewShopModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="PictureId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -998,26 +1032,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tables">
+            <EntityTypeMapping TypeName="NewShopModel.Table">
+              <MappingFragment StoreEntitySet="Table">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="NewShopModel.Product">
               <MappingFragment StoreEntitySet="Products">
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
-                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
                 <ScalarProperty Name="OutputPrice" ColumnName="OutputPrice" />
                 <ScalarProperty Name="InputPrice" ColumnName="InputPrice" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="BarCode" ColumnName="BarCode" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tables">
-            <EntityTypeMapping TypeName="NewShopModel.Table">
-              <MappingFragment StoreEntitySet="Table">
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

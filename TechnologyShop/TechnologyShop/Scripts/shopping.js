@@ -42,6 +42,7 @@ function addItem(productid, productname, unit, price) {
         cart_items.push(new_item);
         saveCartItems(cart_items);
         alert("Added to your cart!");
+        loadHeaderCartItems();
     } else {
         alert("Existed!");
     }
@@ -58,6 +59,7 @@ function updateItem(productid, q) {
             t = cart_items[i].price * q;
         }
     });
+    loadHeaderCartItems();
     return t;
 }
 
@@ -72,6 +74,7 @@ function removeItem(productid) {
     });
 
     saveCartItems(cart_items);
+    loadHeaderCartItems();
 }
 
 function showTotal() {
@@ -121,6 +124,37 @@ function loadCartItems() {
     });
 }
 
+
+function loadHeaderCartItems() {
+
+    var cart_items = getCartItems();
+    var total = 0;
+    $(cart_items).each(function (i, v) {
+        var t = v.price * v.quantity;
+        total += t;
+        $("#headercarts").append("<tr>"
+            + "<td align='center'>" + v.productid + "</td>"
+            + "<td>" + v.productname + "</td>"
+            + "<td align='center'>" + v.unit + "</td>"
+            + "<td align='right'>" + parseFloat(v.price).toLocaleString('en') + "</td>"
+            + "<td align='right'><input type='number' class='quantity' value='" + v.quantity + "' min='1' max='1000'></td>"
+            + "<td align='right'>" + t.toLocaleString('en') + "</td>"
+            + "<td><button class='removeitem'>Remove</button></td>"
+            + "</tr>");
+    });
+    $("#sumtotal").html(total.toLocaleString('en'));
+    
+
+    $(".removeitem").click(function () {
+        if (confirm("Are you sure to remove this item?")) {
+            var tr = $(this).closest("tr").find("td");
+            removeItem(tr.eq(0).html());
+            tr.remove();
+            showTotal();
+        }
+    });
+}
+
 function Checkout() {
     var cart_items = getCartItems();
 
@@ -140,3 +174,25 @@ function Checkout() {
 
     
 }
+
+$(document).ready(function () {
+
+    $(".addtocart").click(function () {
+        var a = $(this);
+        addItem(a.attr("productid"), a.attr("productname"), a.attr("unit"), a.attr("price"));
+
+        return false;
+    });
+
+
+    loadHeaderCartItems();//tren header moi trang
+
+    loadCartItems();
+
+});
+
+
+
+
+
+

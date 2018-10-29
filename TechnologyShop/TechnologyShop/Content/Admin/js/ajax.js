@@ -39,14 +39,20 @@ function InitAction() {
 function bindForm(dialog) {
 
     $('form', dialog).submit(function () {
-        var form_data  = $(this).serialize();
-        var fileInput = document.getElementById('file');
-        var filename = fileInput.files[0].name
-        form_data.append(filename, fileInput.files[0]);
+
+        var formData = new FormData($(this)[0]);
+        var files = $('input[type=file]')[0];
+        if (files != null) {
+            formData.append('pic');
+        }
         $.ajax({
+            
             url: this.action,
             type: this.method,
-            data: form_data, $(this).serialize(),
+            data: formData,
+            //data: $(this).serialize(),
+            contentType: false,
+            processData: false,
             success: function (result) {
                 if (result == "OK") {
                     $('#dialog').modal('hide');

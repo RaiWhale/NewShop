@@ -29,7 +29,7 @@ namespace TechnologyShop.Models
         public string Unit { get; set; }
         public decimal InputPrice { get; set; }
         public decimal OutputPrice { get; set; }
-        public string Picture { get; set; }
+        public Nullable<int> PictureId { get; set; }
         public decimal Discount { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }
@@ -41,5 +41,6 @@ namespace TechnologyShop.Models
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Picture> Pictures { get; set; }
+        public virtual Picture Picture { get; set; }
     }
 }

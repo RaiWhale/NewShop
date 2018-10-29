@@ -72,6 +72,7 @@
     <Property Name="ProductId" Type="Int32" />
     <Property Name="Url" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Product" Relationship="NewShopModel.FK_Pictures_Products" FromRole="Picture" ToRole="Product" />
+    <NavigationProperty Name="Products" Relationship="NewShopModel.FK_Products_Pictures" FromRole="Picture" ToRole="Product" />
   </EntityType>
   <EntityType Name="Supplier">
     <Key>
@@ -193,8 +194,8 @@
       <End Role="UserLevel" EntitySet="UserLevels" />
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
-    <EntitySet Name="Products" EntityType="NewShopModel.Product" />
     <EntitySet Name="Tables" EntityType="NewShopModel.Table" />
+    <EntitySet Name="Products" EntityType="NewShopModel.Product" />
     <AssociationSet Name="FK_Products_Categories" Association="NewShopModel.FK_Products_Categories">
       <End Role="Category" EntitySet="Categories" />
       <End Role="Product" EntitySet="Products" />
@@ -210,6 +211,10 @@
     <AssociationSet Name="FK_Pictures_Products" Association="NewShopModel.FK_Pictures_Products">
       <End Role="Product" EntitySet="Products" />
       <End Role="Picture" EntitySet="Pictures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_Pictures" Association="NewShopModel.FK_Products_Pictures">
+      <End Role="Picture" EntitySet="Pictures" />
+      <End Role="Product" EntitySet="Products" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Customer">
@@ -359,6 +364,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Table">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+  </EntityType>
   <EntityType Name="Product">
     <Key>
       <PropertyRef Name="Id" />
@@ -370,7 +381,7 @@
     <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="InputPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="OutputPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="Picture" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="PictureId" Type="Int32" />
     <Property Name="Discount" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
@@ -378,12 +389,7 @@
     <NavigationProperty Name="InputDetails" Relationship="NewShopModel.FK_InputDetails_Products" FromRole="Product" ToRole="InputDetail" />
     <NavigationProperty Name="OrderDetails" Relationship="NewShopModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
     <NavigationProperty Name="Pictures" Relationship="NewShopModel.FK_Pictures_Products" FromRole="Product" ToRole="Picture" />
-  </EntityType>
-  <EntityType Name="Table">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Picture" Relationship="NewShopModel.FK_Products_Pictures" FromRole="Product" ToRole="Picture" />
   </EntityType>
   <Association Name="FK_Products_Categories">
     <End Type="NewShopModel.Category" Role="Category" Multiplicity="1" />
@@ -430,6 +436,18 @@
       </Principal>
       <Dependent Role="Picture">
         <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products_Pictures">
+    <End Type="NewShopModel.Picture" Role="Picture" Multiplicity="0..1" />
+    <End Type="NewShopModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Picture">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="PictureId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

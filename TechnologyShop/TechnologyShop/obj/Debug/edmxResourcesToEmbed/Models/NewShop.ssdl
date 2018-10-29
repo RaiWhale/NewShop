@@ -97,7 +97,7 @@
     <Property Name="Unit" Type="nvarchar" MaxLength="20" />
     <Property Name="InputPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="OutputPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
-    <Property Name="Picture" Type="varchar" MaxLength="150" />
+    <Property Name="PictureId" Type="int" />
     <Property Name="Discount" Type="decimal" Precision="5" Scale="2" Nullable="false" />
     <Property Name="Description" Type="ntext" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -304,6 +304,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Products_Pictures">
+    <End Role="Pictures" Type="Self.Pictures" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pictures">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="PictureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UserLevelPermissions_UserLevels">
     <End Role="UserLevels" Type="Self.UserLevels" Multiplicity="1" />
     <End Role="UserLevelPermissions" Type="Self.UserLevelPermissions" Multiplicity="*" />
@@ -389,6 +401,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
       <End Role="Categories" EntitySet="Categories" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_Pictures" Association="Self.FK_Products_Pictures">
+      <End Role="Pictures" EntitySet="Pictures" />
       <End Role="Products" EntitySet="Products" />
     </AssociationSet>
     <AssociationSet Name="FK_UserLevelPermissions_UserLevels" Association="Self.FK_UserLevelPermissions_UserLevels">

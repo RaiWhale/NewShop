@@ -18,8 +18,8 @@
             <td>@item.Category.CategoryName</td>
             <td>
                 @Html.ActionLink("Edit", "Edit", "Products", new { id = item.Id }, new { baction = "" }) |
-                @Html.ActionLink("Delete", "Delete", "Products", new { id = item.Id }, new { baction = "" })|
-                @Html.ActionLink("Upload", "UploadFile", "Products", new { id = item.Id }, new { baction = "" })
+                @Html.ActionLink("Delete", "Delete", "Products", new { id = item.Id }, new { baction = "" })
+                
             </td>
         </tr>
     }
