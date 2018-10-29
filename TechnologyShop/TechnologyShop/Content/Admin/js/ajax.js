@@ -35,13 +35,18 @@ function InitAction() {
         return false;
     });
 }
+
 function bindForm(dialog) {
 
     $('form', dialog).submit(function () {
+        var form_data  = $(this).serialize();
+        var fileInput = document.getElementById('file');
+        var filename = fileInput.files[0].name
+        form_data.append(filename, fileInput.files[0]);
         $.ajax({
             url: this.action,
             type: this.method,
-            data: $(this).serialize(),
+            data: form_data, $(this).serialize(),
             success: function (result) {
                 if (result == "OK") {
                     $('#dialog').modal('hide');
@@ -51,7 +56,9 @@ function bindForm(dialog) {
                     bindForm(dialog);
                 }
             }
+
         });
+
         return false;
     });
 }
