@@ -703,12 +703,6 @@
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\shopping.js" />
-    <Content Include="Uploads\Pictures\10\636764228066496419_30126118_1852819314749948_321022773_o.jpg" />
-    <Content Include="Uploads\Pictures\636764131609607362_41HPFwV+dYL._SY355_.jpg" />
-    <Content Include="Uploads\Pictures\636764151439198768_41HPFwV+dYL._SY355_.jpg" />
-    <Content Include="Uploads\Pictures\636764176739042430_41HPFwV+dYL._SY355_.jpg" />
-    <Content Include="Uploads\Pictures\636764225319262038_30126117_1852819231416623_271581277_o.jpg" />
-    <Content Include="Uploads\Pictures\636764226676394341_35049832_10209498336295812_8813429206726737920_n.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -742,6 +736,7 @@
     <Folder Include="Content\MainPage\css\github.com\necolas\" />
     <Folder Include="Content\MainPage\css\plugins\images\" />
     <Folder Include="Content\MainPage\images\pattern\" />
+    <Folder Include="Uploads\Pictures\" />
     <Folder Include="Views\LoginRedirect\" />
   </ItemGroup>
   <ItemGroup>

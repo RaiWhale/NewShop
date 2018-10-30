@@ -41,10 +41,8 @@ function bindForm(dialog) {
     $('form', dialog).submit(function () {
 
         var formData = new FormData($(this)[0]);
-        var files = $('input[type=file]')[0];
-        if (files != null) {
-            formData.append('pic');
-        }
+
+  
         $.ajax({
             
             url: this.action,
