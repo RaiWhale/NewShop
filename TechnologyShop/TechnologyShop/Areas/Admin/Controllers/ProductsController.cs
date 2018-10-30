@@ -236,6 +236,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                     }
                     catch { }
                 }
+                db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return Content("OK");
             }

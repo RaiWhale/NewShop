@@ -6,7 +6,7 @@
         <a href="~/Products/Details/@Model.Id">
             <!--Sua-->
             @{
-                @{
+
                     string src = "/Content/MainPage/img/product/1.jpg";
                     var pic = Model.Picture;
                     if (pic == null)
@@ -18,8 +18,7 @@
                     {
                         src = "/Uploads/Pictures/" + pic.ProductId + "/" + pic.Url;
                     }
-                }
-                <img src="@src" alt="" />
+    
             }
             <img src="@src" alt="" />
         </a>

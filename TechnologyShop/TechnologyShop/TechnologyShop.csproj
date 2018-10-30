@@ -703,6 +703,8 @@
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\shopping.js" />
+    <Content Include="Uploads\Pictures\10\636765007056518133_Faker-1.jpg" />
+    <Content Include="Uploads\Pictures\10\636765007056628069_hpbd.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -736,7 +738,6 @@
     <Folder Include="Content\MainPage\css\github.com\necolas\" />
     <Folder Include="Content\MainPage\css\plugins\images\" />
     <Folder Include="Content\MainPage\images\pattern\" />
-    <Folder Include="Uploads\Pictures\" />
     <Folder Include="Views\LoginRedirect\" />
   </ItemGroup>
   <ItemGroup>
