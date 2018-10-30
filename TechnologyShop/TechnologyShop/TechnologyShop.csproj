@@ -181,7 +181,6 @@
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\ImageHandler.cs" />
     <Compile Include="Helpers\StoreHelpers.cs" />
-    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\NewShop1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -433,6 +432,7 @@
     <Content Include="Content\MainPage\img\cart\1.jpg" />
     <Content Include="Content\MainPage\img\icon\down-arrow.png" />
     <Content Include="Content\MainPage\img\icon\techshop - size nho 1.png" />
+    <Content Include="Content\MainPage\img\logo\logo size 02.png" />
     <Content Include="Content\MainPage\img\logo\logo ts.png" />
     <Content Include="Content\MainPage\img\logo\logo.png" />
     <Content Include="Content\MainPage\img\mega-menu\1.jpg" />
@@ -705,6 +705,24 @@
     <Content Include="Scripts\shopping.js" />
     <Content Include="Uploads\Pictures\10\636765007056518133_Faker-1.jpg" />
     <Content Include="Uploads\Pictures\10\636765007056628069_hpbd.jpg" />
+    <Content Include="Uploads\Pictures\11\636765028456176855_baymau.jpg" />
+    <Content Include="Uploads\Pictures\11\636765028456236643_Blackpantherdragon.jpg" />
+    <Content Include="Uploads\Pictures\11\636765078931562955_i5.png" />
+    <Content Include="Uploads\Pictures\12\636765030219548930_Blackpantherdragon.jpg" />
+    <Content Include="Uploads\Pictures\12\636765089304255468_xs.png" />
+    <Content Include="Uploads\Pictures\13\636765090053329204_xs.png" />
+    <Content Include="Uploads\Pictures\14\636765033524994333_250_43417_gheg284.png" />
+    <Content Include="Uploads\Pictures\14\636765067174683479_ssd.jpg" />
+    <Content Include="Uploads\Pictures\14\636765068234738694_ssd.jpg" />
+    <Content Include="Uploads\Pictures\14\636765076441201055_ssd.png" />
+    <Content Include="Uploads\Pictures\15\636765084173869152_ssd480.png" />
+    <Content Include="Uploads\Pictures\15\636765084877180655_ssd480.png" />
+    <Content Include="Uploads\Pictures\27\636765038660306584_44023064_1279810425492172_1279462605630472192_n.jpg" />
+    <Content Include="Uploads\Pictures\28\636765051871789515_4.jpg" />
+    <Content Include="Uploads\Pictures\29\636765055559810838_1.png" />
+    <Content Include="Uploads\Pictures\30\636765057334705783_2.png" />
+    <Content Include="Uploads\Pictures\31\636765061967693891_3.jpg" />
+    <Content Include="Uploads\Pictures\32\636765090599643023_xs.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -732,6 +750,8 @@
     <Content Include="Views\Shared\_ProductsItem3.cshtml" />
     <Content Include="Views\Shared\_ProductsItem4.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Uploads\Pictures\11\636765078346952480_" />
+    <Content Include="Uploads\Pictures\14\636765068321472765_" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
