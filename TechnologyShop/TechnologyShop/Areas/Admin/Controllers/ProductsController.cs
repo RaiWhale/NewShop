@@ -213,6 +213,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
                 {
                     try
@@ -236,6 +237,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                     }
                     catch { }
                 }
+                db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return Content("OK");
             }

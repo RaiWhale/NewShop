@@ -100,27 +100,30 @@
         <div class="row">
             @foreach (var p in Model.Pictures)
             {
-                <div>
-                    <img src="~/Uploads/Pictures/@p.ProductId/@p.Url" height="80" />
+            <div>
+                <img src="~/Uploads/Pictures/@p.ProductId/@p.Url" height="80" />
 
-                    <input type="button" class="remove-picture" picid="@p.Id" value="Remove" onclick="return confirm('Are you sure you want to delete this item?');" />
+                <input type="button" class="remove-picture" picid="@p.Id" value="Remove" onclick="if (!confirm('Are you sure?')) { return false }" />
 
-                    <input type="button" class="set-default" picid="@p.Id" value="Default" onclick="return confirm('You want to select this image as the default?');" />
+                <input type="button" class="set-default" picid="@p.Id" value="Default" onclick="if (!confirm('You want to select this image as the default?')) { return false }" />
 
-                    @{
-                        var setDef = "";
-                        if (p.Id == Model.PictureId)
-                        {
-                            setDef = "checked";
+                @{
+                    string setDef = "";
+                    if (p.Id == Model.PictureId)
+                    {
+                        setDef = "checked";
 
-                        }
                     }
 
-
                     <input type="checkbox" checked="@setDef" class="set-default toggle">
+                }
 
 
-                </div>
+
+                <br />
+                <hr />
+            </div>
+          
             }
 
         </div>
@@ -144,8 +147,6 @@
     $(document).ready(function () {
         $(".remove-picture").click(function () {
             var _btn = $(this);
-
-
             $.post("/Admin/Products/RemovePicture", "picid=" + _btn.attr("picid"), function (data, status) {
                 if (data == "OK") {
 
