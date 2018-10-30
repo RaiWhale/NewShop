@@ -3,8 +3,24 @@
 <div class="col-md-3 col-sm-4 col-xs-12">
     <div class="product-item">
         <div class="product-img">
-            <a href="single-product.html">
-                <img src="/Content/MainPage/img/product/7.jpg" alt="" />
+            <a href="~/Products/Details/@Model.Id">
+                <!--Sua-->
+         
+                    @{
+                        string src = "/Content/MainPage/img/product/1.jpg";
+                        var pic = Model.Picture;
+                        if (pic == null)
+                        {
+                            pic = Model.Pictures.FirstOrDefault();
+                        }
+
+                        if (pic != null)
+                        {
+                            src = "/Uploads/Pictures/" + pic.ProductId + "/" + pic.Url;
+                        }
+                    }
+                    <img src="@src" alt="" />
+       
             </a>
         </div>
         <div class="product-info">
@@ -30,7 +46,7 @@
                     <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
                 </li>
                 <li>
-                    <a class="addtocart" pid="@Model.Id" pname="@Model.ProductName" punit="@Model.Unit" pprice="@Model.OutputPrice" href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                    <a class="addtocart" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
                 </li>
             </ul>
         </div>
