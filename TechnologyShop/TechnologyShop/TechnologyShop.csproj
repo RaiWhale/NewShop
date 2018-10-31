@@ -181,7 +181,6 @@
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\ImageHandler.cs" />
     <Compile Include="Helpers\StoreHelpers.cs" />
-    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\NewShop1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -404,7 +403,6 @@
     <Content Include="Content\MainPage\images\bg\7.jpg" />
     <Content Include="Content\MainPage\images\bg\8.jpg" />
     <Content Include="Content\MainPage\images\bg\9.jpg" />
-    <Content Include="Content\MainPage\images\bg\bannerts3.jpg" />
     <Content Include="Content\MainPage\images\customizer\bodybg\01.jpg" />
     <Content Include="Content\MainPage\images\customizer\bodybg\02.jpg" />
     <Content Include="Content\MainPage\images\customizer\bodybg\03.jpg" />
@@ -423,6 +421,7 @@
     <Content Include="Content\MainPage\images\customizer\pattern\8.png" />
     <Content Include="Content\MainPage\images\logo\logo.png" />
     <Content Include="Content\MainPage\img\banner\1.jpg" />
+    <Content Include="Content\MainPage\images\bg\bannerts1.jpg" />
     <Content Include="Content\MainPage\img\bg\blog-photo-bg.png" />
     <Content Include="Content\MainPage\img\bg\grid.png" />
     <Content Include="Content\MainPage\img\bg\ribbon.png" />
