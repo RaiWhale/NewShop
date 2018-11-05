@@ -27,7 +27,7 @@ namespace TechnologyShop.Controllers
             }
 
             ViewBag.products_hot = db.Products.OrderByDescending(x => x.OutputPrice).Take(5).ToList();
-            
+          
             return View();
         }
 
