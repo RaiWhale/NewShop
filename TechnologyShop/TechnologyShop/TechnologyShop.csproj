@@ -754,6 +754,10 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Uploads\Pictures\11\636765078346952480_" />
     <Content Include="Uploads\Pictures\14\636765068321472765_" />
+    <Content Include="Views\Shared\_ProductsDetail.cshtml" />
+    <Content Include="Views\Shared\_ProductsRecent.cshtml" />
+    <Content Include="Views\Shared\_QuickView.cshtml" />
+    <Content Include="Views\Customer\UpdateProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

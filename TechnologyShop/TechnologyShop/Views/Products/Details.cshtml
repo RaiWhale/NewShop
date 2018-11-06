@@ -1,9 +1,14 @@
-﻿@model TechnologyShop.Models.Product
+﻿@using TechnologyShop.Models
 
 @{
-    ViewBag.Title = "Details";
-    
+    /**/
 
+    ViewBag.Title = "Details";
+    var product_detail = ViewBag.product_detail;
+    var related_products = ViewBag.related_products as List<Product>;
+    var recent_products = ViewBag.recent_products as List<Product>;
+    var categories = ViewBag.categories as List<Category>;
+    var topics = ViewBag.topics as List<Topic>;
 
 }
 
@@ -16,91 +21,13 @@
                 <!-- single-product-area start -->
                 <div class="single-product-area mb-80">
                     <div class="row">
-                        <!-- imgs-zoom-area start -->
-                        <div class="col-md-5 col-sm-5 col-xs-12">
-                            <div class="imgs-zoom-area">
-                                <a href="~/Products/Details/@Model.Id">
-                                    <!--Sua-->
-                                    @{
 
-                                        string src = "/Content/MainPage/img/product/1.jpg";
-                                        var pic = Model.Picture;
-                                        if (pic == null)
-                                        {
-                                            pic = Model.Pictures.FirstOrDefault();
-                                        }
+                        @if (product_detail != null)
+                        {
+                            @Html.Partial("_ProductsDetail")
+                        }
 
-                                        if (pic != null)
-                                        {
-                                            src = "/Uploads/Pictures/" + pic.ProductId + "/" + pic.Url;
-                                        }
-                                    }
-                                    <img src="@src" alt="" />
-                                </a>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div id="gallery_01" class="carousel-btn slick-arrow-3 mt-30">
 
-                                            @foreach (var item in Model.Pictures.Where(x => x.ProductId == Model.Id))
-                                            {
-                                                <div class="p-c">
-                                                    <a href="~/Products/Details/@Model.Id">
-                                                        <img class="zoom_03" src=@src alt="">
-                                                    </a>
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- imgs-zoom-area end -->
-                        <!-- single-product-info start -->
-                        <div class="col-md-7 col-sm-7 col-xs-12">
-                            <div class="single-product-info">
-                                <h3 class="text-black-1"><a href="~/Products/Details/@Model.ProductName">@Model.ProductName</a><!--Sua--></h3>
-                                <h6 class="brand-name-2">@Model.Category.CategoryName</h6>
-                                <!--  hr -->
-
-                                <hr>
-
-                                @if (User.Identity.IsAuthenticated)
-                                {
-                                    <!-- plus-minus-pro-action -->
-                                    <div class="plus-minus-pro-action clearfix">
-                                        <div class="sin-pro-action col-md-offset-4">
-                                            <ul class="action-button">
-                                                <li>
-                                                    <a class="addtowishlist" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" data-toggle="modal" data-target="#productModal" title="Quickview" tabindex="0"><i class="zmdi zmdi-zoom-in"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" title="Compare" tabindex="0"><i class="zmdi zmdi-refresh"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a class="addtocart" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                }
-                                <!-- plus-minus-pro-action end -->
-                                <!-- hr -->
-                                <hr>
-                                <!-- single-product-price -->
-                                <h3 class="pro-price">Price:@Model.OutputPrice</h3>
-                                <!--  hr -->
-                                <hr>
-                                <div>
-                                    <a href="#" class="button extra-small button-black" tabindex="-1">
-                                        <span class="text-uppercase">Buy now</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- single-product-info end -->
                     </div>
                     <!-- single-product-tab -->
                     <div class="row">
@@ -182,53 +109,21 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="section-title text-left mb-40">
-                                <h2 class="uppercase">related product</h2>
-                                <h6>There are many variations of passages of brands available,</h6>
+                                <h2 class="uppercase">Sản phẩm liên quan</h2>
+                                <h6></h6>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="active-related-product">
-                        
-                                <!-- product-item start -->
-                                <div class="col-xs-12">
-                                    <div class="product-item">
-                                        <div class="product-img">
-                                            <a href="single-product.html">
-                                                <img src="~/Content/home/img/product/1.jpg" alt="" />
-                                            </a>
-                                        </div>
-                                        <div class="product-info">
-                                            <h6 class="product-title">
-                                                <a href="single-product.html">Product Name</a>
-                                            </h6>
-                                            <div class="pro-rating">
-                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star-half"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star-outline"></i></a>
-                                            </div>
-                                            <h3 class="pro-price">$ 869.00</h3>
-                                            <ul class="action-button">
-                                                <li>
-                                                    <a class="addtowishlist" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" data-toggle="modal" data-target="#productModal" title="Quickview"><i class="zmdi zmdi-zoom-in"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a class="addtocart" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- product-item end -->
-                            
+
+                            <!-- product-item start -->
+                            @foreach (var item in related_products)
+                            {
+                                @Html.Partial("_ProductsItem1", item)
+                            }
+                            <!-- product-item end -->
+
 
 
 
@@ -250,60 +145,31 @@
                     <h6 class="widget-title border-left mb-20">Categories</h6>
                     <div id="cat-treeview" class="product-cat">
                         <ul>
-                            <li class="closed">
-                                <a href="#">Brand One</a>
-                                <ul>
-                                    <li><a href="#">Mobile</a></li>
-                                    <li><a href="#">Tab</a></li>
-                                    <li><a href="#">Watch</a></li>
-                                    <li><a href="#">Head Phone</a></li>
-                                    <li><a href="#">Memory</a></li>
-                                </ul>
-                            </li>
-                            <li class="open">
-                                <a href="#">Brand Two</a>
-                                <ul>
-                                    <li><a href="#">Mobile</a></li>
-                                    <li><a href="#">Tab</a></li>
-                                    <li><a href="#">Watch</a></li>
-                                    <li><a href="#">Head Phone</a></li>
-                                    <li><a href="#">Memory</a></li>
-                                </ul>
-                            </li>
-                            <li class="closed">
-                                <a href="#">Accessories</a>
-                                <ul>
-                                    <li><a href="#">Footwear</a></li>
-                                    <li><a href="#">Sunglasses</a></li>
-                                    <li><a href="#">Watches</a></li>
-                                    <li><a href="#">Utilities</a></li>
-                                </ul>
-                            </li>
-                            <li class="closed">
-                                <a href="#">Top Brands</a>
-                                <ul>
-                                    <li><a href="#">Mobile</a></li>
-                                    <li><a href="#">Tab</a></li>
-                                    <li><a href="#">Watch</a></li>
-                                    <li><a href="#">Head Phone</a></li>
-                                    <li><a href="#">Memory</a></li>
-                                </ul>
-                            </li>
-                            <li class="closed">
-                                <a href="#">Jewelry</a>
-                                <ul>
-                                    <li><a href="#">Footwear</a></li>
-                                    <li><a href="#">Sunglasses</a></li>
-                                    <li><a href="#">Watches</a></li>
-                                    <li><a href="#">Utilities</a></li>
-                                </ul>
-                            </li>
+                            @foreach (var item in topics)
+                            {
+                                <li class="closed">
+                                    <a href="#">@item.TopicName</a>
+
+                                    @foreach (var cat in item.Categories)
+                                    {
+                                    <ul>
+                                      
+                                        
+                                        <li><a href="~/Products/?cat=@cat.CategoryName">@cat.CategoryName</a></li>
+
+                                    </ul>
+                                    }
+
+                                </li>
+
+                            }
                         </ul>
+
                     </div>
                 </aside>
                 <!-- operating-system -->
                 <aside class="widget operating-system box-shadow mb-30">
-                    <h6 class="widget-title border-left mb-20">operating system</h6>
+                    <h6 class="widget-title border-left mb-20">Hệ điều hành</h6>
                     <form action="action_page.php">
                         <label><input type="checkbox" name="operating-1" value="phone-1">Windows Phone</label><br>
                         <label><input type="checkbox" name="operating-1" value="phone-1">Bleckgerry ios</label><br>
@@ -316,52 +182,14 @@
                 </aside>
                 <!-- widget-product -->
                 <aside class="widget widget-product box-shadow">
-                    <h6 class="widget-title border-left mb-20">recent products</h6>
+                    <h6 class="widget-title border-left mb-20">Sản phẩm gần đây</h6>
                     <!-- product-item start -->
-                    <div class="product-item">
-                        <div class="product-img">
-                            <a href="single-product.html">
-                                <img src="~/Content/home/img/product/4.jpg" alt="" />
-                            </a>
-                        </div>
-                        <div class="product-info">
-                            <h6 class="product-title">
-                                <a href="single-product.html">Product Name</a>
-                            </h6>
-                            <h3 class="pro-price">$ 869.00</h3>
-                        </div>
-                    </div>
+                    @foreach (var item in recent_products)
+                    {
+                        @Html.Partial("_ProductsRecent", item)
+                    }
                     <!-- product-item end -->
-                    <!-- product-item start -->
-                    <div class="product-item">
-                        <div class="product-img">
-                            <a href="single-product.html">
-                                <img src="~/Content/home/img/product/8.jpg" alt="" />
-                            </a>
-                        </div>
-                        <div class="product-info">
-                            <h6 class="product-title">
-                                <a href="single-product.html">Product Name</a>
-                            </h6>
-                            <h3 class="pro-price">$ 869.00</h3>
-                        </div>
-                    </div>
-                    <!-- product-item end -->
-                    <!-- product-item start -->
-                    <div class="product-item">
-                        <div class="product-img">
-                            <a href="single-product.html">
-                                <img src="~/Content/home/img/product/12.jpg" alt="" />
-                            </a>
-                        </div>
-                        <div class="product-info">
-                            <h6 class="product-title">
-                                <a href="single-product.html">Product Name</a>
-                            </h6>
-                            <h3 class="pro-price">$ 869.00</h3>
-                        </div>
-                    </div>
-                    <!-- product-item end -->
+
                 </aside>
             </div>
         </div>
