@@ -9,12 +9,23 @@ function getCartItems() {
         return [];
     }
 }
-
+function getCartItems2() {
+    //return [];
+    if ($.cookie('wishlist')) {
+        return $.cookie('wishlist').cartItems;
+    } else {
+        return [];
+    }
+}
 function saveCartItems(cart_items) {
     var obj = { "cartItems": cart_items };
     $.cookie('productlist', obj);
 }
 
+function saveCartItems2(cart_items) {
+    var obj = { "cartItems": cart_items };
+    $.cookie('wishlist', obj);
+}
 function emptyCartItems() {
     var cart_items = getCartItems();
 
@@ -27,6 +38,17 @@ function emptyCartItems() {
     saveCartItems(cart_items);
 }
 
+function emptyCartItems2() {
+    var cart_items = getCartItems2();
+
+    $(cart_items).each(function (i, v) {
+        if (v) {
+            cart_items.splice(i, 1);
+        }
+    });
+
+    saveCartItems2(cart_items);
+}
 function addItem(productid, productname, unit, price) {
 
     var cart_items = getCartItems();
@@ -42,7 +64,28 @@ function addItem(productid, productname, unit, price) {
         cart_items.push(new_item);
         saveCartItems(cart_items);
         alert("Added to your cart!");
-        loadHeaderCartItems();
+        //loadHeaderCartItems();
+    } else {
+        alert("Existed!");
+    }
+}
+
+function addItem2(productid, productname, unit, price) {
+
+    var cart_items = getCartItems2();
+
+    var is_exist = false;
+    $(cart_items).each(function (i, v) {
+        if (v && v.productid == productid) {
+            is_exist = true;
+        }
+    });
+    if (!is_exist) {
+        var new_item = { "productid": productid, "productname": productname, "unit": unit, "price": price.replace(/,/g, '')};
+        cart_items.push(new_item);
+        saveCartItems2(cart_items);
+        alert("Added to your Wishlist!");
+        //loadHeaderCartItems();
     } else {
         alert("Existed!");
     }
@@ -59,9 +102,10 @@ function updateItem(productid, q) {
             t = cart_items[i].price * q;
         }
     });
-    loadHeaderCartItems();
+    //loadHeaderCartItems();
     return t;
 }
+
 
 function removeItem(productid) {
 
@@ -74,9 +118,22 @@ function removeItem(productid) {
     });
 
     saveCartItems(cart_items);
-    loadHeaderCartItems();
+    //loadHeaderCartItems();
 }
 
+function removeItem2(productid) {
+
+    var cart_items = getCartItems();
+
+    $(cart_items).each(function (i, v) {
+        if (v && v.productid == productid) {
+            cart_items.splice(i, 1);
+        }
+    });
+
+    saveCartItems2(cart_items);
+ 
+}
 function showTotal() {
     var total = 0;
     var cart_items = getCartItems();
@@ -124,7 +181,6 @@ function loadCartItems() {
     });
 }
 
-
 function loadHeaderCartItems() {
 
     var cart_items = getCartItems();
@@ -132,7 +188,7 @@ function loadHeaderCartItems() {
     $(cart_items).each(function (i, v) {
         var t = v.price * v.quantity;
         total += t;
-        $("#headercarts").append("<tr>"
+        $("#carts").append("<tr>"
             + "<td align='center'>" + v.productid + "</td>"
             + "<td>" + v.productname + "</td>"
             + "<td align='center'>" + v.unit + "</td>"
@@ -143,7 +199,7 @@ function loadHeaderCartItems() {
             + "</tr>");
     });
     $("#sumtotal").html(total.toLocaleString('en'));
-    
+
 
     $(".removeitem").click(function () {
         if (confirm("Are you sure to remove this item?")) {
@@ -151,6 +207,33 @@ function loadHeaderCartItems() {
             removeItem(tr.eq(0).html());
             tr.remove();
             showTotal();
+        }
+    });
+}
+
+function loadWishListCartItems() {
+
+    var cart_items = getCartItems2();
+    
+
+    $(cart_items).each(function (i, v) {
+      
+        $("#wishlist2").append("<tr>"
+            + "<td>" + v.productname + "</td>"
+            + "<td align='center'>" + v.unit + "</td>"
+            + "<td align='right'>" + parseFloat(v.price).toLocaleString('en') + "</td>"
+            + "<td><button class='addtocart'>Add to cart</button></td>"
+            + "<td><button class='removeitem'>Remove</button></td>"
+            + "</tr>");
+    });
+ 
+
+    $(".removeitem").click(function () {
+        if (confirm("Are you sure to remove this item?")) {
+            var tr = $(this).closest("tr").find("td");
+            removeItem2(tr.eq(0).html());
+            tr.remove();
+
         }
     });
 }
@@ -185,12 +268,22 @@ $(document).ready(function () {
     });
 
 
-    loadHeaderCartItems();//tren header moi trang
 
+    //loadHeaderCartItems();//tren header moi trang
+ 
     loadCartItems();
 
 });
 
+$(document).ready(function () {
+$(".addtowishlist").click(function () {
+    var a = $(this);
+    addItem2(a.attr("productid"), a.attr("productname"), a.attr("unit"), a.attr("price"));
+
+    return false;
+    });
+    loadWishListCartItems();
+});
 
 
 

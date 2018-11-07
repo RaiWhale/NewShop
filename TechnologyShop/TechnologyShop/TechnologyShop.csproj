@@ -189,9 +189,6 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>NewShop.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Table.cs">
-      <DependentUpon>NewShop.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ViewModel\ForgetPasswordVM.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
@@ -403,7 +400,6 @@
     <Content Include="Content\MainPage\images\bg\7.jpg" />
     <Content Include="Content\MainPage\images\bg\8.jpg" />
     <Content Include="Content\MainPage\images\bg\9.jpg" />
-    <Content Include="Content\MainPage\images\bg\bannerts3.jpg" />
     <Content Include="Content\MainPage\images\customizer\bodybg\01.jpg" />
     <Content Include="Content\MainPage\images\customizer\bodybg\02.jpg" />
     <Content Include="Content\MainPage\images\customizer\bodybg\03.jpg" />
@@ -422,6 +418,7 @@
     <Content Include="Content\MainPage\images\customizer\pattern\8.png" />
     <Content Include="Content\MainPage\images\logo\logo.png" />
     <Content Include="Content\MainPage\img\banner\1.jpg" />
+    <Content Include="Content\MainPage\images\bg\bannerts1.jpg" />
     <Content Include="Content\MainPage\img\bg\blog-photo-bg.png" />
     <Content Include="Content\MainPage\img\bg\grid.png" />
     <Content Include="Content\MainPage\img\bg\ribbon.png" />
@@ -717,6 +714,8 @@
     <Content Include="Uploads\Pictures\14\636765076441201055_ssd.png" />
     <Content Include="Uploads\Pictures\15\636765084173869152_ssd480.png" />
     <Content Include="Uploads\Pictures\15\636765084877180655_ssd480.png" />
+    <Content Include="Uploads\Pictures\26\636764899089072513_hoho.jpg" />
+    <Content Include="Uploads\Pictures\26\636764899089242420_hp146DS.jpg" />
     <Content Include="Uploads\Pictures\27\636765038660306584_44023064_1279810425492172_1279462605630472192_n.jpg" />
     <Content Include="Uploads\Pictures\28\636765051871789515_4.jpg" />
     <Content Include="Uploads\Pictures\29\636765055559810838_1.png" />
@@ -752,6 +751,10 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Uploads\Pictures\11\636765078346952480_" />
     <Content Include="Uploads\Pictures\14\636765068321472765_" />
+    <Content Include="Views\Shared\_ProductsDetail.cshtml" />
+    <Content Include="Views\Shared\_ProductsRecent.cshtml" />
+    <Content Include="Views\Shared\_QuickView.cshtml" />
+    <Content Include="Views\Customer\UpdateProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

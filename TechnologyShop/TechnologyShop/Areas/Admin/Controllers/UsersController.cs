@@ -52,13 +52,13 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(User user, HttpPostedFileBase pic)
+        public ActionResult Create(User user)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    string filename = DateTime.Now.Ticks + "_" + pic.FileName.Split('/').Last();
+                  
                     user.CreatedDate = DateTime.Now;
                     user.ResetPasswordToken = "";
                     user.Password = MySecurity.EncryptPass(user.Password);

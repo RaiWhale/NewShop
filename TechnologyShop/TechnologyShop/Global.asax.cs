@@ -28,8 +28,7 @@ namespace TechnologyShop
                 cfg.CreateMap<RegisterVM, Customer>();
                 cfg.CreateMap<UpdateProfileVM, Customer>();
                 cfg.CreateMap<ForgetPasswordVM, Customer>();
-                cfg.CreateMap<UploadFileVM, Picture>();
-                cfg.CreateMap<Picture,UploadFileVM>();
+        
             });
         }
     }

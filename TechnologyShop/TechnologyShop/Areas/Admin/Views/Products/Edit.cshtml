@@ -108,6 +108,7 @@
                 <input type="button" class="set-default" picid="@p.Id" value="Default" onclick="if (!confirm('You want to select this image as the default?')) { return false }" />
 
                 @{
+                    
                     string setDef = "";
                     if (p.Id == Model.PictureId)
                     {
@@ -115,7 +116,7 @@
 
                     }
 
-                    <input type="checkbox" checked="@setDef" class="set-default toggle">
+                    <input type="checkbox" checked=@setDef class="set-default toggle">
                 }
 
 

@@ -22,9 +22,9 @@ namespace TechnologyShop.Areas.Admin.Controllers
         public ActionResult Index()
         {
             int user_id = int.Parse(User.Identity.Name);
-
-            //var products = db.Products.Include(p => p.Category);
-            ViewBag.topics = db.Topics.ToList();
+         
+        //var products = db.Products.Include(p => p.Category);
+        ViewBag.topics = db.Topics.ToList();
             return View();
         }
 
@@ -153,11 +153,11 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 product.IsActive = true;
                 db.Products.Add(product);
                 db.SaveChanges();
-
-                for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
+                try
                 {
-                    try
+                    for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
                     {
+
                         HttpPostedFileBase file = Request.Files[i];
 
                         string filename = DateTime.Now.Ticks + "_" + file.FileName.Split('/').Last();
@@ -174,9 +174,10 @@ namespace TechnologyShop.Areas.Admin.Controllers
                         };
 
                         db.Pictures.Add(p);
+
                     }
-                    catch { }
                 }
+                catch { }
                 db.SaveChanges();
 
                 return Content("OK");
@@ -213,11 +214,11 @@ namespace TechnologyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-               
-                for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
+                try
                 {
-                    try
+                    for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
                     {
+
                         HttpPostedFileBase file = Request.Files[i];
 
                         string filename = DateTime.Now.Ticks + "_" + file.FileName.Split('/').Last();
@@ -234,9 +235,10 @@ namespace TechnologyShop.Areas.Admin.Controllers
                         };
 
                         db.Pictures.Add(p);
+
                     }
-                    catch { }
                 }
+                catch { }
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return Content("OK");

@@ -65,8 +65,19 @@ namespace TechnologyShop.Controllers
             try
             {
 
+                string filename = DateTime.Now.Ticks + "_" + pic.FileName.Split('/').Last();
+                acc.Avatar = filename;
+                acc.CreatedDate = DateTime.Now;
+                acc.IsActive = false;
+
                 db.Customers.Add(acc);
                 db.SaveChanges();
+
+                string path = Server.MapPath("~/Uploads/Avatars") + "\\" + acc.Id;
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                pic.SaveAs(path + "\\" + filename);
+
+
                 return View("RegisterSuccess");
             }
             catch (Exception ex)
@@ -135,15 +146,26 @@ namespace TechnologyShop.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateProfile(UpdateProfileVM data)
+        [Authorize]
+        public ActionResult UpdateProfile(UpdateProfileVM data, HttpPostedFileBase pic)
         {
     
             try
             {
+                string filename = DateTime.Now.Ticks + "_" + pic.FileName.Split('/').Last();
                 var email = db.Customers.Find(int.Parse(User.Identity.Name));
                 data.Id = email.Id;
+                data.Avatar = filename;
+
                 AutoMapper.Mapper.Map(data, email);
+               
+
                 db.SaveChanges();
+
+                string path = Server.MapPath("~/Uploads/Avatars") + "\\" + data.Id;
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                pic.SaveAs(path + "\\" + filename);
+
                 ViewBag.Message = "Update Successfully";
             }
             catch (Exception ex)
