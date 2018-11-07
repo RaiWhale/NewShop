@@ -213,3 +213,4 @@ E:\NewShop\TechnologyShop\TechnologyShop\bin\Microsoft.CodeDom.Providers.DotNetC
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csproj.CoreCompileInputs.cache
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.dll
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.pdb
+E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csprojAssemblyReference.cache
