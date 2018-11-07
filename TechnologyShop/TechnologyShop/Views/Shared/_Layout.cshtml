@@ -52,7 +52,7 @@
                                     @if (User.Identity.IsAuthenticated)
                                     {
                                         <li>
-                                            <a href="my-account.html">
+                                            <a href="@Url.Action("UpdateProfile","Customer")">
                                                 <i class="zmdi zmdi-account"></i>
                                                 My Account
                                             </a>

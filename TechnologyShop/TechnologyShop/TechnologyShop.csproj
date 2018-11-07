@@ -189,9 +189,6 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>NewShop.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Table.cs">
-      <DependentUpon>NewShop.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ViewModel\ForgetPasswordVM.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />

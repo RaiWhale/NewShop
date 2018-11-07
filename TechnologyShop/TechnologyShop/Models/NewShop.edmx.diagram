@@ -16,8 +16,6 @@
         <AssociationConnector Association="NewShopModel.FK_InputDetails_Inputs" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_Input_Suppliers" ManuallyRouted="false" />
         <AssociationConnector Association="NewShopModel.FK_OrderDetails_Orders" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="NewShopModel.Customer" Width="1.5" PointX="3.375" PointY="1" />
-        <AssociationConnector Association="NewShopModel.FK_Orders_Customers" />
         <EntityTypeShape EntityType="NewShopModel.Category" Width="1.5" PointX="3" PointY="6.25" />
         <AssociationConnector Association="NewShopModel.FK_Categories_ToTopics" />
         <EntityTypeShape EntityType="NewShopModel.User" Width="1.5" PointX="7.5" PointY="21" />
@@ -27,13 +25,14 @@
         <AssociationConnector Association="NewShopModel.FK_Categories_Users" />
         <AssociationConnector Association="NewShopModel.FK_UserLevelPermissions_UserLevels" />
         <AssociationConnector Association="NewShopModel.FK_Users_UserLevels" />
-        <EntityTypeShape EntityType="NewShopModel.Table" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="NewShopModel.Product" Width="1.5" PointX="9.75" PointY="10.25" />
+        <EntityTypeShape EntityType="NewShopModel.Product" Width="1.5" PointX="11.125" PointY="9.75" />
         <AssociationConnector Association="NewShopModel.FK_Products_Categories" />
         <AssociationConnector Association="NewShopModel.FK_InputDetails_Products" />
         <AssociationConnector Association="NewShopModel.FK_OrderDetails_Products" />
         <AssociationConnector Association="NewShopModel.FK_Pictures_Products" />
         <AssociationConnector Association="NewShopModel.FK_Products_Pictures" />
+        <EntityTypeShape EntityType="NewShopModel.Customer" Width="1.5" PointX="0.75" PointY="1" />
+        <AssociationConnector Association="NewShopModel.FK_Orders_Customers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
