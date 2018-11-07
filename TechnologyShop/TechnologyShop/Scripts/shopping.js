@@ -228,6 +228,10 @@ function loadWishListCartItems() {
     });
  
 
+    $(".addtocart").click(function () {
+        addItem(productid, productname, unit, price)
+    });
+
     $(".removeitem").click(function () {
         if (confirm("Are you sure to remove this item?")) {
             var tr = $(this).closest("tr").find("td");
