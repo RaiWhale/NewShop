@@ -222,15 +222,30 @@ function loadWishListCartItems() {
             + "<td>" + v.productname + "</td>"
             + "<td align='center'>" + v.unit + "</td>"
             + "<td align='right'>" + parseFloat(v.price).toLocaleString('en') + "</td>"
-            + "<td><button class='addtocart'>Add to cart</button></td>"
+            + "<td><button class='addtocart1'>Add to cart</button></td>"
             + "<td><button class='removeitem'>Remove</button></td>"
             + "</tr>");
     });
  
-
-    $(".addtocart").click(function () {
-        addItem(productid, productname, unit, price)
+    $(".addtocart1").click(function () {
+        var is_exist = false;
+        $(cart_items).each(function (i, v) {
+            if (v && v.productid == productid) {
+                is_exist = true;
+            }
+        });
+        if (!is_exist) {
+            var new_item = { "productid": productid, "productname": productname, "unit": unit, "price": price.replace(/,/g, ''), "quantity": 1 };
+            cart_items.push(new_item);
+            saveCartItems(cart_items);
+            alert("Added to your cart!");
+            //loadHeaderCartItems();
+        } else {
+            alert("Existed!");
+        }
     });
+    
+   
 
     $(".removeitem").click(function () {
         if (confirm("Are you sure to remove this item?")) {
@@ -283,7 +298,6 @@ $(document).ready(function () {
 $(".addtowishlist").click(function () {
     var a = $(this);
     addItem2(a.attr("productid"), a.attr("productname"), a.attr("unit"), a.attr("price"));
-
     return false;
     });
     loadWishListCartItems();
