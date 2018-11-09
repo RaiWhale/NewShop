@@ -214,3 +214,7 @@ E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csproj.CoreCom
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.dll
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.pdb
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csprojAssemblyReference.cache
+E:\NewShop\TechnologyShop\TechnologyShop\bin\PagedList.dll
+E:\NewShop\TechnologyShop\TechnologyShop\bin\PagedList.Mvc.dll
+E:\NewShop\TechnologyShop\TechnologyShop\bin\PagedList.xml
+E:\NewShop\TechnologyShop\TechnologyShop\bin\PagedList.Mvc.xml

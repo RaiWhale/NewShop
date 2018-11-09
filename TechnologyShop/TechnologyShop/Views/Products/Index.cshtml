@@ -1,119 +1,121 @@
 ﻿@using TechnologyShop.Models
+@using PagedList.Mvc
+@using PagedList
+@model PagedList.IPagedList<TechnologyShop.Models.Product>
+    
 
-@{
-    ViewBag.Title = "Products";
-    var products = ViewBag.products as List<Product>;
-    //var products_hot = ViewBag.products_hot as List<Product>;
-    var topics = ViewBag.topics as List<Topic>;
-    var recent_products = ViewBag.recent_products as List<Product>;
-}
-<div class="col-md-offset-7"><h2>@ViewBag.CategoryName <div class="float-right badge badge-success">(@products.Count)</div></h2></div>
-<!-- =============== BOOTSTRAP STYLES ===============-->
-<link rel="stylesheet" href="/Content/admin/css/bootstrap.css" id="bscss">
+    @{
+        ViewBag.Title = "Products";
+        var products = ViewBag.products as List<Product>;
+        //var products_hot = ViewBag.products_hot as List<Product>;
+        var topics = ViewBag.topics as List<Topic>;
+        var recent_products = ViewBag.recent_products as List<Product>;
+    }
+    <div class="col-md-offset-7"><h2>@ViewBag.CategoryName <div class="float-right badge badge-success">(@products.Count)</div></h2></div>
+    <!-- =============== BOOTSTRAP STYLES ===============-->
+    <link rel="stylesheet" href="/Content/admin/css/bootstrap.css" id="bscss">
 
 
-<!-- SHOP SECTION START -->
-<div class="shop-section mb-80">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-9 col-md-push-3 col-xs-12">
-                <div class="shop-content">
 
-                    <!-- Tab Content start -->
-                    <div class="tab-content">
-                        <!-- grid-view -->
-                        <div role="tabpanel" class="tab-pane active" id="grid-view">
-                            <!--Sua-->
-                            <div class="row">
-                                @foreach (var item in products)
-                                {
-                                    @Html.Partial("_ProductsItem1", item)
-                                }
-                            </div>
-                        </div>
-                        <!-- list-view -->
-                        <!--Huy-->
-                    </div>
-                    <!-- Tab Content end -->
-                    <!-- shop-pagination start -->
-                    <ul class="shop-pagination box-shadow text-center ptblr-10-30">
-                        <li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
-                        <li><a href="#">01</a></li>
-                        <li><a href="#">02</a></li>
-                        <li><a href="#">03</a></li>
-                        <li><a href="#">...</a></li>
-                        <li><a href="#">05</a></li>
-                        <li class="active"><a href="#"><i class="zmdi zmdi-chevron-right"></i></a></li>
-                    </ul>
-                    <!-- shop-pagination end -->
-                </div>
-            </div>
-            <div class="col-md-3 col-md-pull-9 col-xs-12">
-                <!-- widget-search -->
-                <aside class="widget-search mb-30">
-                    <form action="#">
-                        <input type="text" placeholder="Search here...">
-                        <button type="submit"><i class="zmdi zmdi-search"></i></button>
-                    </form>
-                </aside>
-                <!-- widget-categories -->
-                <aside class="widget widget-categories box-shadow mb-30">
-                    <h6 class="widget-title border-left mb-20">Danh mục</h6>
-                    <div id="cat-treeview" class="product-cat">
-                        <ul>
-                            @foreach (var item in topics)
-                            {
-                                <li class="closed">
-                                    <a href="#">@item.TopicName</a>
+    <!-- SHOP SECTION START -->
+    <div class="shop-section mb-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-md-push-3 col-xs-12">
+                    <div class="shop-content">
 
-                                    @foreach (var cat in item.Categories)
+                        <!-- Tab Content start -->
+                        <div class="tab-content">
+                            <!-- grid-view -->
+                            <div role="tabpanel" class="tab-pane active" id="grid-view">
+                                <!--Sua-->
+                                <div class="row">
+                                    @foreach (TechnologyShop.Models.Product item in products)
                                     {
-                                        <ul>
-                                            <li><a href="~/Products/?cat=@cat.CategoryName">@cat.CategoryName</a></li>
-                                        </ul>
+                                        @Html.Partial("_ProductsItem1", item)
                                     }
 
-                                </li>
-
-                            }
-                        </ul>
-                    </div>
-                </aside>
-                <!-- shop-filter -->
-                <aside class="widget shop-filter box-shadow mb-30">
-                    <h6 class="widget-title border-left mb-20">Mức giá</h6>
-                    <div class="price_filter">
-                        <div class="price_slider_amount">
-                            <input type="submit" value="You range :" />
-                            <input type="text" id="amount" name="price" placeholder="Add Your Price" />
+                                </div>
+                                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.Minimal);
+                            </div>
+                            <!-- list-view -->
+                            <!--Huy-->
                         </div>
-                        <div id="slider-range"></div>
+                        <!-- Tab Content end -->
+                        <!-- shop-pagination start -->
+                        <!-- shop-pagination end -->
                     </div>
-                </aside>
-  
-                <!-- operating-system -->
-                <aside class="widget operating-system box-shadow mb-30">
-                    <h6 class="widget-title border-left mb-20">Hệ điều hành</h6>
-                    <form action="action_page.php">
-                        <label><input type="checkbox" name="operating-1" value="phone-1">Windows Phone</label><br>
-                        <label><input type="checkbox" name="operating-1" value="phone-1">Bleckgerry ios</label><br>
-                        <label><input type="checkbox" name="operating-1" value="phone-1">Android</label><br>
-                        <label><input type="checkbox" name="operating-1" value="phone-1">ios</label><br>
-                        <label><input type="checkbox" name="operating-1" value="phone-1">Windows Phone</label><br>
-                        <label><input type="checkbox" name="operating-1" value="phone-1">Symban</label><br>
-                        <label class="mb-0"><input type="checkbox" name="operating-1" value="phone-1">Bleckgerry os</label><br>
-                    </form>
-                </aside>
-                <!-- widget-product -->
-                <aside class="widget widget-product box-shadow">
-                    <h6 class="widget-title border-left mb-20">Sản phẩm liên quan</h6>
-                    @foreach (var item in recent_products)
-                    {
-                        @Html.Partial("_ProductsItem2", item);
-                    }
-                </aside>
+                </div>
+                <div class="col-md-3 col-md-pull-9 col-xs-12">
+                    <!-- widget-search -->
+                    <aside class="widget-search mb-30">
+                        <!-- header-search -->
+                        @using (Html.BeginForm("Index","Products",FormMethod.Get))
+                        {
+                            @Html.TextBox("search", null, new { @placeholder = "Search with keywords...", @class = "form-control", @style = "display:inline-block" })
+                            <button type="submit" value="Search"><i class="zmdi zmdi-search"></i></button>
+
+                        }
+
+                    </aside>
+                    <!-- widget-categories -->
+                    <aside class="widget widget-categories box-shadow mb-30">
+                        <h6 class="widget-title border-left mb-20">Danh mục</h6>
+                        <div id="cat-treeview" class="product-cat">
+                            <ul>
+                                @foreach (var item in topics)
+                                {
+                                    <li class="closed">
+                                        <a href="#">@item.TopicName</a>
+
+                                        @foreach (var cat in item.Categories)
+                                        {
+                                            <ul>
+                                                <li><a href="~/Products/?cat=@cat.CategoryName">@cat.CategoryName</a></li>
+                                            </ul>
+                                        }
+
+                                    </li>
+
+                                }
+                            </ul>
+                        </div>
+                    </aside>
+                    <!-- shop-filter -->
+                    <aside class="widget shop-filter box-shadow mb-30">
+                        <h6 class="widget-title border-left mb-20">Mức giá</h6>
+                        <div class="price_filter">
+                            <div class="price_slider_amount">
+                                <input type="submit" value="You range :" />
+                                <input type="text" id="amount" name="price" placeholder="Add Your Price" />
+                            </div>
+                            <div id="slider-range"></div>
+                        </div>
+                    </aside>
+
+                    <!-- operating-system -->
+                    <aside class="widget operating-system box-shadow mb-30">
+                        <h6 class="widget-title border-left mb-20">Hệ điều hành</h6>
+                        <form action="action_page.php">
+                            <label><input type="checkbox" name="operating-1" value="phone-1">Windows Phone</label><br>
+                            <label><input type="checkbox" name="operating-1" value="phone-1">Bleckgerry ios</label><br>
+                            <label><input type="checkbox" name="operating-1" value="phone-1">Android</label><br>
+                            <label><input type="checkbox" name="operating-1" value="phone-1">ios</label><br>
+                            <label><input type="checkbox" name="operating-1" value="phone-1">Windows Phone</label><br>
+                            <label><input type="checkbox" name="operating-1" value="phone-1">Symban</label><br>
+                            <label class="mb-0"><input type="checkbox" name="operating-1" value="phone-1">Bleckgerry os</label><br>
+                        </form>
+                    </aside>
+                    <!-- widget-product -->
+                    <aside class="widget widget-product box-shadow">
+                        <h6 class="widget-title border-left mb-20">Sản phẩm liên quan</h6>
+                        @foreach (var item in recent_products)
+                        {
+                            @Html.Partial("_ProductsItem2", item);
+                        }
+                    </aside>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- SHOP SECTION END -->
+    <!-- SHOP SECTION END -->

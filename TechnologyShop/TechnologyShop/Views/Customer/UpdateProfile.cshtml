@@ -4,24 +4,26 @@
     ViewBag.Title = "UpdateProfile";
 }
 
-<div class="wrapper">
 
-    <!-- Start page content -->
-    <div id="page-content" class="page-wrapper">
-        <!-- UPDATE PROFILE SECTION START -->
-        <div class="login-section mb-80">
-            <div class="container">
-                <div class="row">
-                    <!-- new-customers -->
-                    <div class="col-md-6 col-md-offset-3">
-                        <div class="new-customers">
-                            @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-                            {
+@using (Html.BeginForm("UpdateProfile", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="wrapper">
+
+        <!-- Start page content -->
+        <div id="page-content" class="page-wrapper">
+            <!-- UPDATE PROFILE SECTION START -->
+            <div class="login-section mb-80">
+                <div class="container">
+                    <div class="row">
+                        <!-- new-customers -->
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="new-customers">
+
 
                                 <h6 class="widget-title border-left mb-50">UPDATE PROFILE CUSTOMERS</h6>
                                 <div class="login-account p-30 box-shadow">
-                                    <!--Update-->
-
+                                    @Html.HiddenFor(model => model.Id)
                                     <div class="row">
 
                                         <div class="form-group">
@@ -64,7 +66,8 @@
                                             <div class="col-md-12">
                                                 <label for="Logo">Avatar:</label>
                                                 <div class="input-group">
-                                                    <input type="file" class="form-control" name="pic" id="pic" placeholder="Avatar" required />
+                                            
+                                                    <input type="file" name="pic" placeholder="Avatar" />
                                                 </div>
                                             </div>
                                         </div>
@@ -77,18 +80,27 @@
                                                 <button class="submit-btn-1 mt-20 btn-hover-1 f-right" type="reset">Clear</button>
                                             </div>
                                         </div>
+                                        <!--Update-->
+                                        @*<div class="row">
+
+                                            <div class="form-group">
+
+                                                <img src="~/Uploads/Avatars/@Model.Id/@Model.Avatar" height="80" />
+                                            </div>
+                                        </div>*@
                                     </div>
                                     <p>@ViewBag.Message</p>
                                 </div>
-                            }
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- UPDATE PROFILE SECTION END -->
         </div>
-        <!-- UPDATE PROFILE SECTION END -->
+        <!-- End page content -->
+
     </div>
-    <!-- End page content -->
 
-</div>
-
+}

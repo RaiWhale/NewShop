@@ -5,15 +5,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TechnologyShop.Models;
+using PagedList;
 
 namespace TechnologyShop.Controllers
 {
     public class ProductsController : Controller
     {
         NewShopEntities db = new NewShopEntities();
+        int pageSize = 5;
         // GET: Products
-        public ActionResult Index(string cat)
+        public ActionResult Index(string cat,int? page, string sort, string search)
         {
+  
+
+
             var category = db.Categories.Where(x => x.CategoryName.Equals(cat)).FirstOrDefault();
             if (category != null)
             {
@@ -29,7 +34,41 @@ namespace TechnologyShop.Controllers
             ViewBag.products_hot = db.Products.OrderByDescending(x => x.OutputPrice).Take(5).ToList();
             ViewBag.topics = db.Topics.ToList();
 
-            return View();
+                        int pageNumber = page ?? 1;
+            var products = db.Products.AsQueryable();
+            if (search != null && search.Trim() != "")
+            {
+                products = products.Where(s => s.ProductName.ToLower().Contains(search.Trim().ToLower()));
+            }
+            if (string.IsNullOrEmpty(sort))
+            {
+                sort = "id_asc";
+            }
+            ViewBag.SortName = "name_asc";
+            switch (sort)
+            {
+                case "id_asc":
+                    products = products.OrderBy(x => x.Id);
+                    ViewBag.SortId = "id_desc";// Dùng cho lần bấm tiếp theo
+                    break;
+                case "id_desc":
+                    products = products.OrderByDescending(x => x.Id);
+                    ViewBag.SortId = "id_asc"; //Dùng cho lần bấm tiếp theo
+                    break;
+                case "name_asc":
+                    products = products.OrderBy(x => x.ProductName);
+                    ViewBag.SortId = "name_desc";// Dùng cho lần bấm tiếp theo
+                    break;
+                case "name_desc":
+                    products = products.OrderByDescending(x => x.ProductName);
+                    ViewBag.SortId = "name_asc"; //Dùng cho lần bấm tiếp theo
+                    break;
+            }
+            ViewBag.CurrentSort = sort; //biến hiện hành giữ nguyên sắp xếp
+            ViewBag.CurrentSearch = search;
+
+
+            return View(products.ToPagedList(pageNumber,pageSize));
         }
 
         // GET: Admin/Products/Details/5
