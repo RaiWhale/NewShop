@@ -56,6 +56,12 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -460,6 +466,7 @@
     <Content Include="Content\MainPage\lib\css\nivo-slider.css" />
     <Content Include="Content\MainPage\lib\js\jquery.nivo.slider.js" />
     <Content Include="Content\MainPage\shopping.js" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\products\case-jetek-a10.jpg" />
     <Content Include="Content\products\case-jetek-a8.jpg" />
@@ -698,6 +705,8 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\shopping.js" />
     <Content Include="Uploads\Pictures\10\636765007056518133_Faker-1.jpg" />
@@ -761,6 +770,7 @@
     <Folder Include="Content\MainPage\css\github.com\necolas\" />
     <Folder Include="Content\MainPage\css\plugins\images\" />
     <Folder Include="Content\MainPage\images\pattern\" />
+    <Folder Include="Uploads\Avatars\" />
     <Folder Include="Views\LoginRedirect\" />
   </ItemGroup>
   <ItemGroup>

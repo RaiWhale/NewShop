@@ -147,24 +147,38 @@ namespace TechnologyShop.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult UpdateProfile(UpdateProfileVM data, HttpPostedFileBase pic)
+        public ActionResult UpdateProfile(UpdateProfileVM data)
         {
     
             try
             {
-                string filename = DateTime.Now.Ticks + "_" + pic.FileName.Split('/').Last();
+             
+                 
+   
                 var email = db.Customers.Find(int.Parse(User.Identity.Name));
                 data.Id = email.Id;
-                data.Avatar = filename;
+                for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
+                {
+
+                    HttpPostedFileBase file = Request.Files[i];
+
+                    string filename = DateTime.Now.Ticks + "_" + file.FileName.Split('/').Last();
+
+                    string path = Server.MapPath("~/Uploads/Avatars") + "\\" + data.Id;
+                    if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+                    file.SaveAs(path + "\\" + filename);
+                    data.Avatar = filename;
+
+                }
+
 
                 AutoMapper.Mapper.Map(data, email);
-               
+
 
                 db.SaveChanges();
 
-                string path = Server.MapPath("~/Uploads/Avatars") + "\\" + data.Id;
-                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-                pic.SaveAs(path + "\\" + filename);
+   
 
                 ViewBag.Message = "Update Successfully";
             }
