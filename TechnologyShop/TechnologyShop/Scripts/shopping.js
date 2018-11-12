@@ -179,6 +179,33 @@ function loadCartItems() {
             showTotal();
         }
     });
+
+    
+    $("#form_checkout").submit(function () {
+        var cart_items = getCartItems();
+        $("#cartlist").val(JSON.stringify(cart_items));
+        alert("submit");
+        $.ajax({
+            url: '/Cart/Checkout',
+            type: "POST",
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response == "OK") {
+                    //tu nghien cuu sau khi ngu day
+                    emptyCartItems();
+                    alert("Successfully!");
+                } else {
+                    alert(response);
+                }
+            },
+            error: function () {
+
+            }
+        });
+        return false;
+    });
+
+
 }
 
 function loadHeaderCartItems() {
@@ -222,12 +249,12 @@ function loadWishListCartItems() {
             + "<td>" + v.productname + "</td>"
             + "<td align='center'>" + v.unit + "</td>"
             + "<td align='right'>" + parseFloat(v.price).toLocaleString('en') + "</td>"
-            + "<td><button class='addtocart1'>Add to cart</button></td>"
+            + "<td><button class='addtocart'>Add to cart</button></td>"
             + "<td><button class='removeitem'>Remove</button></td>"
             + "</tr>");
     });
  
-    $(".addtocart1").click(function () {
+    $(".addtocart").click(function () {
         var is_exist = false;
         $(cart_items).each(function (i, v) {
             if (v && v.productid == productid) {
@@ -257,27 +284,9 @@ function loadWishListCartItems() {
     });
 }
 
-function Checkout() {
-    var cart_items = getCartItems();
-
-    $.ajax({
-        url: '/Cart/Checkout',
-        type: "POST",
-        data: "id=1&name=sgfashgfj",
-        success: function (response) {
-            if (response != "") {
-                $("#thongbao").html(response);
-            }
-        },
-        error: function () {
-
-        }
-    });
-
-    
-}
-
 $(document).ready(function () {
+
+    //loadWishListCartItems();
 
     $(".addtocart").click(function () {
         var a = $(this);
@@ -293,17 +302,3 @@ $(document).ready(function () {
     loadCartItems();
 
 });
-
-$(document).ready(function () {
-$(".addtowishlist").click(function () {
-    var a = $(this);
-    addItem2(a.attr("productid"), a.attr("productname"), a.attr("unit"), a.attr("price"));
-    return false;
-    });
-    loadWishListCartItems();
-});
-
-
-
-
-

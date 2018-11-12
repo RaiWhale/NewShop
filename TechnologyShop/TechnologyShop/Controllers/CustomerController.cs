@@ -140,8 +140,8 @@ namespace TechnologyShop.Controllers
         [Authorize]
         public ActionResult UpdateProfile()
         {
-            var email = db.Customers.Find(int.Parse(User.Identity.Name));
-            var data = AutoMapper.Mapper.Map<UpdateProfileVM>(email);
+            var cus = db.Customers.Find(int.Parse(User.Identity.Name));
+            var data = AutoMapper.Mapper.Map<UpdateProfileVM>(cus);
             return View(data);
         }
 
@@ -155,8 +155,9 @@ namespace TechnologyShop.Controllers
              
                  
    
-                var email = db.Customers.Find(int.Parse(User.Identity.Name));
-                data.Id = email.Id;
+                var cus = db.Customers.Find(int.Parse(User.Identity.Name));
+                data.Id = cus.Id;
+
                 for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
                 {
 
@@ -173,7 +174,7 @@ namespace TechnologyShop.Controllers
                 }
 
 
-                AutoMapper.Mapper.Map(data, email);
+                AutoMapper.Mapper.Map(data, cus);
 
 
                 db.SaveChanges();

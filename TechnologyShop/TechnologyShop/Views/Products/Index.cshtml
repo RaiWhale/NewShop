@@ -6,12 +6,11 @@
 
     @{
         ViewBag.Title = "Products";
-        var products = ViewBag.products as List<Product>;
-        //var products_hot = ViewBag.products_hot as List<Product>;
+        
         var topics = ViewBag.topics as List<Topic>;
         var recent_products = ViewBag.recent_products as List<Product>;
     }
-    <div class="col-md-offset-7"><h2>@ViewBag.CategoryName <div class="float-right badge badge-success">(@products.Count)</div></h2></div>
+    <div class="col-md-offset-7"><h2>@ViewBag.CategoryName <div class="float-right badge badge-success">(@Model.Count)</div></h2></div>
     <!-- =============== BOOTSTRAP STYLES ===============-->
     <link rel="stylesheet" href="/Content/admin/css/bootstrap.css" id="bscss">
 
@@ -30,13 +29,13 @@
                             <div role="tabpanel" class="tab-pane active" id="grid-view">
                                 <!--Sua-->
                                 <div class="row">
-                                    @foreach (TechnologyShop.Models.Product item in products)
+                                    @foreach (TechnologyShop.Models.Product item in Model)
                                     {
                                         @Html.Partial("_ProductsItem1", item)
                                     }
 
                                 </div>
-                                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.Minimal);
+                                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, search = ViewBag.search, cat = ViewBag.cat }));
                             </div>
                             <!-- list-view -->
                             <!--Huy-->
@@ -52,6 +51,7 @@
                         <!-- header-search -->
                         @using (Html.BeginForm("Index","Products",FormMethod.Get))
                         {
+                            @Html.Hidden("cat")
                             @Html.TextBox("search", null, new { @placeholder = "Search with keywords...", @class = "form-control", @style = "display:inline-block" })
                             <button type="submit" value="Search"><i class="zmdi zmdi-search"></i></button>
 
