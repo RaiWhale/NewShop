@@ -194,6 +194,7 @@ function loadCartItems() {
                     //tu nghien cuu sau khi ngu day
                     emptyCartItems();
                     alert("Successfully!");
+                    window.location.href = 'Cart/OrderComplete';
                 } else {
                     alert(response);
                 }
@@ -250,7 +251,7 @@ function loadWishListCartItems() {
             + "<td align='center'>" + v.unit + "</td>"
             + "<td align='right'>" + parseFloat(v.price).toLocaleString('en') + "</td>"
             + "<td><button class='addtocart'>Add to cart</button></td>"
-            + "<td><button class='removeitem'>Remove</button></td>"
+            + "<td><button class='removewishlist'>Remove</button></td>"
             + "</tr>");
     });
  
@@ -274,7 +275,7 @@ function loadWishListCartItems() {
     
    
 
-    $(".removeitem").click(function () {
+    $(".removewishlist").click(function () {
         if (confirm("Are you sure to remove this item?")) {
             var tr = $(this).closest("tr").find("td");
             removeItem2(tr.eq(0).html());
@@ -286,7 +287,13 @@ function loadWishListCartItems() {
 
 $(document).ready(function () {
 
-    //loadWishListCartItems();
+    $(".addtowishlist").click(function () {
+        var a = $(this);
+        addItem2(a.attr("productid"), a.attr("productname"), a.attr("unit"), a.attr("price"));
+
+        return false;
+    });
+  
 
     $(".addtocart").click(function () {
         var a = $(this);
@@ -300,5 +307,5 @@ $(document).ready(function () {
     //loadHeaderCartItems();//tren header moi trang
  
     loadCartItems();
-
+    loadWishListCartItems();
 });

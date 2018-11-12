@@ -28,13 +28,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             return View();
         }
 
-        static Random rnd = new Random();
-        public string RandomString2(int length)
-        {
-            const string chars = "0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[rnd.Next(s.Length)]).ToArray());
-        }
+
 
         public ActionResult Category(int? cat)
         {
@@ -149,7 +143,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
 
-                product.BarCode = RandomString2(6);
+                product.BarCode = MySecurity.RandomString(6);
                 product.IsActive = true;
                 db.Products.Add(product);
                 db.SaveChanges();

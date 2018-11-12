@@ -20,12 +20,16 @@ namespace TechnologyShop.Controllers
             {
                 var cus = db.Customers.Find(int.Parse(User.Identity.Name));
                 ViewBag.customer = AutoMapper.Mapper.Map<UpdateProfileVM>(cus);
+
+            
             }
             return View();
         }
 
+    
+
         [HttpPost]
-        public ActionResult CheckOut(string CustomerName, string Email, string Phone, byte Gender, string Address, string cartlist)
+        public ActionResult CheckOut(string CustomerName, string Email, string Phone, byte Gender, string Address, string cartlist, int? id)
         {
             //xu ly cartlist
             List<CartItemVM> cart_items = JsonConvert.DeserializeObject <List<CartItemVM>>(cartlist);
@@ -36,6 +40,7 @@ namespace TechnologyShop.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 cus = db.Customers.Find(int.Parse(User.Identity.Name));
+                cus.Gender = Gender;
             }
             else
             {
@@ -56,12 +61,11 @@ namespace TechnologyShop.Controllers
             //Create new order
             var order = new Order
             {
+                OrderCode = MySecurity.RandomString(6),
                 CustomerId = cus.Id,
-                UserId = 5,
                 OrderDate = DateTime.Now,
                 Discount = 0,
                 Tax = 0,
-                OrderCode = "cuc cut",
                 Status = 1 //pending
             };
             db.Orders.Add(order);
@@ -79,7 +83,7 @@ namespace TechnologyShop.Controllers
                     ProductId = product.Id,
                     Unit = product.Unit,
                     Price = product.OutputPrice,
-                    Discount = 0,
+                    Discount = product.Discount,
                     Tax = 0,
                     Quantity = cart_items.Where(x=>x.productid == product.Id).SingleOrDefault().quantity,
                     Note = ""
@@ -87,9 +91,14 @@ namespace TechnologyShop.Controllers
                 db.OrderDetails.Add(od);
             }
             db.SaveChanges();
-
             return Content("OK");
         }
-   
+
+        public ActionResult OrderComplete()
+        {
+
+            return View();
+        }
+
     }
 }

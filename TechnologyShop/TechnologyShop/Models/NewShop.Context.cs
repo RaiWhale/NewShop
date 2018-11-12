@@ -28,7 +28,6 @@ namespace TechnologyShop.Models
         public virtual DbSet<InputDetail> InputDetails { get; set; }
         public virtual DbSet<Input> Inputs { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
@@ -38,5 +37,6 @@ namespace TechnologyShop.Models
         public virtual DbSet<UserLevel> UserLevels { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
     }
 }

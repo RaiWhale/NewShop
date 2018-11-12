@@ -765,6 +765,7 @@
     <Content Include="Views\Shared\_ProductsRecent.cshtml" />
     <Content Include="Views\Shared\_QuickView.cshtml" />
     <Content Include="Views\Customer\UpdateProfile.cshtml" />
+    <Content Include="Views\Cart\OrderComplete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
