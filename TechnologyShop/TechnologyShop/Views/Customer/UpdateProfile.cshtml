@@ -21,7 +21,7 @@
                             <div class="new-customers">
 
 
-                                <h6 class="widget-title border-left mb-50">UPDATE PROFILE CUSTOMERS</h6>
+                                <h6 class="widget-title border-left mb-50">CẬP NHẬT THÔNG TIN</h6>
                                 <div class="login-account p-30 box-shadow">
                                     
                                     <div class="row">
@@ -34,21 +34,21 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            @Html.Label("Họ tên", htmlAttributes: new { @class = "control-label col-md-4" })
                                             <div class="col-md-8">
                                                 @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Name" } })
                                                 @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            @Html.Label("Giới tính", htmlAttributes: new { @class = "control-label col-md-4" })
                                             <div class="col-md-6">
                                                 @Html.EnumDropDownListFor(model => model.Gender, "Please select gender", new { htmlAttributes = new { @class = "form-control" } })
                                                 @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            @Html.Label("Số điện thoại", htmlAttributes: new { @class = "control-label col-md-4" })
                                             <div class="col-md-6">
                                                 @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Phone here....." } })
                                                 @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
@@ -56,7 +56,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            @Html.Label("Địa chỉ", htmlAttributes: new { @class = "control-label col-md-4" })
                                             <div class="col-md-6">
                                                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Country" } })
                                                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
@@ -64,7 +64,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-12">
-                                                <label for="Logo">Avatar:</label>
+                                                <label for="Logo">Ảnh đại diện:</label>
                                                 <div class="input-group">
                                             
                                                     <input type="file" name="pic" placeholder="Avatar" />

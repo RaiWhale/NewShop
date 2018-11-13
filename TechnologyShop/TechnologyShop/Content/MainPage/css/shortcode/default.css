@@ -1258,7 +1258,9 @@ textarea:focus {
   16. Background variation set 
  **************************************/
 /*colored background*/
-.theme-bg { background: #ff7f00; }
+.theme-bg {
+    background: #2F4F4F;
+}
 .black-bg { background: #222222; }
 .white-bg { background: #fff; }
 .gray-bg { background: #f6f6f6; }
@@ -1332,7 +1334,7 @@ textarea:focus {
   background: url(../../images/bg/1.jpg);}
  .bg-2 { background: url(../../images/bg/2.jpg);}
 .bg-3 {
-    background: url(../../images/bg/bannerts1.jpg);
+    background: url(../../images/bg/3.jpg);
 }
  .bg-4 { background: url(../../images/bg/4.jpg);}
  .bg-5 { background: url(../../images/bg/5.jpg);}

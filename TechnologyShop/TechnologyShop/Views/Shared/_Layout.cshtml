@@ -58,7 +58,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="wishlist.html">
+                                            <a href="@Url.Action("Index","Cart")">
                                                 <i class="zmdi zmdi-favorite"></i>
                                                 Wish List (0)
                                             </a>
@@ -396,17 +396,17 @@
                     <div class="col-md-12">
                         <div class="slider-desc-3 text-center">
                             <div class="wow rotateInDownLeft" data-wow-duration="2s" data-wow-delay="0.5s">
-                                <h6 class="slider2-title-1">Best price : $866</h6>
+                                <h6 class="slider2-title-1">Tech Shop</h6>
                             </div>
                             <div class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="1s">
-                                <h1 class="slider2-title-2">new smart phone</h1>
+                                <h1 class="slider2-title-2">Mở bán chính hãng</h1>
                             </div>
                             <div class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="1.5s">
-                                <h2 class="slider2-title-3">Samsung grand 6</h2>
+                                <h2 class="slider2-title-3"> Apple Iphone Xs & Apple Iphone xs max</h2>
                             </div>
                             <div class="slider-button wow fadeInUp" data-wow-duration="1s" data-wow-delay="2.5s">
-                                <a href="#" class="button extra-small button-white">
-                                    <span class="text-uppercase">Buy now</span>
+                                <a href="@Url.Action("Index","Products")" class="button extra-small button-white">
+                                    <span class="text-uppercase">Mua Ngay</span>
                                 </a>
                             </div>
                         </div>
@@ -428,17 +428,14 @@
             <div class="footer-top">
                 <div class="container-fluid">
                     <div class="plr-185">
-                        <div class="footer-top-inner theme-bg">
-                            <div class="row">
+                        <div class="footer-bottom-inner theme-bg">
+                            <div class="row col-md-offset-1">
                                 <div class="col-lg-4 col-md-5 col-sm-4">
                                     <div class="single-footer footer-about">
                                         <div class="footer-logo">
-                                            <img src="~/Content/MainPage/img/logo/logo.png" alt="">
+                                            <img src="~/Content/MainPage/img/logo/logo size 02.png" alt="">
                                         </div>
-                                        <div class="footer-brief">
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the subas industry's standard dummy text ever since the 1500s,</p>
-                                            <p>When an unknown printer took a galley of type and If you are going to use a passage of Lorem Ipsum scrambled it to make.</p>
-                                        </div>
+                       
                                         <ul class="footer-social">
                                             <li>
                                                 <a class="facebook" href="" title="Facebook"><i class="zmdi zmdi-facebook"></i></a>
@@ -455,71 +452,44 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 hidden-md hidden-sm">
-                                    <div class="single-footer">
-                                        <h4 class="footer-title border-left">Shipping</h4>
-                                        <ul class="footer-menu">
-                                            <li>
-                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>New Products</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>Discount Products</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>Best Sell Products</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>Popular Products</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>Manufactirers</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>Suppliers</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>Special Products</span></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                              
                                 <div class="col-lg-2 col-md-3 col-sm-4">
                                     <div class="single-footer">
-                                        <h4 class="footer-title border-left">my account</h4>
+                                        <h4 class="footer-title border-left">Tài khoản</h4>
                                         <ul class="footer-menu">
                                             <li>
-                                                <a href=""><i class="zmdi zmdi-circle"></i><span>My Account</span></a>
+                                                <a href="@Url.Action("UpdateProfile","Customer")"><i class="zmdi zmdi-circle"></i><span>Tài khoản</span></a>
                                             </li>
                                             <li>
-                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>My Wishlist</span></a>
+                                                <a href="@Url.Action("Index","Cart")"><i class="zmdi zmdi-circle"></i><span>Yêu thích</span></a>
                                             </li>
                                             <li>
-                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>My Cart</span></a>
+                                                <a href="@Url.Action("Index","Cart")"><i class="zmdi zmdi-circle"></i><span>Giỏ hàng</span></a>
                                             </li>
                                             <li>
-                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>Sign In</span></a>
+                                                <a href="@Url.Action("Login","Customer")"><i class="zmdi zmdi-circle"></i><span>Đăng nhập</span></a>
                                             </li>
                                             <li>
-                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>Registration</span></a>
+                                                <a href="@Url.Action("Register","Customer")"><i class="zmdi zmdi-circle"></i><span>Đăng ký</span></a>
                                             </li>
                                             <li>
-                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>Check out</span></a>
+                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>Thanh toán</span></a>
                                             </li>
                                             <li>
-                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>Oder Complete</span></a>
+                                                <a href="#"><i class="zmdi zmdi-circle"></i><span>Hoàn tất thủ tục</span></a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="single-footer">
-                                        <h4 class="footer-title border-left">Get in touch</h4>
+                                        <h4 class="footer-title border-left">Đánh giá</h4>
                                         <div class="footer-message">
                                             <form action="#">
                                                 <input type="text" name="name" placeholder="Your name here...">
                                                 <input type="text" name="email" placeholder="Your email here...">
                                                 <textarea class="height-80" name="message" placeholder="Your messege here..."></textarea>
-                                                <button class="submit-btn-1 mt-20 btn-hover-1" type="submit">submit message</button>
+                                                <button class="submit-btn-1 mt-20 btn-hover-1" type="submit">Gửi đánh giá</button>
                                             </form>
                                         </div>
                                     </div>
@@ -580,6 +550,7 @@
     <script src="~/Scripts/jquery.cookie.js"></script>
     <script src="~/Scripts/shopping.js"></script>
     <script src="~/Content/Admin/js/app.js"></script>
+    <script src="~/Content/Admin/js/PartialWork.js"></script>
     @RenderSection("scripts", required: false);
 
 
