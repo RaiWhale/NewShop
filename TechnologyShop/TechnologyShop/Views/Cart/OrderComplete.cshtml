@@ -1,8 +1,8 @@
-﻿@using TechnologyShop.Models
+﻿@model TechnologyShop.Models.Order
 
 @{
     ViewBag.Title = "OrderComplete";
-
+    var order = ViewBag.order;
 }
 
 <!-- order-complete start -->
@@ -15,7 +15,7 @@
             <ul class="order-info-list">
                 <li>
                     <h6>order no</h6>
-                    <p>     @ViewBag.orid</p>
+                    <p>   </p>
 
                 </li>
             </ul>
