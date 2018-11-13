@@ -184,7 +184,7 @@ function loadCartItems() {
     $("#form_checkout").submit(function () {
         var cart_items = getCartItems();
         $("#cartlist").val(JSON.stringify(cart_items));
-        alert("submit");
+
         $.ajax({
             url: '/Cart/Checkout',
             type: "POST",
@@ -193,7 +193,7 @@ function loadCartItems() {
                 if (response == "OK") {
                     //tu nghien cuu sau khi ngu day
                     emptyCartItems();
-                    alert("Successfully!");
+              
                     window.location.href = 'Cart/OrderComplete';
                 } else {
                     alert(response);
