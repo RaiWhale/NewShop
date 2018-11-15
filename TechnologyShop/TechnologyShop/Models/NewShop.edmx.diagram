@@ -33,6 +33,9 @@
         <AssociationConnector Association="NewShopModel.FK_Orders_Customers" />
         <AssociationConnector Association="NewShopModel.FK_OrderDetails_Orders" />
         <AssociationConnector Association="NewShopModel.FK_Orders_Users" />
+        <EntityTypeShape EntityType="NewShopModel.WishList" Width="1.5" PointX="13.375" PointY="6.5" />
+        <AssociationConnector Association="NewShopModel.FK_WishList_ToCustomers" />
+        <AssociationConnector Association="NewShopModel.FK_WishList_ToProducts" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

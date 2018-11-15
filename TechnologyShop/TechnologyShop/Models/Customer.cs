@@ -18,6 +18,7 @@ namespace TechnologyShop.Models
         public Customer()
         {
             this.Orders = new HashSet<Order>();
+            this.WishLists = new HashSet<WishList>();
         }
     
         public int Id { get; set; }
@@ -34,5 +35,7 @@ namespace TechnologyShop.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WishList> WishLists { get; set; }
     }
 }

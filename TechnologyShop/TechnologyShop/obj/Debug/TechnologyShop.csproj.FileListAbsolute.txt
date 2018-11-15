@@ -110,7 +110,6 @@ E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\Microsoft.CodeAnalysis.CShar
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\Microsoft.CodeAnalysis.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Collections.Immutable.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Reflection.Metadata.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\VBCSCompiler.exe
 E:\NewShop\TechnologyShop\TechnologyShop\bin\System.Web.Helpers.xml
@@ -213,8 +212,9 @@ E:\NewShop\TechnologyShop\TechnologyShop\bin\Microsoft.CodeDom.Providers.DotNetC
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csproj.CoreCompileInputs.cache
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.dll
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.pdb
-E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csprojAssemblyReference.cache
 E:\NewShop\TechnologyShop\TechnologyShop\bin\PagedList.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\PagedList.Mvc.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\PagedList.xml
 E:\NewShop\TechnologyShop\TechnologyShop\bin\PagedList.Mvc.xml
+E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Collections.Immutable.dll
+E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csprojAssemblyReference.cache

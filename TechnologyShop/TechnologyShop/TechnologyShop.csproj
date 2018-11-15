@@ -296,6 +296,9 @@
     <Compile Include="Models\ViewModel\QuantityReportVM.cs" />
     <Compile Include="Models\ViewModel\RegisterVM.cs" />
     <Compile Include="Models\ViewModel\UpdateProfileVM.cs" />
+    <Compile Include="Models\WishList.cs">
+      <DependentUpon>NewShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
