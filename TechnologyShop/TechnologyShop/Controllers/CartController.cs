@@ -97,7 +97,7 @@ namespace TechnologyShop.Controllers
         public ActionResult OrderComplete()
         {
             var cus = db.Customers.Find(int.Parse(User.Identity.Name));
-            var order = db.Orders.Where(x => x.CustomerId == cus.Id).OrderBy(x => x.OrderDate);
+            var order = db.Orders.Where(x => x.CustomerId == cus.Id);
 
             ViewBag.order = order;
 

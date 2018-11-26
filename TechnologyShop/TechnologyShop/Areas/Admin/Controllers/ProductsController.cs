@@ -216,19 +216,22 @@ namespace TechnologyShop.Areas.Admin.Controllers
                         HttpPostedFileBase file = Request.Files[i];
 
                         string filename = DateTime.Now.Ticks + "_" + file.FileName.Split('/').Last();
-
-                        string path = Server.MapPath("~/Uploads/Pictures") + "\\" + product.Id;
-                        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-
-                        file.SaveAs(path + "\\" + filename);
-
-                        Picture p = new Picture()
+                        if(filename != null)
                         {
-                            ProductId = product.Id,
-                            Url = filename
-                        };
+                            string path = Server.MapPath("~/Uploads/Pictures") + "\\" + product.Id;
+                            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
-                        db.Pictures.Add(p);
+                            file.SaveAs(path + "\\" + filename);
+
+                            Picture p = new Picture()
+                            {
+                                ProductId = product.Id,
+                                Url = filename
+                            };
+
+                            db.Pictures.Add(p);
+                        }
+            
 
                     }
                 }
