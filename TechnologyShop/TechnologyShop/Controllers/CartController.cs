@@ -29,7 +29,7 @@ namespace TechnologyShop.Controllers
     
 
         [HttpPost]
-        public ActionResult CheckOut(string CustomerName, string Email, string Phone, byte Gender, string Address, string cartlist, int? id)
+        public ActionResult CheckOut(string CustomerName, string Email, string Phone, byte Gender, string Address, string cartlist)
         {
             //xu ly cartlist
             List<CartItemVM> cart_items = JsonConvert.DeserializeObject <List<CartItemVM>>(cartlist);

@@ -47,11 +47,11 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( Customer customer, byte Gender)
+        public ActionResult Create([Bind(Include = "Id,CustomerName,Gender,Birthday,Phone,Email,Password,Address,IsActive")] Customer customer)
         {
             if (ModelState.IsValid)
             {
-                customer.Gender = Gender;
+             
                 db.Customers.Add(customer);
                 db.SaveChanges();
                 return Content("OK");

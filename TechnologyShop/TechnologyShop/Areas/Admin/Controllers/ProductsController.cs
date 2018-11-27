@@ -216,8 +216,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                         HttpPostedFileBase file = Request.Files[i];
 
                         string filename = DateTime.Now.Ticks + "_" + file.FileName.Split('/').Last();
-                        if(filename != null)
-                        {
+                  
                             string path = Server.MapPath("~/Uploads/Pictures") + "\\" + product.Id;
                             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
@@ -230,7 +229,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                             };
 
                             db.Pictures.Add(p);
-                        }
+                        
             
 
                     }
