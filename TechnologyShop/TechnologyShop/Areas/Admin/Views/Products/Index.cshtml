@@ -24,9 +24,9 @@
                 s += "<tr class='rcat' catid='" + cat.Id + "'>"
                 + "<td>&nbsp; &nbsp; &nbsp; + " + cat.CategoryName + "</td>"
                 + "<td>"
-                
+
                 + Html.ActionLink("Edit", "Edit", "Categories", new { id = cat.Id }, new { baction = "" }) + "|"
-                + Html.ActionLink("Delete", "Delete", "Categories", new { id = cat.Id }, new { baction = "" })
+                + Html.ActionLink("Delete", "Delete", "Categories", new { id = cat.Id }, new { baction = "" }) 
                 + "</td>"
             + "</tr>" + Environment.NewLine;
             }
@@ -46,7 +46,7 @@
                 @Html.ActionLink("Add Topic", "Create", "Topics", null, new { baction = "", @class = "btn btn-info" })
             </p>
 
-            <div id="tblcat">
+            <div id="tblcat" class="table-content table-responsive mb-50">
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
@@ -57,7 +57,6 @@
                     </thead>
 
                     <tbody>
-
                         <tr class="rcat" catid="0">
                             <td>All (*)</td>
                             <td></td>

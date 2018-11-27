@@ -1,0 +1,88 @@
+﻿@model TechnologyShop.Models.Product
+<!-- imgs-zoom-area start -->
+<div class="col-md-5 col-sm-5 col-xs-12">
+    <div class="imgs-zoom-area">
+        <a href="~/Products/Details/@Model.Id">
+            <!--Sua-->
+            @{
+
+                string src = "/Content/MainPage/img/product/1.jpg";
+                var pic = Model.Picture;
+                if (pic == null)
+                {
+                    pic = Model.Pictures.FirstOrDefault();
+                }
+
+                if (pic != null)
+                {
+                    src = "/Uploads/Pictures/" + pic.ProductId + "/" + pic.Url;
+                }
+            }
+            <img src="@src" alt="" />
+        </a>
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="gallery_01" class="carousel-btn slick-arrow-3 mt-30">
+
+                    @foreach (var item in Model.Pictures)
+                    {
+                        <div class="p-c">
+                            <a href="~/Products/Details/@Model.Id">
+                                <img class="zoom_03" src=@src alt="">
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- imgs-zoom-area end -->
+<!-- single-product-info start -->
+<div class="col-md-7 col-sm-7 col-xs-12">
+    <div class="single-product-info">
+        <h3 class="text-black-1"><a href="~/Products/Details/@Model.Id">@Model.ProductName</a><!--Sua--></h3>
+        <h6 class="brand-name-2">@Model.Category.CategoryName</h6>
+        <!--  hr -->
+
+        <hr>
+
+       
+            <!-- plus-minus-pro-action -->
+            <div class="plus-minus-pro-action clearfix">
+                <div class="sin-pro-action col-md-offset-4">
+                    <ul class="action-button">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a class="addtowishlist" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
+                            </li>
+                        }
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#productModal" title="Quickview" tabindex="0"><i class="zmdi zmdi-zoom-in"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" title="Compare" tabindex="0"><i class="zmdi zmdi-refresh"></i></a>
+                            </li>
+                            <li>
+                                <a class="addtocart" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                            </li>
+                        </ul>
+                </div>
+            </div>
+        
+        <!-- plus-minus-pro-action end -->
+        <!-- hr -->
+        <hr>
+        <!-- single-product-price -->
+        <h3 class="pro-price">Price:@Model.OutputPrice</h3>
+        <!--  hr -->
+        <hr>
+        <div>
+            <a href="@Url.Action("BuyNow","Products",new { @class="btnmodal"})">
+                <small>Buy Now</small>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- single-product-info end -->

@@ -1,0 +1,177 @@
+﻿@using TechnologyShop.Models
+@using TechnologyShop.Models.ViewModel
+
+@{
+    var customer = ViewBag.customer as UpdateProfileVM;
+   
+}
+
+<section id="page-content" class="page-wrapper">
+
+    <!-- SHOP SECTION START -->
+    <div class="shop-section mb-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-sm-12">
+                    <ul class="cart-tab">
+                        <li>
+                            <a class="active" href="#shopping-cart" data-toggle="tab">
+                                <span>01</span>
+                                Shopping cart
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#wishlist" data-toggle="tab">
+                                <span>02</span>
+                                Wishlist
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-10 col-sm-12">
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <!-- shopping-cart start -->
+                        <div class="tab-pane active" id="shopping-cart">
+                            <div class="shopping-cart-content">
+
+                                <div class="table-content table-responsive mb-50">
+                                    <table class="text-center table">
+                                        <thead>
+                                            <tr class="header">
+                                                <td class="product-title ">Id</td>
+                                                <td class="product-thumbnail">Tên sản phẩm</td>
+                                                <td class="product-info">Đơn vị</td>
+                                                <td class="product-price">Giá</td>
+                                                <td class="product-quantity">Số lượng</td>
+                                                <td class="product-subtotal">Tổng tiền</td>
+                                                <td class="product-remove">Hủy</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="carts">
+                                            <!-- tr -->
+                                            <!-- tr -->
+
+                                        </tbody>
+                                    </table>
+                                    <h3>
+                                        Sum Total: <span id="sumtotal"></span>
+                                    </h3>
+                                </div>
+                                <!-- checkout start -->
+                                <div class="tab-pane" id="checkout">
+                                    <div class="checkout-content box-shadow p-30">
+                                        <form id="form_checkout" method="post">
+                                            <div class="row">
+
+                                                <!-- billing details -->
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                <div class="col-md-6">
+                                                    <h6 class="widget-title border-left mb-20">billing details</h6>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            @Html.Label("Name:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-4">
+                                                                @customer.CustomerName
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            @Html.Label("Email:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-4">
+                                                                @customer.Email
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            @Html.Label("Gender:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-6">
+                                                                @Html.DropDownList("Gender", EnumHelper.GetSelectList(typeof(Gender)), "Please select gender")
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            @Html.Label("Phone:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-4">
+                                                                @customer.Phone
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            @Html.Label("Address:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-4">
+                                                                @customer.Address
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-6">
+                                                        <div class="billing-details pr-10">
+                                                            <h6 class="widget-title border-left mb-20">billing details</h6>
+                                                            <input type="text" name="CustomerName" placeholder="Your Name Here...">
+                                                            <input type="text" name="Email" placeholder="Email address here...">
+                                                            <input type="text" name="Phone" placeholder="Phone here...">
+                                                            @Html.DropDownList("Gender", EnumHelper.GetSelectList(typeof(Gender)), "Please select gender")
+                                                            <textarea name="Address" class="custom-textarea" placeholder="Your address here..."></textarea>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                                <input type="hidden" id="cartlist" name="cartlist" />
+                                                <div class="col-md-12">
+                                                    <button class="submit-btn-1 mt-30 btn-hover-1" type="submit">Finish</button>
+                                                </div>
+                                            </div>
+</form>
+                                    </div>
+                                </div>
+                                <!-- checkout end -->
+
+                            </div>
+                        </div>
+                        <!-- shopping-cart end -->
+                        <!-- wishlist start -->
+                        <div class="tab-pane" id="wishlist">
+                            <div class="wishlist-content">
+                                <form action="#">
+                                    <div class="table-content table-responsive mb-50">
+                                        <table class="text-center">
+                                            <thead>
+                                                <tr class="header">
+                                                    <th class="product-thumbnail">Tên sản phẩm</th>
+                                                    <th class="product-price">Giá</th>
+                                                    <td class="product-info">Đơn vị</td>
+                                                    <th class="product-add-cart">add to cart</th>
+                                                    <th class="product-remove">remove</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="wishlist2">
+                                                <!-- tr -->
+                                                <!-- tr -->
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- wishlist end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SHOP SECTION END -->
+
+</section>
+

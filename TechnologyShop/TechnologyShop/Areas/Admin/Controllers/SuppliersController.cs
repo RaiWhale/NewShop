@@ -17,7 +17,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // GET: Admin/Suppliers
         public ActionResult Index()
         {
-            return View(db.Suppliers.ToList());
+            return PartialView(db.Suppliers.ToList());
         }
 
         // GET: Admin/Suppliers/Details/5
@@ -32,13 +32,13 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(supplier);
+            return PartialView(supplier);
         }
 
         // GET: Admin/Suppliers/Create
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Admin/Suppliers/Create
@@ -52,10 +52,10 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 db.Suppliers.Add(supplier);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Content("OK");
             }
 
-            return View(supplier);
+            return PartialView(supplier);
         }
 
         // GET: Admin/Suppliers/Edit/5
@@ -70,7 +70,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(supplier);
+            return PartialView(supplier);
         }
 
         // POST: Admin/Suppliers/Edit/5
@@ -86,7 +86,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(supplier);
+            return PartialView(supplier);
         }
 
         // GET: Admin/Suppliers/Delete/5
@@ -112,7 +112,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             Supplier supplier = db.Suppliers.Find(id);
             db.Suppliers.Remove(supplier);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Content("OK");
         }
 
         protected override void Dispose(bool disposing)

@@ -60,8 +60,8 @@ namespace TechnologyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-     
 
+                category.UserId = int.Parse(User.Identity.Name);
                 db.Categories.Add(category);
                 db.SaveChanges();
                 return Content("OK");
@@ -73,6 +73,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // GET: Admin/Categories/Edit/5
         public ActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -81,6 +82,12 @@ namespace TechnologyShop.Areas.Admin.Controllers
             if (category == null)
             {
                 return HttpNotFound();
+            }
+            var user = db.Users.Find(int.Parse(User.Identity.Name));
+
+            if (category.UserId != user.Id && !user.UserLevel.UserLevelName.Equals("Administrator"))
+            {
+                return PartialView("Error");
             }
             ViewBag.TopicId = new SelectList(db.Topics, "Id", "TopicName", category.TopicId);
             return PartialView(category);
@@ -91,15 +98,26 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CategoryName,TopicId")] Category category)
+        public ActionResult Edit([Bind(Include = "Id,CategoryName,TopicId")] Category data)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
+                var user = db.Users.Find(int.Parse(User.Identity.Name));
+
+
+                var category = db.Categories.Find(data.Id);
+
+                if (category.UserId != user.Id && !user.UserLevel.UserLevelName.Equals("Administrator"))
+                {
+                    return Content("Ban khong co quyen chinh sua");
+                }
+                category.CategoryName = data.CategoryName;
+                category.TopicId = data.TopicId;
+                //category.UserId = int.Parse(User.Identity.Name);///Truong hop admin edit thi lay admin gan vao
                 db.SaveChanges();
                 return Content("OK");
             }
-            return PartialView(category);
+            return PartialView(data);
         }
 
         // GET: Admin/Categories/Delete/5

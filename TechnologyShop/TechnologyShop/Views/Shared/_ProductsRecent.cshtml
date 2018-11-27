@@ -1,0 +1,30 @@
+﻿@model TechnologyShop.Models.Product
+
+<div class="product-item">
+    <div class="product-img">
+        <a href="~/Products/Details/@Model.Id">
+            <!--Sua-->
+            @{
+
+                string src = "/Content/MainPage/img/product/1.jpg";
+                var pic = Model.Picture;
+                if (pic == null)
+                {
+                    pic = Model.Pictures.FirstOrDefault();
+                }
+
+                if (pic != null)
+                {
+                    src = "/Uploads/Pictures/" + pic.ProductId + "/" + pic.Url;
+                }
+            }
+            <img src="@src" alt="" height="80"/>
+        </a>
+    </div>
+    <div class="product-info">
+        <h6 class="product-title">
+            <a href="~/Products/Details/@Model.ProductName">@Model.ProductName</a><!--Sua-->
+        </h6>
+        <h3 class="pro-price">@Model.OutputPrice.ToString("N0") VND</h3> <!--Sua-->
+    </div>
+</div>

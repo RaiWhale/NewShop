@@ -20,6 +20,7 @@ namespace TechnologyShop.Models
             this.InputDetails = new HashSet<InputDetail>();
             this.OrderDetails = new HashSet<OrderDetail>();
             this.Pictures = new HashSet<Picture>();
+            this.WishLists = new HashSet<WishList>();
         }
     
         public int Id { get; set; }
@@ -29,15 +30,20 @@ namespace TechnologyShop.Models
         public string Unit { get; set; }
         public decimal InputPrice { get; set; }
         public decimal OutputPrice { get; set; }
+        public Nullable<int> PictureId { get; set; }
+        public decimal Discount { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }
     
+        public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InputDetail> InputDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Picture> Pictures { get; set; }
-        public virtual Category Category { get; set; }
+        public virtual Picture Picture { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WishList> WishLists { get; set; }
     }
 }

@@ -58,14 +58,26 @@ namespace TechnologyShop.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterVM data)
+        public ActionResult Register(RegisterVM data, HttpPostedFileBase pic)
         {
             //Code đăng ký
             var acc = AutoMapper.Mapper.Map<Customer>(data);
             try
             {
+
+                string filename = DateTime.Now.Ticks + "_" + pic.FileName.Split('/').Last();
+                acc.Avatar = filename;
+                acc.CreatedDate = DateTime.Now;
+                acc.IsActive = false;
+
                 db.Customers.Add(acc);
                 db.SaveChanges();
+
+                string path = Server.MapPath("~/Uploads/Avatars") + "\\" + acc.Id;
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                pic.SaveAs(path + "\\" + filename);
+
+
                 return View("RegisterSuccess");
             }
             catch (Exception ex)
@@ -128,21 +140,47 @@ namespace TechnologyShop.Controllers
         [Authorize]
         public ActionResult UpdateProfile()
         {
-            var email = db.Customers.Find(int.Parse(User.Identity.Name));
-            var data = AutoMapper.Mapper.Map<UpdateProfileVM>(email);
+            var cus = db.Customers.Find(int.Parse(User.Identity.Name));
+            var data = AutoMapper.Mapper.Map<UpdateProfileVM>(cus);
             return View(data);
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult UpdateProfile(UpdateProfileVM data)
         {
     
             try
             {
-                var email = db.Customers.Find(int.Parse(User.Identity.Name));
-                data.Id = email.Id;
-                AutoMapper.Mapper.Map(data, email);
+             
+                 
+   
+                var cus = db.Customers.Find(int.Parse(User.Identity.Name));
+                data.Id = cus.Id;
+
+                for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
+                {
+
+                    HttpPostedFileBase file = Request.Files[i];
+
+                    string filename = DateTime.Now.Ticks + "_" + file.FileName.Split('/').Last();
+
+                    string path = Server.MapPath("~/Uploads/Avatars") + "\\" + data.Id;
+                    if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+                    file.SaveAs(path + "\\" + filename);
+                    data.Avatar = filename;
+
+                }
+
+
+                AutoMapper.Mapper.Map(data, cus);
+
+
                 db.SaveChanges();
+
+   
+
                 ViewBag.Message = "Update Successfully";
             }
             catch (Exception ex)

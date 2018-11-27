@@ -18,5 +18,13 @@ namespace TechnologyShop.Models
             return BitConverter.ToString(result).Replace("-", "").ToLower();
 
         }
+
+        public static string RandomString(int length)
+        {
+             Random rnd = new Random();
+            const string chars = "0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[rnd.Next(s.Length)]).ToArray());
+        }
     }
 }

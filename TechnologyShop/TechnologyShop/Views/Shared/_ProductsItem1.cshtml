@@ -6,12 +6,17 @@
         <div class="product-img">
             <a href="~/Products/Details/@Model.Id">
                 <!--Sua-->
-                @{ 
+                @{
                     string src = "/Content/MainPage/img/product/1.jpg";
-                    var pic = Model.Pictures.FirstOrDefault();
-                    if(pic != null)
+                    var pic = Model.Picture;
+                    if (pic == null)
                     {
-                        src = "/Content/products/" + pic.Url;
+                        pic = Model.Pictures.FirstOrDefault();
+                    }
+
+                    if (pic != null)
+                    {
+                        src = "/Uploads/Pictures/" + pic.ProductId + "/" + pic.Url;
                     }
                 }
                 <img src="@src" alt="" />
@@ -30,9 +35,12 @@
             </div>
             <h3 class="pro-price">@Model.OutputPrice.ToString("N0") VND</h3> <!--Sua-->
             <ul class="action-button">
+                @if (User.Identity.IsAuthenticated)
+                {
                 <li>
-                    <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
+                    <a class="addtowishlist" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
                 </li>
+                }
                 <li>
                     <a href="#" data-toggle="modal" data-target="#productModal" title="Quickview"><i class="zmdi zmdi-zoom-in"></i></a>
                 </li>
@@ -40,7 +48,7 @@
                     <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
                 </li>
                 <li>
-                    <a class="addtocart" pid="@Model.Id" pname="@Model.ProductName" punit="@Model.Unit" pprice="@Model.OutputPrice" href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                    <a class="addtocart" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
                 </li>
             </ul>
         </div>

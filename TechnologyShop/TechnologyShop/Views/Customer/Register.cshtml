@@ -17,14 +17,14 @@
                             @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
                                 @Html.AntiForgeryToken()
-                                <h6 class="widget-title border-left mb-50">NEW CUSTOMERS</h6>
+                                <h6 class="widget-title border-left mb-50">ĐĂNG KÝ MỚI</h6>
                                 <div class="login-account p-30 box-shadow" id="register-form">
                                     <!--Register-->
 
                                     <div class="row">
 
                                         <div class="col-md-12">
-                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email"} })
+                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
                                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                         </div>
 
@@ -43,7 +43,7 @@
                                             @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="col-md-6">
-                                            @Html.EnumDropDownListFor(model => model.Gender, "Please select gender", new { htmlAttributes = new { @class = "form-control"} })
+                                            @Html.EnumDropDownListFor(model => model.Gender, "Please select gender", new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="col-md-12">
@@ -56,14 +56,19 @@
                                             @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Country" } })
                                             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                                         </div>
-
+                                        <div class="col-md-12">
+                                            <label for="Logo">Avatar:</label>
+                                            <div class="input-group">
+                                                <input type="file" class="form-control" name="pic" id="pic" placeholder="Avatar" required />
+                                            </div>
+                                        </div>
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <button class="submit-btn-1 mt-20 btn-hover-1" type="submit" value="register">Register</button>
+                                                <button class="submit-btn-1 mt-20 btn-hover-1" type="submit" value="register">Đăng ký</button>
                                             </div>
                                             <div class="col-md-6">
-                                                <button class="submit-btn-1 mt-20 btn-hover-1 f-right" type="reset">Clear</button>
+                                                <button class="submit-btn-1 mt-20 btn-hover-1 f-right" type="reset">Xóa</button>
                                             </div>
                                         </div>
                                     </div>
@@ -81,4 +86,4 @@
 
 </div>
 
---------------
+

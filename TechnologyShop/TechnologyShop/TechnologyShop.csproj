@@ -56,6 +56,12 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -176,6 +182,20 @@
     <Compile Include="Areas\Admin\Controllers\SuppliersController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserLevelsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModel\UploadFileVM.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Helpers\FilesHelper.cs" />
+    <Compile Include="Helpers\ImageHandler.cs" />
+    <Compile Include="Helpers\StoreHelpers.cs" />
+    <Compile Include="Models\NewShop1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NewShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>NewShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModel\CartItemVM.cs" />
     <Compile Include="Models\ViewModel\ForgetPasswordVM.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
@@ -256,13 +276,7 @@
     <Compile Include="Models\Picture.cs">
       <DependentUpon>NewShop.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Product.cs">
-      <DependentUpon>NewShop.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Supplier.cs">
-      <DependentUpon>NewShop.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>NewShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Topic.cs">
@@ -282,6 +296,9 @@
     <Compile Include="Models\ViewModel\QuantityReportVM.cs" />
     <Compile Include="Models\ViewModel\RegisterVM.cs" />
     <Compile Include="Models\ViewModel\UpdateProfileVM.cs" />
+    <Compile Include="Models\WishList.cs">
+      <DependentUpon>NewShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -315,6 +332,12 @@
     <Content Include="Content\Admin\img\user\user-6.jpg" />
     <Content Include="Content\Admin\img\user\user-8.jpg" />
     <Content Include="Content\Admin\img\user\user-9.jpg" />
+    <Content Include="Content\Admin\jQuery.FileUpload\css\jquery.fileupload-noscript.css" />
+    <Content Include="Content\Admin\jQuery.FileUpload\css\jquery.fileupload-ui-noscript.css" />
+    <Content Include="Content\Admin\jQuery.FileUpload\css\jquery.fileupload-ui.css" />
+    <Content Include="Content\Admin\jQuery.FileUpload\css\jquery.fileupload.css" />
+    <Content Include="Content\Admin\jQuery.FileUpload\img\loading.gif" />
+    <Content Include="Content\Admin\jQuery.FileUpload\img\progressbar.gif" />
     <Content Include="Content\Admin\js\ajax.js" />
     <Content Include="Content\Admin\js\app.js" />
     <Content Include="Content\Admin\js\apps.min.js" />
@@ -405,6 +428,7 @@
     <Content Include="Content\MainPage\images\customizer\pattern\8.png" />
     <Content Include="Content\MainPage\images\logo\logo.png" />
     <Content Include="Content\MainPage\img\banner\1.jpg" />
+    <Content Include="Content\MainPage\images\bg\bannerts1.jpg" />
     <Content Include="Content\MainPage\img\bg\blog-photo-bg.png" />
     <Content Include="Content\MainPage\img\bg\grid.png" />
     <Content Include="Content\MainPage\img\bg\ribbon.png" />
@@ -415,6 +439,7 @@
     <Content Include="Content\MainPage\img\cart\1.jpg" />
     <Content Include="Content\MainPage\img\icon\down-arrow.png" />
     <Content Include="Content\MainPage\img\icon\techshop - size nho 1.png" />
+    <Content Include="Content\MainPage\img\logo\logo size 02.png" />
     <Content Include="Content\MainPage\img\logo\logo ts.png" />
     <Content Include="Content\MainPage\img\logo\logo.png" />
     <Content Include="Content\MainPage\img\mega-menu\1.jpg" />
@@ -445,6 +470,7 @@
     <Content Include="Content\MainPage\lib\css\nivo-slider.css" />
     <Content Include="Content\MainPage\lib\js\jquery.nivo.slider.js" />
     <Content Include="Content\MainPage\shopping.js" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\products\case-jetek-a10.jpg" />
     <Content Include="Content\products\case-jetek-a8.jpg" />
@@ -585,7 +611,7 @@
     <Content Include="Models\NewShop.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>NewShop.edmx</DependentUpon>
-      <LastGenOutput>NewShop.cs</LastGenOutput>
+      <LastGenOutput>NewShop1.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -675,12 +701,40 @@
     <Content Include="Areas\Admin\Views\Suppliers\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Suppliers\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Suppliers\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Error.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\UploadFile.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\shopping.js" />
+    <Content Include="Uploads\Pictures\10\636765007056518133_Faker-1.jpg" />
+    <Content Include="Uploads\Pictures\10\636765007056628069_hpbd.jpg" />
+    <Content Include="Uploads\Pictures\11\636765028456176855_baymau.jpg" />
+    <Content Include="Uploads\Pictures\11\636765028456236643_Blackpantherdragon.jpg" />
+    <Content Include="Uploads\Pictures\11\636765078931562955_i5.png" />
+    <Content Include="Uploads\Pictures\12\636765030219548930_Blackpantherdragon.jpg" />
+    <Content Include="Uploads\Pictures\12\636765089304255468_xs.png" />
+    <Content Include="Uploads\Pictures\13\636765090053329204_xs.png" />
+    <Content Include="Uploads\Pictures\14\636765033524994333_250_43417_gheg284.png" />
+    <Content Include="Uploads\Pictures\14\636765067174683479_ssd.jpg" />
+    <Content Include="Uploads\Pictures\14\636765068234738694_ssd.jpg" />
+    <Content Include="Uploads\Pictures\14\636765076441201055_ssd.png" />
+    <Content Include="Uploads\Pictures\15\636765084173869152_ssd480.png" />
+    <Content Include="Uploads\Pictures\15\636765084877180655_ssd480.png" />
+    <Content Include="Uploads\Pictures\26\636764899089072513_hoho.jpg" />
+    <Content Include="Uploads\Pictures\26\636764899089242420_hp146DS.jpg" />
+    <Content Include="Uploads\Pictures\27\636765038660306584_44023064_1279810425492172_1279462605630472192_n.jpg" />
+    <Content Include="Uploads\Pictures\28\636765051871789515_4.jpg" />
+    <Content Include="Uploads\Pictures\29\636765055559810838_1.png" />
+    <Content Include="Uploads\Pictures\30\636765057334705783_2.png" />
+    <Content Include="Uploads\Pictures\31\636765061967693891_3.jpg" />
+    <Content Include="Uploads\Pictures\32\636765090599643023_xs.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -705,13 +759,24 @@
     <Content Include="Views\Shared\_ProductsItem2.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\ForgotPassword.cshtml" />
+    <Content Include="Views\Shared\_ProductsItem3.cshtml" />
+    <Content Include="Views\Shared\_ProductsItem4.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Uploads\Pictures\11\636765078346952480_" />
+    <Content Include="Uploads\Pictures\14\636765068321472765_" />
+    <Content Include="Views\Shared\_ProductsDetail.cshtml" />
+    <Content Include="Views\Shared\_ProductsRecent.cshtml" />
+    <Content Include="Views\Shared\_QuickView.cshtml" />
+    <Content Include="Views\Customer\UpdateProfile.cshtml" />
+    <Content Include="Views\Cart\OrderComplete.cshtml" />
+    <Content Include="Views\Products\BuyNow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\ViewModel\" />
     <Folder Include="Content\MainPage\css\github.com\necolas\" />
     <Folder Include="Content\MainPage\css\plugins\images\" />
     <Folder Include="Content\MainPage\images\pattern\" />
+    <Folder Include="Uploads\Avatars\" />
     <Folder Include="Views\LoginRedirect\" />
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,23 @@
 <div class="product-item">
     <div class="product-img">
         <a href="~/Products/Details/@Model.Id">
-            <img src="~/Content/home/img/product-2/4.jpg" alt="" />
+            <!--Sua-->
+            @{
+
+                    string src = "/Content/MainPage/img/product/1.jpg";
+                    var pic = Model.Picture;
+                    if (pic == null)
+                    {
+                        pic = Model.Pictures.FirstOrDefault();
+                    }
+
+                    if (pic != null)
+                    {
+                        src = "/Uploads/Pictures/" + pic.ProductId + "/" + pic.Url;
+                    }
+    
+            }
+            <img src="@src" alt="" />
         </a>
     </div>
     <div class="product-info">

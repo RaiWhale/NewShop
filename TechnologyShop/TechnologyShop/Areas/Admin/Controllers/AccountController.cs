@@ -20,7 +20,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         public ActionResult Login(string LoginName, string Password)
         {
             try

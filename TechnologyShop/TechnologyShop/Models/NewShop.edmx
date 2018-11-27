@@ -11,7 +11,9 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
           <Property Name="TopicId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -24,7 +26,9 @@
           <Property Name="Phone" Type="varchar" MaxLength="30" />
           <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Avatar" Type="varchar(max)" />
           <Property Name="Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreatedDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="InputDetails">
@@ -75,7 +79,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderCode" Type="varchar" MaxLength="20" />
           <Property Name="OrderDate" Type="datetime" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
           <Property Name="CustomerId" Type="int" Nullable="false" />
           <Property Name="Discount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Tax" Type="decimal" Precision="18" Scale="0" Nullable="false" />
@@ -100,7 +104,9 @@
           <Property Name="Unit" Type="nvarchar" MaxLength="20" />
           <Property Name="InputPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="OutputPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="PictureId" Type="int" />
+          <Property Name="Discount" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="Description" Type="ntext" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Suppliers">
@@ -114,16 +120,6 @@
           <Property Name="Address" Type="nvarchar" MaxLength="250" />
           <Property Name="Description" Type="nvarchar" MaxLength="250" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Topics">
           <Key>
@@ -147,7 +143,6 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="UserLevelName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -166,6 +161,14 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="ResetPasswordToken" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="WishList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Categories_ToTopics">
           <End Role="Topics" Type="Self.Topics" Multiplicity="1" />
           <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
@@ -175,6 +178,18 @@
             </Principal>
             <Dependent Role="Categories">
               <PropertyRef Name="TopicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Categories_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Categories">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -263,7 +278,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -298,6 +313,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Products_Pictures">
+          <End Role="Pictures" Type="Self.Pictures" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pictures">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserLevelPermissions_UserLevels">
           <End Role="UserLevels" Type="Self.UserLevels" Multiplicity="1" />
           <End Role="UserLevelPermissions" Type="Self.UserLevelPermissions" Multiplicity="*" />
@@ -322,6 +349,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WishList_ToCustomers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="WishList" Type="Self.WishList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WishList">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WishList_ToProducts">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="WishList" Type="Self.WishList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WishList">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="NewShopModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
@@ -332,13 +383,17 @@
           <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Topics" EntityType="Self.Topics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLevelPermissions" EntityType="Self.UserLevelPermissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLevels" EntityType="Self.UserLevels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WishList" EntityType="Self.WishList" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Categories_ToTopics" Association="Self.FK_Categories_ToTopics">
             <End Role="Topics" EntitySet="Topics" />
+            <End Role="Categories" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Categories_Users" Association="Self.FK_Categories_Users">
+            <End Role="Users" EntitySet="Users" />
             <End Role="Categories" EntitySet="Categories" />
           </AssociationSet>
           <AssociationSet Name="FK_Input_Suppliers" Association="Self.FK_Input_Suppliers">
@@ -381,6 +436,10 @@
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="FK_Products_Pictures" Association="Self.FK_Products_Pictures">
+            <End Role="Pictures" EntitySet="Pictures" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserLevelPermissions_UserLevels" Association="Self.FK_UserLevelPermissions_UserLevels">
             <End Role="UserLevels" EntitySet="UserLevels" />
             <End Role="UserLevelPermissions" EntitySet="UserLevelPermissions" />
@@ -388,6 +447,14 @@
           <AssociationSet Name="FK_Users_UserLevels" Association="Self.FK_Users_UserLevels">
             <End Role="UserLevels" EntitySet="UserLevels" />
             <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WishList_ToCustomers" Association="Self.FK_WishList_ToCustomers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="WishList" EntitySet="WishList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WishList_ToProducts" Association="Self.FK_WishList_ToProducts">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="WishList" EntitySet="WishList" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -408,7 +475,7 @@
           <Property Name="Tax" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Note" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Input" Relationship="Self.FK_InputDetails_Inputs" FromRole="InputDetails" ToRole="Inputs" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_InputDetails_Products" FromRole="InputDetails" ToRole="Products" />
+          <NavigationProperty Name="Product" Relationship="NewShopModel.FK_InputDetails_Products" FromRole="InputDetail" ToRole="Product" />
         </EntityType>
         <EntityType Name="Input">
           <Key>
@@ -439,24 +506,8 @@
           <Property Name="Discount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Tax" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Note" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetails_Orders" FromRole="OrderDetails" ToRole="Orders" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_OrderDetails_Products" FromRole="OrderDetails" ToRole="Products" />
-        </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="CustomerId" Type="Int32" Nullable="false" />
-          <Property Name="Discount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Tax" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Status" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
-          <NavigationProperty Name="Customer" Relationship="NewShopModel.FK_Orders_Customers" FromRole="Order" ToRole="Customer" />
-          <NavigationProperty Name="User" Relationship="NewShopModel.FK_Orders_Users" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="Product" Relationship="NewShopModel.FK_OrderDetails_Products" FromRole="OrderDetail" ToRole="Product" />
+          <NavigationProperty Name="Order" Relationship="NewShopModel.FK_OrderDetails_Orders" FromRole="OrderDetail" ToRole="Order" />
         </EntityType>
         <EntityType Name="Picture">
           <Key>
@@ -465,25 +516,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductId" Type="Int32" />
           <Property Name="Url" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_Pictures_Products" FromRole="Pictures" ToRole="Products" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BarCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="InputPrice" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="OutputPrice" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="InputDetails" Relationship="Self.FK_InputDetails_Products" FromRole="Products" ToRole="InputDetails" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Products" FromRole="Products" ToRole="OrderDetails" />
-          <NavigationProperty Name="Pictures" Relationship="Self.FK_Pictures_Products" FromRole="Products" ToRole="Pictures" />
-          <NavigationProperty Name="Category" Relationship="NewShopModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Product" Relationship="NewShopModel.FK_Pictures_Products" FromRole="Picture" ToRole="Product" />
+          <NavigationProperty Name="Products" Relationship="NewShopModel.FK_Products_Pictures" FromRole="Picture" ToRole="Product" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -497,16 +531,6 @@
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Inputs" Relationship="Self.FK_Input_Suppliers" FromRole="Suppliers" ToRole="Inputs" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Topic">
           <Key>
@@ -524,17 +548,7 @@
           <Property Name="UserLevelId" Type="Int32" Nullable="false" />
           <Property Name="ControllerName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PermissionCode" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="UserLevel" Relationship="Self.FK_UserLevelPermissions_UserLevels" FromRole="UserLevelPermissions" ToRole="UserLevels" />
-        </EntityType>
-        <EntityType Name="UserLevel">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="UserLevelName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserLevelPermissions" Relationship="Self.FK_UserLevelPermissions_UserLevels" FromRole="UserLevels" ToRole="UserLevelPermissions" />
-          <NavigationProperty Name="Users" Relationship="NewShopModel.FK_Users_UserLevels" FromRole="UserLevel" ToRole="User" />
+          <NavigationProperty Name="UserLevel" Relationship="NewShopModel.FK_UserLevelPermissions_UserLevels" FromRole="UserLevelPermission" ToRole="UserLevel" />
         </EntityType>
         <Association Name="FK_InputDetails_Inputs">
           <End Role="Inputs" Type="Self.Input" Multiplicity="1" />
@@ -545,18 +559,6 @@
             </Principal>
             <Dependent Role="InputDetails">
               <PropertyRef Name="InputId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InputDetails_Products">
-          <End Role="Products" Type="Self.Product" Multiplicity="1" />
-          <End Role="InputDetails" Type="Self.InputDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InputDetails">
-              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -572,149 +574,90 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderDetails_Orders">
-          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
-          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetails_Products">
-          <End Role="Products" Type="Self.Product" Multiplicity="1" />
-          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Pictures_Products">
-          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="Pictures" Type="Self.Picture" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Pictures">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserLevelPermissions_UserLevels">
-          <End Role="UserLevels" Type="Self.UserLevel" Multiplicity="1" />
-          <End Role="UserLevelPermissions" Type="Self.UserLevelPermission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserLevels">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserLevelPermissions">
-              <PropertyRef Name="UserLevelId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="NewShopEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="InputDetails" EntityType="Self.InputDetail" />
           <EntitySet Name="Inputs" EntityType="Self.Input" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
-          <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Pictures" EntityType="Self.Picture" />
-          <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Topics" EntityType="Self.Topic" />
           <EntitySet Name="UserLevelPermissions" EntityType="Self.UserLevelPermission" />
-          <EntitySet Name="UserLevels" EntityType="Self.UserLevel" />
           <AssociationSet Name="FK_InputDetails_Inputs" Association="Self.FK_InputDetails_Inputs">
             <End Role="Inputs" EntitySet="Inputs" />
-            <End Role="InputDetails" EntitySet="InputDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InputDetails_Products" Association="Self.FK_InputDetails_Products">
-            <End Role="Products" EntitySet="Products" />
             <End Role="InputDetails" EntitySet="InputDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Input_Suppliers" Association="Self.FK_Input_Suppliers">
             <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="Inputs" EntitySet="Inputs" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Products" Association="Self.FK_OrderDetails_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Pictures_Products" Association="Self.FK_Pictures_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Pictures" EntitySet="Pictures" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserLevelPermissions_UserLevels" Association="Self.FK_UserLevelPermissions_UserLevels">
-            <End Role="UserLevels" EntitySet="UserLevels" />
-            <End Role="UserLevelPermissions" EntitySet="UserLevelPermissions" />
-          </AssociationSet>
-          <EntitySet Name="Customers" EntityType="NewShopModel.Customer" />
-          <AssociationSet Name="FK_Orders_Customers" Association="NewShopModel.FK_Orders_Customers">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
           <EntitySet Name="Categories" EntityType="NewShopModel.Category" />
           <AssociationSet Name="FK_Categories_ToTopics" Association="NewShopModel.FK_Categories_ToTopics">
             <End Role="Topic" EntitySet="Topics" />
             <End Role="Category" EntitySet="Categories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_Categories" Association="NewShopModel.FK_Products_Categories">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <EntitySet Name="Users" EntityType="NewShopModel.User" />
           <AssociationSet Name="FK_Input_Users" Association="NewShopModel.FK_Input_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="Input" EntitySet="Inputs" />
           </AssociationSet>
-          <AssociationSet Name="FK_Orders_Users" Association="NewShopModel.FK_Orders_Users">
+          <EntitySet Name="UserLevels" EntityType="NewShopModel.UserLevel" />
+          <AssociationSet Name="FK_Categories_Users" Association="NewShopModel.FK_Categories_Users">
             <End Role="User" EntitySet="Users" />
-            <End Role="Order" EntitySet="Orders" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLevelPermissions_UserLevels" Association="NewShopModel.FK_UserLevelPermissions_UserLevels">
+            <End Role="UserLevel" EntitySet="UserLevels" />
+            <End Role="UserLevelPermission" EntitySet="UserLevelPermissions" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_UserLevels" Association="NewShopModel.FK_Users_UserLevels">
             <End Role="UserLevel" EntitySet="UserLevels" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Products" EntityType="NewShopModel.Product" />
+          <AssociationSet Name="FK_Products_Categories" Association="NewShopModel.FK_Products_Categories">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InputDetails_Products" Association="NewShopModel.FK_InputDetails_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="InputDetail" EntitySet="InputDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Products" Association="NewShopModel.FK_OrderDetails_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pictures_Products" Association="NewShopModel.FK_Pictures_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Picture" EntitySet="Pictures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Pictures" Association="NewShopModel.FK_Products_Pictures">
+            <End Role="Picture" EntitySet="Pictures" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <EntitySet Name="Customers" EntityType="NewShopModel.Customer" />
+          <EntitySet Name="Orders" EntityType="NewShopModel.Order" />
+          <AssociationSet Name="FK_Orders_Customers" Association="NewShopModel.FK_Orders_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="NewShopModel.FK_OrderDetails_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Users" Association="NewShopModel.FK_Orders_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <EntitySet Name="WishLists" EntityType="NewShopModel.WishList" />
+          <AssociationSet Name="FK_WishList_ToCustomers" Association="NewShopModel.FK_WishList_ToCustomers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="WishList" EntitySet="WishLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WishList_ToProducts" Association="NewShopModel.FK_WishList_ToProducts">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="WishList" EntitySet="WishLists" />
+          </AssociationSet>
           </EntityContainer>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="NewShopModel.Gender" Nullable="false" />
-          <Property Name="Birthday" Type="DateTime" Precision="3" />
-          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Orders" Relationship="NewShopModel.FK_Orders_Customers" FromRole="Customer" ToRole="Order" />
-        </EntityType>
-        <Association Name="FK_Orders_Customers">
-          <End Type="NewShopModel.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="NewShopModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EnumType Name="Gender" UnderlyingType="Byte">
           <Member Name="Man" Value="1" />
           <Member Name="Women" Value="2" />
@@ -728,6 +671,9 @@
           <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="TopicId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Topic" Relationship="NewShopModel.FK_Categories_ToTopics" FromRole="Category" ToRole="Topic" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="NewShopModel.FK_Categories_Users" FromRole="Category" ToRole="User" />
           <NavigationProperty Name="Products" Relationship="NewShopModel.FK_Products_Categories" FromRole="Category" ToRole="Product" />
         </EntityType>
         <Association Name="FK_Categories_ToTopics">
@@ -739,18 +685,6 @@
             </Principal>
             <Dependent Role="Category">
               <PropertyRef Name="TopicId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Products_Categories">
-          <End Type="NewShopModel.Category" Role="Category" Multiplicity="1" />
-          <End Type="NewShopModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="CategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -771,8 +705,9 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="ResetPasswordToken" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Inputs" Relationship="NewShopModel.FK_Input_Users" FromRole="User" ToRole="Input" />
-          <NavigationProperty Name="Orders" Relationship="NewShopModel.FK_Orders_Users" FromRole="User" ToRole="Order" />
+          <NavigationProperty Name="Categories" Relationship="NewShopModel.FK_Categories_Users" FromRole="User" ToRole="Category" />
           <NavigationProperty Name="UserLevel" Relationship="NewShopModel.FK_Users_UserLevels" FromRole="User" ToRole="UserLevel" />
+          <NavigationProperty Name="Orders" Relationship="NewShopModel.FK_Orders_Users" FromRole="User" ToRole="Order" />
         </EntityType>
         <Association Name="FK_Input_Users">
           <End Type="NewShopModel.User" Role="User" Multiplicity="1" />
@@ -786,15 +721,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Orders_Users">
+        <EntityType Name="UserLevel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserLevelName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserLevelPermissions" Relationship="NewShopModel.FK_UserLevelPermissions_UserLevels" FromRole="UserLevel" ToRole="UserLevelPermission" />
+          <NavigationProperty Name="Users" Relationship="NewShopModel.FK_Users_UserLevels" FromRole="UserLevel" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Categories_Users">
           <End Type="NewShopModel.User" Role="User" Multiplicity="1" />
-          <End Type="NewShopModel.Order" Role="Order" Multiplicity="*" />
+          <End Type="NewShopModel.Category" Role="Category" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Order">
+            <Dependent Role="Category">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLevelPermissions_UserLevels">
+          <End Type="NewShopModel.UserLevel" Role="UserLevel" Multiplicity="1" />
+          <End Type="NewShopModel.UserLevelPermission" Role="UserLevelPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserLevel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLevelPermission">
+              <PropertyRef Name="UserLevelId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -807,6 +763,192 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="UserLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BarCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="InputPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="OutputPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="PictureId" Type="Int32" />
+          <Property Name="Discount" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="NewShopModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="InputDetails" Relationship="NewShopModel.FK_InputDetails_Products" FromRole="Product" ToRole="InputDetail" />
+          <NavigationProperty Name="OrderDetails" Relationship="NewShopModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
+          <NavigationProperty Name="Pictures" Relationship="NewShopModel.FK_Pictures_Products" FromRole="Product" ToRole="Picture" />
+          <NavigationProperty Name="Picture" Relationship="NewShopModel.FK_Products_Pictures" FromRole="Product" ToRole="Picture" />
+          <NavigationProperty Name="WishLists" Relationship="NewShopModel.FK_WishList_ToProducts" FromRole="Product" ToRole="WishList" />
+        </EntityType>
+        <Association Name="FK_Products_Categories">
+          <End Type="NewShopModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="NewShopModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InputDetails_Products">
+          <End Type="NewShopModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="NewShopModel.InputDetail" Role="InputDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InputDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Products">
+          <End Type="NewShopModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="NewShopModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pictures_Products">
+          <End Type="NewShopModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="NewShopModel.Picture" Role="Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Picture">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Pictures">
+          <End Type="NewShopModel.Picture" Role="Picture" Multiplicity="0..1" />
+          <End Type="NewShopModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Byte" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="NewShopModel.FK_Orders_Customers" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="WishLists" Relationship="NewShopModel.FK_WishList_ToCustomers" FromRole="Customer" ToRole="WishList" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="Discount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Tax" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="NewShopModel.FK_Orders_Customers" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="OrderDetails" Relationship="NewShopModel.FK_OrderDetails_Orders" FromRole="Order" ToRole="OrderDetail" />
+          <NavigationProperty Name="User" Relationship="NewShopModel.FK_Orders_Users" FromRole="Order" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Orders_Customers">
+          <End Type="NewShopModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="NewShopModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Type="NewShopModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="NewShopModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Users">
+          <End Type="NewShopModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="NewShopModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WishList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="NewShopModel.FK_WishList_ToCustomers" FromRole="WishList" ToRole="Customer" />
+          <NavigationProperty Name="Product" Relationship="NewShopModel.FK_WishList_ToProducts" FromRole="WishList" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_WishList_ToCustomers">
+          <End Type="NewShopModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="NewShopModel.WishList" Role="WishList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WishList">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WishList_ToProducts">
+          <End Type="NewShopModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="NewShopModel.WishList" Role="WishList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WishList">
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -860,41 +1002,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Orders">
-      <EntityTypeMapping TypeName="IsTypeOf(NewShopModel.Order)">
-        <MappingFragment StoreEntitySet="Orders">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
-          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-          <ScalarProperty Name="Discount" ColumnName="Discount" />
-          <ScalarProperty Name="Tax" ColumnName="Tax" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Pictures">
       <EntityTypeMapping TypeName="IsTypeOf(NewShopModel.Picture)">
         <MappingFragment StoreEntitySet="Pictures">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ProductId" ColumnName="ProductId" />
           <ScalarProperty Name="Url" ColumnName="Url" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Products">
-      <EntityTypeMapping TypeName="IsTypeOf(NewShopModel.Product)">
-        <MappingFragment StoreEntitySet="Products">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="BarCode" ColumnName="BarCode" />
-          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-          <ScalarProperty Name="Unit" ColumnName="Unit" />
-          <ScalarProperty Name="InputPrice" ColumnName="InputPrice" />
-          <ScalarProperty Name="OutputPrice" ColumnName="OutputPrice" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -908,17 +1021,6 @@
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="IsTypeOf(NewShopModel.sysdiagram)">
-        <MappingFragment StoreEntitySet="sysdiagrams">
-          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -940,34 +1042,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UserLevels">
-      <EntityTypeMapping TypeName="IsTypeOf(NewShopModel.UserLevel)">
-        <MappingFragment StoreEntitySet="UserLevels">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="UserLevelName" ColumnName="UserLevelName" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Customers">
-      <EntityTypeMapping TypeName="IsTypeOf(NewShopModel.Customer)">
-        <MappingFragment StoreEntitySet="Customers">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
-          <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Categories">
       <EntityTypeMapping TypeName="IsTypeOf(NewShopModel.Category)">
         <MappingFragment StoreEntitySet="Categories">
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
           <ScalarProperty Name="TopicId" ColumnName="TopicId" />
         </MappingFragment>
@@ -987,6 +1067,71 @@
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLevels">
+            <EntityTypeMapping TypeName="NewShopModel.UserLevel">
+              <MappingFragment StoreEntitySet="UserLevels">
+                <ScalarProperty Name="UserLevelName" ColumnName="UserLevelName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="NewShopModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="OutputPrice" ColumnName="OutputPrice" />
+                <ScalarProperty Name="InputPrice" ColumnName="InputPrice" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="NewShopModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="NewShopModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WishLists">
+            <EntityTypeMapping TypeName="NewShopModel.WishList">
+              <MappingFragment StoreEntitySet="WishList">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

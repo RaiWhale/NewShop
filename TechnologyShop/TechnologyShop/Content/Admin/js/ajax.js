@@ -35,13 +35,22 @@ function InitAction() {
         return false;
     });
 }
+
 function bindForm(dialog) {
 
     $('form', dialog).submit(function () {
+
+        var formData = new FormData($(this)[0]);
+
+  
         $.ajax({
+            
             url: this.action,
             type: this.method,
-            data: $(this).serialize(),
+            data: formData,
+            //data: $(this).serialize(),
+            contentType: false,
+            processData: false,
             success: function (result) {
                 if (result == "OK") {
                     $('#dialog').modal('hide');
@@ -51,7 +60,9 @@ function bindForm(dialog) {
                     bindForm(dialog);
                 }
             }
+
         });
+
         return false;
     });
 }

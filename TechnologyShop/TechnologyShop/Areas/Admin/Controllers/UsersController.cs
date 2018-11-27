@@ -37,14 +37,14 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return PartialView(user);
         }
 
         // GET: Admin/Users/Create
         public ActionResult Create()
         {
             ViewBag.UserLevelId = new SelectList(db.UserLevels, "Id", "UserLevelName");
-            return View();
+            return PartialView();
         }
 
         // POST: Admin/Users/Create
@@ -56,11 +56,21 @@ namespace TechnologyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                user.CreatedDate = DateTime.Now;
-                user.ResetPasswordToken = "";
-                db.Users.Add(user);
-                db.SaveChanges();
-                return Content("OK");
+                try
+                {
+                  
+                    user.CreatedDate = DateTime.Now;
+                    user.ResetPasswordToken = "";
+                    user.Password = MySecurity.EncryptPass(user.Password);
+
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    return Content("OK");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                }
             }
 
             return PartialView(user);
@@ -92,7 +102,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Content("OK");
             }
             return PartialView(user);
         }
@@ -120,7 +130,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
             User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Content("OK");
         }
 
         protected override void Dispose(bool disposing)

@@ -1,0 +1,57 @@
+﻿@model TechnologyShop.Models.Product
+
+<div class="col-md-3 col-sm-4 col-xs-12">
+    <div class="product-item">
+        <div class="product-img">
+            <a href="~/Products/Details/@Model.Id">
+                <!--Sua-->
+         
+                    @{
+                        string src = "/Content/MainPage/img/product/1.jpg";
+                        var pic = Model.Picture;
+                        if (pic == null)
+                        {
+                            pic = Model.Pictures.FirstOrDefault();
+                        }
+
+                        if (pic != null)
+                        {
+                            src = "/Uploads/Pictures/" + pic.ProductId + "/" + pic.Url;
+                        }
+                    }
+                    <img src="@src" alt="" />
+       
+            </a>
+        </div>
+        <div class="product-info">
+            <h6 class="product-title">
+                <a href="single-product.html">@Model.ProductName</a>
+            </h6>
+            <div class="pro-rating">
+                <a href="#"><i class="zmdi zmdi-star"></i></a>
+                <a href="#"><i class="zmdi zmdi-star"></i></a>
+                <a href="#"><i class="zmdi zmdi-star"></i></a>
+                <a href="#"><i class="zmdi zmdi-star-half"></i></a>
+                <a href="#"><i class="zmdi zmdi-star-outline"></i></a>
+            </div>
+            <h3 class="pro-price">@Model.OutputPrice.ToString("N0") VND</h3>
+            <ul class="action-button">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        <a class="addtowishlist" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
+                    </li>
+                }
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#productModal" title="Quickview"><i class="zmdi zmdi-zoom-in"></i></a>
+                </li>
+                <li>
+                    <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
+                </li>
+                <li>
+                    <a class="addtocart" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

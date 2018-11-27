@@ -24,7 +24,7 @@ namespace TechnologyShop.Models
         public decimal Tax { get; set; }
         public string Note { get; set; }
     
-        public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }
+        public virtual Order Order { get; set; }
     }
 }
