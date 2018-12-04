@@ -703,6 +703,7 @@
     <Content Include="Areas\Admin\Views\Suppliers\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Error.cshtml" />
     <Content Include="Areas\Admin\Views\Products\UploadFile.cshtml" />
+    <Content Include="Areas\Admin\Views\Customers\ChangePassword.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

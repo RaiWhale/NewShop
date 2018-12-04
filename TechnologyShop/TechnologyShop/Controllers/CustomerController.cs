@@ -115,9 +115,9 @@ namespace TechnologyShop.Controllers
                 if ((email.Phone.Equals(data.Phone)) && email.CustomerName.Equals(data.CustomerName))
                 {
                     NewPassword = RandomString2(6);
-                    email.Password = NewPassword;
+                    email.Password = MySecurity.EncryptPass(NewPassword);
                     db.SaveChanges();
-                    ViewBag.Message = email.Password;
+                    ViewBag.Message = NewPassword;
                     return RedirectToAction("Login", "Customer");
                 }
                 else

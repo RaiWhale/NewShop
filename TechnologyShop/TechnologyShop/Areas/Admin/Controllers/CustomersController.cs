@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TechnologyShop.Models;
+using TechnologyShop.Models.ViewModel;
 
 namespace TechnologyShop.Areas.Admin.Controllers
 {
@@ -60,6 +61,43 @@ namespace TechnologyShop.Areas.Admin.Controllers
             return PartialView(customer);
         }
 
+
+        public ActionResult ChangePassword(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+
+            return PartialView(customer);
+        }
+
+        [HttpPost]
+
+        public ActionResult ChangePassword(Customer customer,string Password, string NewPassword, string RePassword)
+        {
+            if (ModelState.IsValid)
+            {
+                Password = MySecurity.EncryptPass(Password);
+
+                if(Password != customer.Password)
+                {
+                    ViewBag.Message = "Wrong Password";
+                }
+                customer.Password = NewPassword;
+
+                db.Entry(customer).State = EntityState.Modified;
+                db.SaveChanges();
+                return Content("OK");
+            }
+            return PartialView(customer);
+        }
+
         // GET: Admin/Customers/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -72,8 +110,10 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+           
             return PartialView(customer);
         }
+
 
         // POST: Admin/Customers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
