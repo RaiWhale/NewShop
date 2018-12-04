@@ -15,7 +15,7 @@ namespace TechnologyShop.Models.ViewModel
         public string CustomerName { get; set; }
         public Gender Gender { get; set; }
 
-        [Phone]
+        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 
         public string Address { get; set; }

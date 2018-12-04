@@ -134,16 +134,13 @@ E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Diagnostics.FileVersi
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Diagnostics.Process.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Diagnostics.StackTrace.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.IO.Compression.dll
-E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.IO.FileSystem.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
-E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.IO.FileSystem.Primitives.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.IO.Pipes.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Reflection.Metadata.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Security.AccessControl.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Security.Claims.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Security.Cryptography.Algorithms.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Security.Cryptography.Encoding.dll
-E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Security.Cryptography.Primitives.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Security.Principal.Windows.dll
 E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Text.Encoding.CodePages.dll
@@ -217,4 +214,7 @@ E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csproj.CoreCom
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csproj.CopyComplete
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.dll
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.pdb
+E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.IO.FileSystem.dll
+E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\NewShop\TechnologyShop\TechnologyShop\bin\roslyn\System.Security.Cryptography.Primitives.dll
 E:\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csprojAssemblyReference.cache

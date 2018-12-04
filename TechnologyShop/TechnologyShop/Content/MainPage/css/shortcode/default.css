@@ -577,7 +577,8 @@ a.button.extra-small i { padding: 11px; width: 38px; font-size: 13px; }
 input[type="text"],
 input[type="password"],
 input[type="email"],
-input[type="tel"],select {
+input[type="tel"],
+input[type="number"], select {
     background: #fff none repeat scroll 0 0;
     border: 1px solid transparent;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);

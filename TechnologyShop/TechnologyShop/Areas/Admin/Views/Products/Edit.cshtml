@@ -95,6 +95,7 @@
             <div class="col-md-10">
                 <input type="file" name="pic" multiple />
             </div>
+            @Html.HiddenFor(model => model.PictureId)
         </div>
 
         <div class="row">
@@ -161,6 +162,7 @@
             var _btn = $(this);
             $.post("/Admin/Products/SetPictureDefault", "picid=" + _btn.attr("picid"), function (data, status) {
                 if (data == "OK") {
+                    $("#PictureId").val(_btn.attr("picid"));
                     alert("Da set!");
 
                 }

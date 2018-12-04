@@ -51,7 +51,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-             
+                customer.Password = MySecurity.EncryptPass(customer.Password);
                 db.Customers.Add(customer);
                 db.SaveChanges();
                 return Content("OK");
@@ -84,6 +84,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                customer.Password = MySecurity.EncryptPass(customer.Password);
                 db.Entry(customer).State = EntityState.Modified;
                 db.SaveChanges();
                 return Content("OK");

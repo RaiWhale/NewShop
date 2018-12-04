@@ -52,7 +52,7 @@ namespace TechnologyShop.Controllers
         }
 
         // GET: Admin/Products/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id ,byte Gender)
         {
             if (id == null)
             {
@@ -63,6 +63,9 @@ namespace TechnologyShop.Controllers
             {
                 return HttpNotFound();
             }
+        
+
+
             var product_detail = db.Products.Where(x => x.Id == id);
             ViewBag.product_detail = product_detail;
             

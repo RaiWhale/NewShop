@@ -23,28 +23,28 @@ namespace TechnologyShop.Controllers
         {
 
             //Code đăng nhập   
-                var email = db.Customers.Where(x => x.Email.Equals(data.Email)).SingleOrDefault(); //LINQ
-                if (email != null)
+            var email = db.Customers.Where(x => x.Email.Equals(data.Email)).SingleOrDefault(); //LINQ
+            if (email != null)
+            {
+                if (email.Password.Equals(MySecurity.EncryptPass(data.Password)))
                 {
-                    if (email.Password.Equals(MySecurity.EncryptPass(data.Password)))
-                    {
 
                     FormsAuthentication.SetAuthCookie(email.Id.ToString(), false);
-                    return RedirectToAction("Index","Home");
-                        
-                    }
-                    else
-                    {
-                        ViewBag.Message = "Password wrong!";
-                    }
+                    return RedirectToAction("Index", "Home");
+
                 }
                 else
                 {
-                    ViewBag.Message = "Email not exist!";
+                    ViewBag.Message = "Password wrong!";
                 }
+            }
+            else
+            {
+                ViewBag.Message = "Email not exist!";
+            }
 
 
-            
+
             return View();
         }
 
@@ -61,7 +61,10 @@ namespace TechnologyShop.Controllers
         public ActionResult Register(RegisterVM data, HttpPostedFileBase pic)
         {
             //Code đăng ký
+            data.Password = MySecurity.EncryptPass(data.Password);
+            data.RePassword = MySecurity.EncryptPass(data.RePassword);
             var acc = AutoMapper.Mapper.Map<Customer>(data);
+
             try
             {
 
@@ -147,28 +150,30 @@ namespace TechnologyShop.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult UpdateProfile(UpdateProfileVM data)
+        public ActionResult UpdateProfile(UpdateProfileVM data, HttpPostedFileBase pic)
         {
-    
+
             try
             {
-             
-                 
-   
                 var cus = db.Customers.Find(int.Parse(User.Identity.Name));
                 data.Id = cus.Id;
+                data.Avatar = cus.Avatar;
 
-                for (int i = 0; i < Request.Files.Count; i++)//nhớ for(i) không dùng foreach->ko chạy: thê mới quái
+                if (pic!=null)
                 {
-
-                    HttpPostedFileBase file = Request.Files[i];
-
-                    string filename = DateTime.Now.Ticks + "_" + file.FileName.Split('/').Last();
-
+                    
+                    string filename = DateTime.Now.Ticks + "_" + pic.FileName.Split('/').Last();
+                    
                     string path = Server.MapPath("~/Uploads/Avatars") + "\\" + data.Id;
                     if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
-                    file.SaveAs(path + "\\" + filename);
+                    if (System.IO.File.Exists(path + "\\" + data.Avatar))
+                    {
+                        System.IO.File.Delete(path + "\\" + data.Avatar);
+
+                    }
+
+                    pic.SaveAs(path + "\\" + filename);
                     data.Avatar = filename;
 
                 }
@@ -179,7 +184,7 @@ namespace TechnologyShop.Controllers
 
                 db.SaveChanges();
 
-   
+
 
                 ViewBag.Message = "Update Successfully";
             }
@@ -188,7 +193,7 @@ namespace TechnologyShop.Controllers
 
                 ViewBag.Message = ex.Message;
             }
-            return View();
+            return View(data);
         }
 
         static Random rnd = new Random();

@@ -27,15 +27,8 @@ function saveCartItems2(cart_items) {
     $.cookie('wishlist', obj);
 }
 function emptyCartItems() {
-    var cart_items = getCartItems();
 
-    $(cart_items).each(function (i, v) {
-        if (v) {
-            cart_items.splice(i, 1);
-        }
-    });
-
-    saveCartItems(cart_items);
+    $.cookie('productlist', null);
 }
 
 function emptyCartItems2() {
@@ -63,10 +56,10 @@ function addItem(productid, productname, unit, price) {
         var new_item = { "productid": productid, "productname": productname, "unit": unit, "price": price.replace(/,/g, ''), "quantity": 1 };
         cart_items.push(new_item);
         saveCartItems(cart_items);
-        alert("Added to your cart!");
+        alert("Thêm giỏ hàng!");
         //loadHeaderCartItems();
     } else {
-        alert("Existed!");
+        alert("Đã có!");
     }
 }
 
@@ -84,7 +77,7 @@ function addItem2(productid, productname, unit, price) {
         var new_item = { "productid": productid, "productname": productname, "unit": unit, "price": price.replace(/,/g, '')};
         cart_items.push(new_item);
         saveCartItems2(cart_items);
-        alert("Added to your Wishlist!");
+        alert("Yêu thích!");
         //loadHeaderCartItems();
     } else {
         alert("Existed!");

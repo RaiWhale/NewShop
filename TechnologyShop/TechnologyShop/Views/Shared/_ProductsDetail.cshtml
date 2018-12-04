@@ -47,30 +47,30 @@
 
         <hr>
 
-       
-            <!-- plus-minus-pro-action -->
-            <div class="plus-minus-pro-action clearfix">
-                <div class="sin-pro-action col-md-offset-4">
-                    <ul class="action-button">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li>
-                                <a class="addtowishlist" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
-                            </li>
-                        }
-                            <li>
-                                <a href="#" data-toggle="modal" data-target="#productModal" title="Quickview" tabindex="0"><i class="zmdi zmdi-zoom-in"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" title="Compare" tabindex="0"><i class="zmdi zmdi-refresh"></i></a>
-                            </li>
-                            <li>
-                                <a class="addtocart" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                            </li>
-                        </ul>
-                </div>
+
+        <!-- plus-minus-pro-action -->
+        <div class="plus-minus-pro-action clearfix">
+            <div class="sin-pro-action col-md-offset-4">
+                <ul class="action-button">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <a class="addtowishlist" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
+                        </li>
+                    }
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#productModal" title="Quickview" tabindex="0"><i class="zmdi zmdi-zoom-in"></i></a>
+                    </li>
+                    <li>
+                        <a href="#" title="Compare" tabindex="0"><i class="zmdi zmdi-refresh"></i></a>
+                    </li>
+                    <li>
+                        <a class="addtocart" productid="@Model.Id" productname="@Model.ProductName" unit="@Model.Unit" price="@Model.OutputPrice" href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                    </li>
+                </ul>
             </div>
-        
+        </div>
+
         <!-- plus-minus-pro-action end -->
         <!-- hr -->
         <hr>
@@ -78,11 +78,16 @@
         <h3 class="pro-price">Price:@Model.OutputPrice</h3>
         <!--  hr -->
         <hr>
-        <div>
-            <a href="@Url.Action("BuyNow","Products",new { @class="btnmodal"})">
-                <small>Buy Now</small>
-            </a>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+            <div>
+                <a href="@Url.Action("BuyNow", "Products", new { id = Model.Id })">
+                    <small >Buy Now</small>
+                </a>
+            </div>
+        }
         </div>
-    </div>
 </div>
 <!-- single-product-info end -->

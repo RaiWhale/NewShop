@@ -713,10 +713,26 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\shopping.js" />
+    <Content Include="Uploads\Avatars\1020\636789243399337772_13844278_1398068046873800_1679632124_o.jpg" />
+    <Content Include="Uploads\Avatars\1022\636789250768769238_13844278_1398068046873800_1679632124_o.jpg" />
+    <Content Include="Uploads\Avatars\1023\636789254063082824_394232_138773372931480_1606251420_n.jpg" />
+    <Content Include="Uploads\Avatars\1024\636789285323034873_636765007056518133_Faker-1.jpg" />
+    <Content Include="Uploads\Avatars\1025\636789291429382403_636765042230611799_123.jpg" />
+    <Content Include="Uploads\Avatars\1026\636789326634520499_636765007056518133_Faker-1.jpg" />
     <Content Include="Uploads\Pictures\10\636765007056518133_Faker-1.jpg" />
     <Content Include="Uploads\Pictures\10\636765007056628069_hpbd.jpg" />
+    <Content Include="Uploads\Pictures\10\636765030151090990_30422118_1988832111367166_1455182894_n.png" />
+    <Content Include="Uploads\Pictures\10\636765033219400173_product_4_20180817141400_5b7667a8ccf8c.png" />
+    <Content Include="Uploads\Pictures\10\636765042230611799_123.jpg" />
+    <Content Include="Uploads\Pictures\10\636765070301747155_i3.jpg" />
+    <Content Include="Uploads\Pictures\10\636765071111527341_i3.jpg" />
+    <Content Include="Uploads\Pictures\10\636765071647976993_i3123.jpg" />
+    <Content Include="Uploads\Pictures\10\636765074049515347_i3321.png" />
+    <Content Include="Uploads\Pictures\10\636765075518923693_42058605_2143935355879805_9214246850553446400_n.jpg" />
+    <Content Include="Uploads\Pictures\10\636765075518943550_42059005_1069524519878546_1438852647326056448_n.jpg" />
     <Content Include="Uploads\Pictures\11\636765028456176855_baymau.jpg" />
     <Content Include="Uploads\Pictures\11\636765028456236643_Blackpantherdragon.jpg" />
+    <Content Include="Uploads\Pictures\11\636765078346952480_" />
     <Content Include="Uploads\Pictures\11\636765078931562955_i5.png" />
     <Content Include="Uploads\Pictures\12\636765030219548930_Blackpantherdragon.jpg" />
     <Content Include="Uploads\Pictures\12\636765089304255468_xs.png" />
@@ -724,6 +740,7 @@
     <Content Include="Uploads\Pictures\14\636765033524994333_250_43417_gheg284.png" />
     <Content Include="Uploads\Pictures\14\636765067174683479_ssd.jpg" />
     <Content Include="Uploads\Pictures\14\636765068234738694_ssd.jpg" />
+    <Content Include="Uploads\Pictures\14\636765068321472765_" />
     <Content Include="Uploads\Pictures\14\636765076441201055_ssd.png" />
     <Content Include="Uploads\Pictures\15\636765084173869152_ssd480.png" />
     <Content Include="Uploads\Pictures\15\636765084877180655_ssd480.png" />
@@ -762,21 +779,22 @@
     <Content Include="Views\Shared\_ProductsItem3.cshtml" />
     <Content Include="Views\Shared\_ProductsItem4.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
-    <Content Include="Uploads\Pictures\11\636765078346952480_" />
-    <Content Include="Uploads\Pictures\14\636765068321472765_" />
     <Content Include="Views\Shared\_ProductsDetail.cshtml" />
     <Content Include="Views\Shared\_ProductsRecent.cshtml" />
     <Content Include="Views\Shared\_QuickView.cshtml" />
     <Content Include="Views\Customer\UpdateProfile.cshtml" />
     <Content Include="Views\Cart\OrderComplete.cshtml" />
     <Content Include="Views\Products\BuyNow.cshtml" />
+    <Content Include="Uploads\Pictures\10\636765042317108476_" />
+    <Content Include="Uploads\Pictures\10\636765071536303914_" />
+    <Content Include="Uploads\Pictures\10\636765076253369913_" />
+    <Content Include="Uploads\Pictures\10\636788380400491936_" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\MainPage\css\github.com\necolas\" />
     <Folder Include="Content\MainPage\css\plugins\images\" />
     <Folder Include="Content\MainPage\images\pattern\" />
-    <Folder Include="Uploads\Avatars\" />
     <Folder Include="Views\LoginRedirect\" />
   </ItemGroup>
   <ItemGroup>

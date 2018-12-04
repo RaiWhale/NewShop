@@ -21,18 +21,18 @@ namespace TechnologyShop.Controllers
                 var cus = db.Customers.Find(int.Parse(User.Identity.Name));
                 ViewBag.customer = AutoMapper.Mapper.Map<UpdateProfileVM>(cus);
 
-            
+
             }
             return View();
         }
 
-    
+
 
         [HttpPost]
-        public ActionResult CheckOut(string CustomerName, string Email, string Phone, byte Gender, string Address, string cartlist)
+        public ActionResult CheckOut(string CustomerName, string Email, string Phone, string Gender, string Address, string cartlist)
         {
             //xu ly cartlist
-            List<CartItemVM> cart_items = JsonConvert.DeserializeObject <List<CartItemVM>>(cartlist);
+            List<CartItemVM> cart_items = JsonConvert.DeserializeObject<List<CartItemVM>>(cartlist);
             if (cartlist.Count() == 0) return Content("Empty");
 
             //xu ly customer
@@ -40,7 +40,7 @@ namespace TechnologyShop.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 cus = db.Customers.Find(int.Parse(User.Identity.Name));
-                cus.Gender = Gender;
+          
             }
             else
             {
@@ -50,7 +50,7 @@ namespace TechnologyShop.Controllers
                     Email = Email,
                     Password = "", //tu nghien cuu sau khi nhau
                     Phone = Phone,
-                    Gender = Gender,
+                    Gender = byte.Parse(Gender),
                     Address = Address
                 };
                 db.Customers.Add(cus);
@@ -63,6 +63,7 @@ namespace TechnologyShop.Controllers
             {
                 OrderCode = MySecurity.RandomString(6),
                 CustomerId = cus.Id,
+                UserId = 1,
                 OrderDate = DateTime.Now,
                 Discount = 0,
                 Tax = 0,
@@ -85,21 +86,18 @@ namespace TechnologyShop.Controllers
                     Price = product.OutputPrice,
                     Discount = product.Discount,
                     Tax = 0,
-                    Quantity = cart_items.Where(x=>x.productid == product.Id).SingleOrDefault().quantity,
+                    Quantity = cart_items.Where(x => x.productid == product.Id).SingleOrDefault().quantity,
                     Note = ""
                 };
                 db.OrderDetails.Add(od);
             }
             db.SaveChanges();
+
             return Content("OK");
         }
 
         public ActionResult OrderComplete()
         {
-            var cus = db.Customers.Find(int.Parse(User.Identity.Name));
-            var order = db.Orders.Where(x => x.CustomerId == cus.Id);
-
-            ViewBag.order = order;
 
             return View();
         }

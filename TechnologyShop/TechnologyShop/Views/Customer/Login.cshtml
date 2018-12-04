@@ -3,7 +3,6 @@
 {
     @Html.AntiForgeryToken()
     <div class="wrapper">
-
         <!-- Start page content -->
         <div id="page-content" class="page-wrapper">
             <!-- LOGIN SECTION START -->
@@ -12,8 +11,7 @@
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3">
                             <div class="registered-customers">
-                                <h6 class="widget-title border-left mb-50">LOGIN CUSTOMERS</h6>
-
+                                <h6 class="widget-title border-left mb-50">ĐĂNG NHẬP</h6>
                                 <div class="login-account p-30 box-shadow">
                                     <div class="row">
                                         <p>If you have an account with us, Please log in.</p>
@@ -22,9 +20,8 @@
                                             <div class="col-md-12">
                                                 <input type="text" class="form-control" name="Email" id="Email" placeholder="Email" required />
                                             </div>
-
                                             <div class="col-md-12">
-                                                <input type="password" class="form-control" name="Password" id="Password" placeholder="Password" autocomplete="off" required />
+                                                <input type="password" class="form-control" name="Password" id="Password" placeholder="Mật khẩu" autocomplete="off" required />
                                             </div>
                                             <div class="checkbox-primary pull-right">
                                                 <label>
@@ -32,13 +29,13 @@
                                                     Remember me
                                                 </label>
                                             </div>
-                                            <p><strong><a href="@Url.Action("ForgotPassword", "Customer")">Forgot our password?</a></strong></p>
-                                            <button class="submit-btn-1 btn-hover-1 center-block" type="submit">login</button>
+                                            <p><strong><a href="@Url.Action("ForgotPassword", "Customer")">Quên mật khẩu?</a></strong></p>
+                                            <button class="submit-btn-1 btn-hover-1 center-block" type="submit">Đăng nhập</button>
                                         </form>
                                         <p>@ViewBag.Message</p>
                                         <div class="form-group text-center">
                                             Need to Signup?
-                                            <a href="@Url.Action("Register", "Customer")"><strong>Register now</strong></a>
+                                            <a href="@Url.Action("Register", "Customer")"><strong>Đăng ký ngay</strong></a>
                                         </div>
                                     </div>
                                 </div>
@@ -50,6 +47,5 @@
             <!-- LOGIN SECTION END -->
         </div>
         <!-- End page content -->
-
     </div>
 }

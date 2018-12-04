@@ -1,13 +1,10 @@
 ﻿@using TechnologyShop.Models
 @using TechnologyShop.Models.ViewModel
-
 @{
     var customer = ViewBag.customer as UpdateProfileVM;
-   
+
 }
-
 <section id="page-content" class="page-wrapper">
-
     <!-- SHOP SECTION START -->
     <div class="shop-section mb-80">
         <div class="container">
@@ -34,7 +31,6 @@
                         <!-- shopping-cart start -->
                         <div class="tab-pane active" id="shopping-cart">
                             <div class="shopping-cart-content">
-
                                 <div class="table-content table-responsive mb-50">
                                     <table class="text-center table">
                                         <thead>
@@ -51,7 +47,6 @@
                                         <tbody id="carts">
                                             <!-- tr -->
                                             <!-- tr -->
-
                                         </tbody>
                                     </table>
                                     <h3>
@@ -63,79 +58,75 @@
                                     <div class="checkout-content box-shadow p-30">
                                         <form id="form_checkout" method="post">
                                             <div class="row">
-
                                                 <!-- billing details -->
                                                 @if (User.Identity.IsAuthenticated)
                                                 {
-                                                <div class="col-md-6">
-                                                    <h6 class="widget-title border-left mb-20">billing details</h6>
-                                                    <div class="row">
-                                                        <div class="form-group">
-                                                            @Html.Label("Name:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                            <div class="col-md-4">
-                                                                @customer.CustomerName
+                                                    <div class="col-md-6">
+                                                        <h6 class="widget-title border-left mb-20">Thông tin</h6>
+                                                        <div class="row">
+                                                            <div class="form-group">
+                                                                @Html.Label("Tên:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-4">
+                                                                    @customer.CustomerName
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="form-group">
+                                                                @Html.Label("Email:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-4">
+                                                                    @customer.Email
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="form-group">
+                                                                @Html.Label("Giới tính:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-6">
+                                                                   @customer.Gender
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="form-group">
+                                                                @Html.Label("Điện thoại:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-4">
+                                                                    @customer.Phone
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="form-group">
+                                                                @Html.Label("Địa chỉ:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-4">
+                                                                    @customer.Address
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="form-group">
-                                                            @Html.Label("Email:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                            <div class="col-md-4">
-                                                                @customer.Email
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="form-group">
-                                                            @Html.Label("Gender:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                            <div class="col-md-6">
-                                                                @Html.DropDownList("Gender", EnumHelper.GetSelectList(typeof(Gender)), "Please select gender")
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="form-group">
-                                                            @Html.Label("Phone:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                            <div class="col-md-4">
-                                                                @customer.Phone
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="form-group">
-                                                            @Html.Label("Address:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                            <div class="col-md-4">
-                                                                @customer.Address
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
                                                 }
                                                 else
                                                 {
                                                     <div class="col-md-6">
                                                         <div class="billing-details pr-10">
-                                                            <h6 class="widget-title border-left mb-20">billing details</h6>
-                                                            <input type="text" name="CustomerName" placeholder="Your Name Here...">
-                                                            <input type="text" name="Email" placeholder="Email address here...">
-                                                            <input type="text" name="Phone" placeholder="Phone here...">
+                                                            <h6 class="widget-title border-left mb-20">Thông tin đăng ký</h6>
+                                                            <input type="text" name="CustomerName" placeholder="Nhập tên...">
+                                                            <input type="text" name="Email" placeholder="Nhập Email ...">
+                                                            <input type="text" name="Phone" placeholder="Nhập điện thoại ...">
                                                             @Html.DropDownList("Gender", EnumHelper.GetSelectList(typeof(Gender)), "Please select gender")
                                                             <textarea name="Address" class="custom-textarea" placeholder="Your address here..."></textarea>
                                                         </div>
                                                     </div>
                                                 }
-
                                                 <input type="hidden" id="cartlist" name="cartlist" />
                                                 <div class="col-md-12">
-                                                    <button class="submit-btn-1 mt-30 btn-hover-1" type="submit">Finish</button>
+                                                    <button class="submit-btn-1 mt-30 btn-hover-1" type="submit">Gửi</button>
                                                 </div>
                                             </div>
-</form>
+                                        </form>
                                     </div>
                                 </div>
                                 <!-- checkout end -->
-
                             </div>
                         </div>
                         <!-- shopping-cart end -->
@@ -152,13 +143,11 @@
                                                     <td class="product-info">Đơn vị</td>
                                                     <th class="product-add-cart">add to cart</th>
                                                     <th class="product-remove">remove</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody id="wishlist2">
                                                 <!-- tr -->
                                                 <!-- tr -->
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -172,6 +161,5 @@
         </div>
     </div>
     <!-- SHOP SECTION END -->
-
 </section>
-
+20

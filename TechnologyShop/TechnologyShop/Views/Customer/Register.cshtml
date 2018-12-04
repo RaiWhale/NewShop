@@ -2,9 +2,7 @@
 @{
     ViewBag.Title = "Register";
 }
-
 <div class="wrapper">
-
     <!-- Start page content -->
     <div id="page-content" class="page-wrapper">
         <!-- LOGIN SECTION START -->
@@ -17,43 +15,37 @@
                             @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
                                 @Html.AntiForgeryToken()
-                                <h6 class="widget-title border-left mb-50">NEW CUSTOMERS</h6>
+                                <h6 class="widget-title border-left mb-50">ĐĂNG KÝ</h6>
                                 <div class="login-account p-30 box-shadow" id="register-form">
                                     <!--Register-->
-
                                     <div class="row">
-
                                         <div class="col-md-12">
                                             @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
                                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                         </div>
-
                                         <div class="col-md-12">
-                                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password" } })
+                                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mật khẩu" } })
                                             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                         </div>
-
                                         <div class="col-md-12">
-                                            @Html.EditorFor(model => model.RePassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Retype-Password" } })
+                                            @Html.EditorFor(model => model.RePassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập lại mật khẩu" } })
                                             @Html.ValidationMessageFor(model => model.RePassword, "", new { @class = "text-danger" })
                                         </div>
-
                                         <div class="col-md-12">
-                                            @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Name" } })
+                                            @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên khách hàng" } })
                                             @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="col-md-6">
-                                            @Html.EnumDropDownListFor(model => model.Gender, "Please select gender", new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.EnumDropDownListFor(model => model.Gender, "Chọn giới tính", new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="col-md-12">
-                                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Phone here....." } })
+                                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control",@type="number", @min = "0", @placeholder = "Điện thoại....." } })
                                             @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
                                         </div>
 
-
                                         <div class="col-md-12">
-                                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Country" } })
+                                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Địa chỉ" } })
                                             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="col-md-12">
@@ -62,7 +54,6 @@
                                                 <input type="file" class="form-control" name="pic" id="pic" placeholder="Avatar" required />
                                             </div>
                                         </div>
-
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <button class="submit-btn-1 mt-20 btn-hover-1" type="submit" value="register">Register</button>
@@ -83,7 +74,5 @@
         <!-- LOGIN SECTION END -->
     </div>
     <!-- End page content -->
-
 </div>
-
 

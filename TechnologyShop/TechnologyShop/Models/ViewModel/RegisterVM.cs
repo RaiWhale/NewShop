@@ -22,6 +22,8 @@ namespace TechnologyShop.Models.ViewModel
         [Required]
         public string CustomerName { get; set; }
         public Gender Gender { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
         public string Address { get; set; }
 

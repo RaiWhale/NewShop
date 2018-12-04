@@ -1,40 +1,36 @@
 ﻿@model TechnologyShop.Models.Category
-
 @{
     ViewBag.Title = "Create";
 }
 <!-- Modal content-->
 
+<div class="modal-header">
+    <h4>Add New Category</h4>
+</div>
+<div class="modal-body">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-    <div class="modal-header">
-
-        <h4>Add New Category</h4>
-    </div>
-    <div class="modal-body">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-horizontal">
-                @Html.HiddenFor(model => model.TopicId)
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-default" />
-                        <input type="button" value="Cancel" class="btn btn-danger ml-2" data-dismiss="modal" />
-                    </div>
+        <div class="form-horizontal">
+            @Html.HiddenFor(model => model.TopicId)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
                 </div>
             </div>
-        }
-    </div>
-
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="button" value="Cancel" class="btn btn-danger ml-2" data-dismiss="modal" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

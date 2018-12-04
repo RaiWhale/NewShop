@@ -11,7 +11,8 @@ namespace TechnologyShop.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Customer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,6 +26,7 @@ namespace TechnologyShop.Models
         public string CustomerName { get; set; }
         public byte Gender { get; set; }
         public Nullable<System.DateTime> Birthday { get; set; }
+        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
