@@ -11,22 +11,19 @@ namespace TechnologyShop.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Customer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
             this.Orders = new HashSet<Order>();
-            this.WishLists = new HashSet<WishList>();
         }
     
         public int Id { get; set; }
         public string CustomerName { get; set; }
         public byte Gender { get; set; }
         public Nullable<System.DateTime> Birthday { get; set; }
-        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
@@ -34,10 +31,9 @@ namespace TechnologyShop.Models
         public string Address { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public bool IsActive { get; set; }
+        public string Token { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WishList> WishLists { get; set; }
     }
 }

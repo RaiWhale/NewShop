@@ -25,6 +25,7 @@
     <Property Name="Address" Type="nvarchar" MaxLength="250" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="Token" Type="varchar" MaxLength="150" />
   </EntityType>
   <EntityType Name="InputDetails">
     <Key>
@@ -155,14 +156,6 @@
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="ResetPasswordToken" Type="varchar" MaxLength="100" />
-  </EntityType>
-  <EntityType Name="WishList">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CustomerId" Type="int" Nullable="false" />
-    <Property Name="ProductId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_Categories_ToTopics">
     <End Role="Topics" Type="Self.Topics" Multiplicity="1" />
@@ -344,30 +337,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_WishList_ToCustomers">
-    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
-    <End Role="WishList" Type="Self.WishList" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="WishList">
-        <PropertyRef Name="CustomerId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_WishList_ToProducts">
-    <End Role="Products" Type="Self.Products" Multiplicity="1" />
-    <End Role="WishList" Type="Self.WishList" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="WishList">
-        <PropertyRef Name="ProductId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="NewShopModelStoreContainer">
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
@@ -382,7 +351,6 @@
     <EntitySet Name="UserLevelPermissions" EntityType="Self.UserLevelPermissions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserLevels" EntityType="Self.UserLevels" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="WishList" EntityType="Self.WishList" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Categories_ToTopics" Association="Self.FK_Categories_ToTopics">
       <End Role="Topics" EntitySet="Topics" />
       <End Role="Categories" EntitySet="Categories" />
@@ -442,14 +410,6 @@
     <AssociationSet Name="FK_Users_UserLevels" Association="Self.FK_Users_UserLevels">
       <End Role="UserLevels" EntitySet="UserLevels" />
       <End Role="Users" EntitySet="Users" />
-    </AssociationSet>
-    <AssociationSet Name="FK_WishList_ToCustomers" Association="Self.FK_WishList_ToCustomers">
-      <End Role="Customers" EntitySet="Customers" />
-      <End Role="WishList" EntitySet="WishList" />
-    </AssociationSet>
-    <AssociationSet Name="FK_WishList_ToProducts" Association="Self.FK_WishList_ToProducts">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="WishList" EntitySet="WishList" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

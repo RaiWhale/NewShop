@@ -295,10 +295,8 @@
     <Compile Include="Models\ViewModel\OrderReportVM.cs" />
     <Compile Include="Models\ViewModel\QuantityReportVM.cs" />
     <Compile Include="Models\ViewModel\RegisterVM.cs" />
+    <Compile Include="Models\ViewModel\SimpleMail.cs" />
     <Compile Include="Models\ViewModel\UpdateProfileVM.cs" />
-    <Compile Include="Models\WishList.cs">
-      <DependentUpon>NewShop.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -790,6 +788,9 @@
     <Content Include="Uploads\Pictures\10\636765071536303914_" />
     <Content Include="Uploads\Pictures\10\636765076253369913_" />
     <Content Include="Uploads\Pictures\10\636788380400491936_" />
+    <Content Include="Views\Home\Success.cshtml" />
+    <Content Include="Views\Customer\NewPassword.cshtml" />
+    <Content Include="Views\Customer\ErrorResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

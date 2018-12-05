@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 using TechnologyShop.Models;
@@ -107,30 +108,80 @@ namespace TechnologyShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ForgotPassword(ForgetPasswordVM data, string NewPassword, string Email)
         {
-            var email = db.Customers.Where(x => x.Email.Equals(data.Email)).SingleOrDefault();
+            var cus = db.Customers.Where(x => x.Email.Equals(data.Email)).SingleOrDefault();
 
 
-            if (email != null)
+            if (cus != null)
             {
-                if ((email.Phone.Equals(data.Phone)) && email.CustomerName.Equals(data.CustomerName))
+                if ((cus.Phone.Equals(data.Phone)) && cus.Email.Equals(data.Email))
                 {
-                    NewPassword = RandomString2(6);
-                    email.Password = MySecurity.EncryptPass(NewPassword);
+              
+                    cus.Token = MySecurity.EncryptPass(DateTime.Now.Ticks + cus.Email + MySecurity.RandomString(6));
                     db.SaveChanges();
-                    ViewBag.Message = NewPassword;
-                    return RedirectToAction("Login", "Customer");
+
+                    var url = string.Format("/Customer/NewPassword/?token={0}&cid={1}", cus.Token,cus.Id);
+                    var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, url);
+
+                    string subject = "Forgot Password !";
+                    string body = "<br/><br/>Here is your password! Please log out account to try new password" +
+                        "<br/> <a href='" + link + "'><h3>" + link + "</h3>  </a>";
+
+                    if (MySecurity.SendMail(data.Email, subject, body))
+                    {
+                        return RedirectToAction("Login", "Customer");
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Error!";
+                    }
                 }
                 else
                 {
-                    ViewBag.Message = "Phone or Customer name Invalid!";
+                    ViewBag.Message = "Phone or Email Invalid!";
                 }
             }
             else
             {
                 ViewBag.Message = "Email invalid!";
             }
+     
 
+            return View(data);
+        }
 
+        public ActionResult NewPassword(int? cid, string token)
+        {
+            var cus = db.Customers.Where(x => x.Token.Equals(token) && x.Id == cid).SingleOrDefault();
+            if(cus == null)
+            {
+                return View("ErrorResetPassword");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult NewPassword(int? cid,string token, string NewPassword, string RePassword)
+        {
+            var cus = db.Customers.Where(x => x.Token.Equals(token) && x.Id == cid).SingleOrDefault();
+            if (cus == null)
+            {
+                return View("ErrorResetPassword");
+            }
+            else
+            {
+                if (!NewPassword.Equals(RePassword))
+                {
+                    ViewBag.Message = "Please enter the same Password as above";
+                }
+                else
+                {
+                    cus.Password = MySecurity.EncryptPass(NewPassword);
+                    cus.Token = "";
+                    db.SaveChanges();
+
+                    return RedirectToAction("Login");
+                }
+            }
             return View();
         }
 
@@ -196,12 +247,8 @@ namespace TechnologyShop.Controllers
             return View(data);
         }
 
-        static Random rnd = new Random();
-        public string RandomString2(int length)
-        {
-            const string chars = "abcdef0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[rnd.Next(s.Length)]).ToArray());
-        }
+
+     
+ 
     }
 }
