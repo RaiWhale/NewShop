@@ -83,16 +83,19 @@ namespace TechnologyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                Password = MySecurity.EncryptPass(Password);
 
-                if(Password != customer.Password)
+
+                if (!NewPassword.Equals(RePassword))
                 {
-                    ViewBag.Message = "Wrong Password";
+                    ViewBag.Message = "Please enter the same Password as above";
                 }
-                customer.Password = NewPassword;
+                else
+                {
+                    customer.Password = MySecurity.EncryptPass(NewPassword);
+                    db.SaveChanges();
 
-                db.Entry(customer).State = EntityState.Modified;
-                db.SaveChanges();
+                    return RedirectToAction("Login");
+                }
                 return Content("OK");
             }
             return PartialView(customer);
