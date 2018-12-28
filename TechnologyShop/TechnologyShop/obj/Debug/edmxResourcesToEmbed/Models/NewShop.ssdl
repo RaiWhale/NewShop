@@ -54,6 +54,20 @@
     <Property Name="Tax" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="Status" Type="tinyint" Nullable="false" />
   </EntityType>
+  <EntityType Name="Inventory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="SupplierId" Type="int" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Input" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Output" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="OutputPrice" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
   <EntityType Name="OrderDetails">
     <Key>
       <PropertyRef Name="Id" />
@@ -229,6 +243,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Inventory_ToProducts">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Inventory">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inventory_ToSuppliers">
+    <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+    <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suppliers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Inventory">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_OrderDetails_Orders">
     <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
     <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
@@ -342,6 +380,7 @@
     <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InputDetails" EntityType="Self.InputDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Inputs" EntityType="Self.Inputs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
@@ -374,6 +413,14 @@
     <AssociationSet Name="FK_InputDetails_Products" Association="Self.FK_InputDetails_Products">
       <End Role="Products" EntitySet="Products" />
       <End Role="InputDetails" EntitySet="InputDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inventory_ToProducts" Association="Self.FK_Inventory_ToProducts">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Inventory" EntitySet="Inventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inventory_ToSuppliers" Association="Self.FK_Inventory_ToSuppliers">
+      <End Role="Suppliers" EntitySet="Suppliers" />
+      <End Role="Inventory" EntitySet="Inventory" />
     </AssociationSet>
     <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
       <End Role="Orders" EntitySet="Orders" />

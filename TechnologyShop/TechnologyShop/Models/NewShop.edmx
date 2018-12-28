@@ -59,6 +59,20 @@
           <Property Name="Tax" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Status" Type="tinyint" Nullable="false" />
         </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="SupplierId" Type="int" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Input" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Output" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="OutputPrice" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="OrderDetails">
           <Key>
             <PropertyRef Name="Id" />
@@ -234,6 +248,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Inventory_ToProducts">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_ToSuppliers">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderDetails_Orders">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
@@ -347,6 +385,7 @@
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InputDetails" EntityType="Self.InputDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inputs" EntityType="Self.Inputs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
@@ -379,6 +418,14 @@
           <AssociationSet Name="FK_InputDetails_Products" Association="Self.FK_InputDetails_Products">
             <End Role="Products" EntitySet="Products" />
             <End Role="InputDetails" EntitySet="InputDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_ToProducts" Association="Self.FK_Inventory_ToProducts">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_ToSuppliers" Association="Self.FK_Inventory_ToSuppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Inventory" EntitySet="Inventory" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
             <End Role="Orders" EntitySet="Orders" />
@@ -491,6 +538,7 @@
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Inputs" Relationship="Self.FK_Input_Suppliers" FromRole="Suppliers" ToRole="Inputs" />
+          <NavigationProperty Name="Inventories" Relationship="NewShopModel.FK_Inventory_ToSuppliers" FromRole="Supplier" ToRole="Inventory" />
         </EntityType>
         <EntityType Name="Topic">
           <Key>
@@ -607,6 +655,15 @@
           <AssociationSet Name="FK_Orders_Customers" Association="NewShopModel.FK_Orders_Customers">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <EntitySet Name="Inventories" EntityType="NewShopModel.Inventory" />
+          <AssociationSet Name="FK_Inventory_ToProducts" Association="NewShopModel.FK_Inventory_ToProducts">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_ToSuppliers" Association="NewShopModel.FK_Inventory_ToSuppliers">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Inventory" EntitySet="Inventories" />
           </AssociationSet>
           </EntityContainer>
         <EnumType Name="Gender" UnderlyingType="Byte">
@@ -737,6 +794,7 @@
           <NavigationProperty Name="OrderDetails" Relationship="NewShopModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
           <NavigationProperty Name="Pictures" Relationship="NewShopModel.FK_Pictures_Products" FromRole="Product" ToRole="Picture" />
           <NavigationProperty Name="Picture" Relationship="NewShopModel.FK_Products_Pictures" FromRole="Product" ToRole="Picture" />
+          <NavigationProperty Name="Inventories" Relationship="NewShopModel.FK_Inventory_ToProducts" FromRole="Product" ToRole="Inventory" />
         </EntityType>
         <Association Name="FK_Products_Categories">
           <End Type="NewShopModel.Category" Role="Category" Multiplicity="1" />
@@ -865,6 +923,46 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="SupplierId" Type="Int32" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Input" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Output" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="TotalQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="OutputPrice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Product" Relationship="NewShopModel.FK_Inventory_ToProducts" FromRole="Inventory" ToRole="Product" />
+          <NavigationProperty Name="Supplier" Relationship="NewShopModel.FK_Inventory_ToSuppliers" FromRole="Inventory" ToRole="Supplier" />
+        </EntityType>
+        <Association Name="FK_Inventory_ToProducts">
+          <End Type="NewShopModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="NewShopModel.Inventory" Role="Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_ToSuppliers">
+          <End Type="NewShopModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="NewShopModel.Inventory" Role="Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="SupplierId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1040,6 +1138,21 @@
                 <ScalarProperty Name="Birthday" ColumnName="Birthday" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inventories">
+            <EntityTypeMapping TypeName="NewShopModel.Inventory">
+              <MappingFragment StoreEntitySet="Inventory">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="OutputPrice" ColumnName="OutputPrice" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="Output" ColumnName="Output" />
+                <ScalarProperty Name="Input" ColumnName="Input" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

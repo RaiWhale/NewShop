@@ -18,6 +18,7 @@ namespace TechnologyShop.Models
         public Supplier()
         {
             this.Inputs = new HashSet<Input>();
+            this.Inventories = new HashSet<Inventory>();
         }
     
         public int Id { get; set; }
@@ -30,5 +31,7 @@ namespace TechnologyShop.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Input> Inputs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Inventory> Inventories { get; set; }
     }
 }

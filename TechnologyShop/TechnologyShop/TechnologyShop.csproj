@@ -188,6 +188,9 @@
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\ImageHandler.cs" />
     <Compile Include="Helpers\StoreHelpers.cs" />
+    <Compile Include="Models\Inventory.cs">
+      <DependentUpon>NewShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\NewShop1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

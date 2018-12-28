@@ -10,6 +10,7 @@ using TechnologyShop.Models;
 
 namespace TechnologyShop.Areas.Admin.Controllers
 {
+    [Authorize]
     public class InputsController : Controller
     {
         private NewShopEntities db = new NewShopEntities();
@@ -39,9 +40,13 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // GET: Admin/Inputs/Create
         public ActionResult Create()
         {
+            Input input = new Input();
+            input.InputCode = MySecurity.RandomString(6);
+
+            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
             ViewBag.SupplierId = new SelectList(db.Suppliers, "Id", "SupplierName");
             ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName");
-            return PartialView();
+            return PartialView(input);
         }
 
         // POST: Admin/Inputs/Create
@@ -49,18 +54,32 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,InputCode,InputDate,UserId,SupplierId,Tax,Status")] Input input)
+        public ActionResult Create([Bind(Include = "Id,InputCode,InputDate,UserId,SupplierId,Tax,Status")] Input input, string productname)
         {
             if (ModelState.IsValid)
             {
-                input.InputCode = MySecurity.RandomString(6);
+                var emp = int.Parse(User.Identity.Name);
+                input.UserId = emp;
                 input.InputDate = DateTime.Now;
-
                 db.Inputs.Add(input);
                 db.SaveChanges();
+
+                var inpid = db.Inputs.Select(x => x.Id).ToList();
+                foreach(var inputdetails in db.InputDetails.Where(x => inpid.Contains(x.Id)))
+                {
+                    InputDetail inpd = new InputDetail
+                    {
+                        InputId = input.Id
+
+                    };
+
+                    
+                }
+
                 return Content("OK");
             }
 
+            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName", productname);
             ViewBag.SupplierId = new SelectList(db.Suppliers, "Id", "SupplierName", input.SupplierId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", input.UserId);
             return PartialView(input);

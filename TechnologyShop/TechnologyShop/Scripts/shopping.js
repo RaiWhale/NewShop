@@ -198,8 +198,6 @@ function loadCartItems() {
         });
         return false;
     });
-
-
 }
 
 function loadHeaderCartItems() {
