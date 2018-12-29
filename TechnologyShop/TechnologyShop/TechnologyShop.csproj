@@ -188,6 +188,9 @@
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\ImageHandler.cs" />
     <Compile Include="Helpers\StoreHelpers.cs" />
+    <Compile Include="Models\InputStatus.cs">
+      <DependentUpon>NewShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Inventory.cs">
       <DependentUpon>NewShop.tt</DependentUpon>
     </Compile>
@@ -706,12 +709,14 @@
     <Content Include="Areas\Admin\Views\Categories\Error.cshtml" />
     <Content Include="Areas\Admin\Views\Products\UploadFile.cshtml" />
     <Content Include="Areas\Admin\Views\Customers\ChangePassword.cshtml" />
-    <Content Include="Areas\Admin\Views\Inputs\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Inputs\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Inputs\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Inputs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Inputs\InputView.cshtml" />
     <Content Include="Areas\Admin\Views\Inputs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Inputs\LoadProducts.cshtml" />
+    <Content Include="Areas\Admin\Views\Inputs\InputError.cshtml" />
+    <Content Include="Areas\Admin\Views\Inputs\InputDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\Inputs\SupplierProducts.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\inputItems.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />

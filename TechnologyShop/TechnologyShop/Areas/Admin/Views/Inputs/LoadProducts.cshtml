@@ -1,0 +1,39 @@
+﻿@model IEnumerable<TechnologyShop.Models.Product>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Product Name")
+        </th>
+        <th>
+            @Html.DisplayName("Input Price")
+        </th>
+        <th>
+            @Html.DisplayName("Output Price")
+        </th>
+        <th>
+            @Html.DisplayName("Add List")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InputPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OutputPrice)
+            </td>
+            <td></td>
+            <td>
+                <input id="addtoinput" type="button" value="Add Items" class="btn btn-danger ml-2 " productid="item.Id" productname="item.ProductName" unit="item.Unit" price="item.OutputPrice" href="#" />
+            </td>
+        </tr>
+    }
+
+</table>

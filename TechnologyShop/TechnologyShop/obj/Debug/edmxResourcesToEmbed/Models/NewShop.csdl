@@ -27,7 +27,7 @@
     <Property Name="SupplierId" Type="Int32" Nullable="false" />
     <Property Name="Discount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="Tax" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-    <Property Name="Status" Type="Byte" Nullable="false" />
+    <Property Name="Status" Type="NewShopModel.InputStatus" Nullable="false" />
     <NavigationProperty Name="InputDetails" Relationship="Self.FK_InputDetails_Inputs" FromRole="Inputs" ToRole="InputDetails" />
     <NavigationProperty Name="Supplier" Relationship="Self.FK_Input_Suppliers" FromRole="Inputs" ToRole="Suppliers" />
     <NavigationProperty Name="User" Relationship="NewShopModel.FK_Input_Users" FromRole="Input" ToRole="User" />
@@ -498,4 +498,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EnumType Name="InputStatus" UnderlyingType="Byte">
+    <Member Name="Pending" Value="0" />
+    <Member Name="Finished" Value="1" />
+    <Member Name="Cancelled" Value="2" />
+  </EnumType>
 </Schema>

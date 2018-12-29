@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -7,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TechnologyShop.Models;
+using TechnologyShop.Models.ViewModel;
 
 namespace TechnologyShop.Areas.Admin.Controllers
 {
@@ -18,7 +20,19 @@ namespace TechnologyShop.Areas.Admin.Controllers
         // GET: Admin/Inputs
         public ActionResult Index()
         {
-            var inputs = db.Inputs.Include(i => i.Supplier).Include(i => i.User);
+            int user_id = int.Parse(User.Identity.Name);
+            var user = db.Users.Find(user_id);
+
+            IQueryable<Input> inputs = db.Inputs;
+
+            //if user seller
+            if(user.UserLevelId == 3)
+            {
+                inputs = db.Inputs.Where(x => x.UserId == user_id);
+            }
+
+            inputs = inputs.Where(x => x.Status > InputStatus.Pending).Include(i => i.Supplier).Include(i => i.User);
+
             return PartialView(inputs.ToList());
         }
 
@@ -37,53 +51,46 @@ namespace TechnologyShop.Areas.Admin.Controllers
             return PartialView(input);
         }
 
+
+        public ActionResult LoadProducts()
+        {
+            var products = from p in db.Products select (p);
+            ViewBag.products = products.ToList();
+            return PartialView(db.Products.ToList());
+        }
         // GET: Admin/Inputs/Create
         public ActionResult Create()
         {
-            Input input = new Input();
-            input.InputCode = MySecurity.RandomString(6);
-
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
-            ViewBag.SupplierId = new SelectList(db.Suppliers, "Id", "SupplierName");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName");
-            return PartialView(input);
-        }
-
-        // POST: Admin/Inputs/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,InputCode,InputDate,UserId,SupplierId,Tax,Status")] Input input, string productname)
-        {
-            if (ModelState.IsValid)
+            Input input;
+            //input.InputCode = MySecurity.RandomString(6);
+            //input code = real code on invoice
+            //if current user no input status = false -> create new input 
+            //else input status is not finish = load for editing
+            //get current user id
+            int user_id = int.Parse(User.Identity.Name);
+            input = db.Inputs.Where(x => x.UserId == user_id && x.Status == 0).SingleOrDefault();
+            if(input == null)
             {
-                var emp = int.Parse(User.Identity.Name);
-                input.UserId = emp;
-                input.InputDate = DateTime.Now;
+                //create new
+                input = new Input()
+                {
+                    UserId = user_id,
+                    InputDate = DateTime.Now, //for report
+                    SupplierId = db.Suppliers.First().Id,
+                    Discount = 0,
+                    Tax = 0,
+                    Status = InputStatus.Pending
+                };
                 db.Inputs.Add(input);
                 db.SaveChanges();
-
-                var inpid = db.Inputs.Select(x => x.Id).ToList();
-                foreach(var inputdetails in db.InputDetails.Where(x => inpid.Contains(x.Id)))
-                {
-                    InputDetail inpd = new InputDetail
-                    {
-                        InputId = input.Id
-
-                    };
-
-                    
-                }
-
-                return Content("OK");
+                //create trigger -> created date
             }
 
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName", productname);
-            ViewBag.SupplierId = new SelectList(db.Suppliers, "Id", "SupplierName", input.SupplierId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", input.UserId);
-            return PartialView(input);
+            ViewBag.SupplierId = new SelectList(db.Suppliers, "Id", "SupplierName");
+            //ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName");
+            return PartialView("InputView", input);
         }
+
 
         // GET: Admin/Inputs/Edit/5
         public ActionResult Edit(int? id)
@@ -92,58 +99,89 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Input input = db.Inputs.Find(id);
+            int user_id = int.Parse(User.Identity.Name);
+            Input input = db.Inputs.Where(x => x.UserId == user_id && x.Id == id).SingleOrDefault();
             if (input == null)
             {
-                return HttpNotFound();
+                return PartialView("InputError");
             }
             ViewBag.SupplierId = new SelectList(db.Suppliers, "Id", "SupplierName", input.SupplierId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", input.UserId);
-            return PartialView(input);
+            //ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", input.UserId);
+            return PartialView("InputView", input); //common view
         }
 
-        // POST: Admin/Inputs/Edit/5
+
+        // POST: Admin/Inputs/InputView
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,InputCode,InputDate,UserId,SupplierId,Discount,Tax,Status")] Input input)
+        public ActionResult InputView([Bind(Include = "Id,InputCode,InputDate,SupplierId,Tax,Discount")] Input data)
         {
-            if (ModelState.IsValid)
+            //update data
+            int user_id = int.Parse(User.Identity.Name);
+            Input input = db.Inputs.Where(x => x.UserId == user_id && x.Id == data.Id).SingleOrDefault();
+            if (input != null)
             {
-                db.Entry(input).State = EntityState.Modified;
+                input.InputCode = data.InputCode;
+                input.InputDate = data.InputDate;
+                input.SupplierId = data.SupplierId;
+                input.Tax = data.Tax;
+                input.Discount = data.Discount;
+                if (input.Status == InputStatus.Pending)
+                {
+                    input.Status = InputStatus.Finished;
+                }
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Content("OK");
             }
-            ViewBag.SupplierId = new SelectList(db.Suppliers, "Id", "SupplierName", input.SupplierId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "LoginName", input.UserId);
-            return PartialView(input);
+            else
+            {
+                return Content("Error!");
+            }
         }
 
-        // GET: Admin/Inputs/Delete/5
-        public ActionResult Delete(int? id)
+
+        //for input details
+
+        public ActionResult InputDetails(int id)
         {
-            if (id == null)
+            var details = db.InputDetails.Where(x => x.InputId == id).ToList();
+            details.Add(new InputDetail()
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Input input = db.Inputs.Find(id);
-            if (input == null)
-            {
-                return HttpNotFound();
-            }
-            return PartialView(input);
+                InputId = id
+            });
+            return PartialView(details);
         }
 
-        // POST: Admin/Inputs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+
+        [HttpPost]
+        public ActionResult PostInputDetails(InputDetail detail)
         {
-            Input input = db.Inputs.Find(id);
-            db.Inputs.Remove(input);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if(detail.Id == 0)
+            {
+                //insert into InputDetails
+            }
+            else
+            {
+                //update
+            }
+
+            return Content("OK|" + detail.Id);
+        }
+
+        //get products ext
+        public ActionResult SupplierProducts(int id)
+        {
+            //id == SupplierId
+            if (id != 0)
+            {
+                return PartialView();
+            }
+            else
+            {
+                return Content("");
+            }
         }
 
         protected override void Dispose(bool disposing)

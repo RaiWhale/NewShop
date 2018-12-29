@@ -28,6 +28,20 @@
     <!-- ================== BEGIN BASE JS ================== -->
     <script src="~/Content/Admin/plugins/pace/pace.min.js"></script>
     <!-- ================== END BASE JS ================== -->
+
+    <style>
+        #input_details .table td {
+            padding: 0px;
+            margin: 0px;
+            border:1px solid #808080;
+        }
+        #input_details input {
+            border:none;
+            border-radius: 0px;
+            background-color:white;
+        }
+    </style>
+
 </head>
 <body>
     <!-- begin #page-loader -->
@@ -299,7 +313,7 @@
 
         </div>
     </div>
-
+    <script src="~/Scripts/inputItems.js"></script>
     <script src="~/Content/Admin/js/app.js"></script>
     @RenderSection("scripts", required: false)
 </body>

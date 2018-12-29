@@ -10,14 +10,13 @@
     <table class="table">
         <tr>
             <th>
+                Id
+            </th>
+            <th>
                 Code
             </th>
             <th>
                 Date
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Tax)
             </th>
 
             <th>
@@ -35,34 +34,32 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InputCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InputDate)
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InputCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InputDate)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tax)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supplier.SupplierName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Supplier.SupplierName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.LoginName)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { baction = "" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { baction = "" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { baction = "" })
-                </td>
-            </tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FullName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { baction = "" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { baction = "" }) 
+            </td>
+        </tr>
         }
 
     </table>

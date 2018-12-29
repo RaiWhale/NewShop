@@ -1,0 +1,59 @@
+﻿@model IEnumerable<TechnologyShop.Models.InputDetail>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Product Name
+        </th>
+        <th>
+            Unit
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Input Price
+        </th>
+        <th>
+            Total
+        </th>
+        <th>
+            Note
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td width="200">
+            @Html.HiddenFor(modelItem => item.Id)
+            @Html.EditorFor(modelItem => item.Product.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+        </td>
+        <td width="80">
+            @Html.EditorFor(modelItem => item.Unit, new { htmlAttributes = new { @class = "form-control", @readonly="" } })
+        </td>
+        <td width="100">
+            <input name="Quantity" class="form-control" value="@item.Quantity.ToString("N0")" />
+        </td>
+        <td width="120">
+            <input name="Price" class="form-control" value="@item.Price.ToString("N0")" />
+        </td>
+        <td width="130">
+            @{ var total = item.Quantity * item.Price; }
+            <input name="Total" class="form-control" value="@total.ToString("N0")" readonly />
+        </td>
+        <td width="100">
+            @Html.EditorFor(modelItem => item.Note, new { htmlAttributes = new { @class = "form-control" } })
+        </td>
+        
+    </tr>
+}
+
+</table>
+
+
+<script>
+
+</script>

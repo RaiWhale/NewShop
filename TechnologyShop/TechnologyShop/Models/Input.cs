@@ -27,7 +27,7 @@ namespace TechnologyShop.Models
         public int SupplierId { get; set; }
         public decimal Discount { get; set; }
         public decimal Tax { get; set; }
-        public byte Status { get; set; }
+        public InputStatus Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InputDetail> InputDetails { get; set; }
