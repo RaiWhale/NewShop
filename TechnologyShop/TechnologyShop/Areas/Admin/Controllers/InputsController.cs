@@ -82,6 +82,7 @@ namespace TechnologyShop.Areas.Admin.Controllers
                     Status = InputStatus.Pending
                 };
                 db.Inputs.Add(input);
+
                 db.SaveChanges();
                 //create trigger -> created date
             }
@@ -151,6 +152,15 @@ namespace TechnologyShop.Areas.Admin.Controllers
             {
                 InputId = id
             });
+
+            string products = " ";
+            foreach (var p in db.Products)
+            {
+                products += "'" + p.Id + "|" + p.Unit + "|" + p.InputPrice + "':'" + p.Id + " → " + p.ProductName + "',";
+                //products += "'" + p.Id + "|" + p.Unit + "|" + p.InputPrice + "':'" + p.BarCode + " → " + p.ProductName + "',";
+            }
+
+            ViewBag.products = products.Substring(0, products.Length - 1);
             return PartialView(details);
         }
 

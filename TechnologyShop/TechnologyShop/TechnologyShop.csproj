@@ -311,6 +311,7 @@
     <Content Include="Content\Admin\crossbrowserjs\excanvas.min.js" />
     <Content Include="Content\Admin\crossbrowserjs\html5shiv.js" />
     <Content Include="Content\Admin\crossbrowserjs\respond.min.js" />
+    <Content Include="Content\Admin\css\better-autocomplete.css" />
     <Content Include="Content\Admin\css\default\images\coming-soon.jpg" />
     <Content Include="Content\Admin\css\default\images\cover-pattern.png" />
     <Content Include="Content\Admin\css\default\images\cover-sidebar-user.jpg" />
@@ -319,6 +320,7 @@
     <Content Include="Content\Admin\css\default\style-responsive.min.css" />
     <Content Include="Content\Admin\css\default\style.min.css" />
     <Content Include="Content\Admin\css\default\theme\default.css" />
+    <Content Include="Content\Admin\css\jquery-ui.css" />
     <Content Include="Content\Admin\img\login-bg\login-bg-11.jpg" />
     <Content Include="Content\Admin\img\logo\logo-bs4.png" />
     <Content Include="Content\Admin\img\theme\apple.jpg" />
@@ -348,6 +350,8 @@
     <Content Include="Content\Admin\js\apps.min.js" />
     <Content Include="Content\Admin\js\demo\dashboard-v2.min.js" />
     <Content Include="Content\Admin\js\demo\table-manage-fixed-header.demo.min.js" />
+    <Content Include="Content\Admin\js\jquery-ui.js" />
+    <Content Include="Content\Admin\js\jquery.autocomplete.js" />
     <Content Include="Content\Admin\js\PartialWork.js" />
     <Content Include="Content\Admin\js\theme\default.min.js" />
     <Content Include="Content\Admin\plugins\animate\animate.min.css" />

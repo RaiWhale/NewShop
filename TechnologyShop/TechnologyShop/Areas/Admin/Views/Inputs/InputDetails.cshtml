@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<TechnologyShop.Models.InputDetail>
 
 
-<table class="table">
+<table class="table details">
     <tr>
         <th>
             Product Name
@@ -27,27 +27,30 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td width="200">
+        <td width="250">
             @Html.HiddenFor(modelItem => item.Id)
-            @Html.EditorFor(modelItem => item.Product.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(modelItem => item.Product.ProductName, new { htmlAttributes = new { @class = "form-control products" } })
         </td>
-        <td width="80">
+        <td width="60">
             @Html.EditorFor(modelItem => item.Unit, new { htmlAttributes = new { @class = "form-control", @readonly="" } })
         </td>
-        <td width="100">
+        <td width="80">
             <input name="Quantity" class="form-control" value="@item.Quantity.ToString("N0")" />
         </td>
-        <td width="120">
+        <td width="80">
             <input name="Price" class="form-control" value="@item.Price.ToString("N0")" />
         </td>
-        <td width="130">
-            @{ var total = item.Quantity * item.Price; }
-            <input name="Total" class="form-control" value="@total.ToString("N0")" readonly />
-        </td>
         <td width="100">
+            @{ var total = item.Quantity * item.Price; }
+            <input name="Total" class="form-control total" value="@total.ToString("N0")" readonly />
+        </td>
+        <td width="80">
             @Html.EditorFor(modelItem => item.Note, new { htmlAttributes = new { @class = "form-control" } })
         </td>
         
+        <td width="50">
+            <button type="button" class="remove">Remove</button>
+        </td>
     </tr>
 }
 
@@ -56,4 +59,158 @@
 
 <script>
 
+    var products = { @Html.Raw(@ViewBag.products) };
+    var productsArray = $.map(products, function (value, key) { return { value: value, data: key }; });
+
+    $(document).ready(function () {
+        
+        InitSearchProducts();
+    
+        SetTextChangeEvent();
+        SetRemoveEvent();
+        SetQuantityTab();
+        
+        SumTotal();
+    });
+
+    function InitSearchProducts() {
+        // Initialize ajax autocomplete:
+        $('.products').autocomplete({
+            // serviceUrl: '/autosuggest/service/url',
+            lookup: productsArray,
+            lookupFilter: function (suggestion, originalQuery, queryLowerCase) {
+                var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+                return re.test(suggestion.value);
+            },
+            onSelect: function (suggestion) {
+                var d = suggestion.data.split("|");
+                var $c = $(this);
+
+                var $cells = $c.parents("tr").first().find("input");
+                $cells.eq(0).val(d[0]);
+                $cells.eq(2).val(d[1]);
+                $cells.eq(4).val(d[2]);
+
+                $c.val(suggestion.value.split(" → ")[1]);
+                $cells.eq(3).select().focus();
+
+                $(".autocomplete-suggestions").hide();
+                
+            },
+            onHint: function (hint) {
+
+            },
+            onInvalidateSelection: function () {
+                $(this).parents("tr").first().find("input").eq(0).val('');
+            }
+        });
+    }
+
+
+    function AddNewRow() {
+        var $grid = $('.details');
+        var $row = $grid.find('tr:last').clone();
+        $row.find('input').val('');
+        $row.insertAfter($grid.find('tr:last'));
+        
+        SetTextChangeEvent();
+        SetRemoveEvent();
+        SetQuantityTab();
+        InitSearchProducts();
+    }
+
+    function SetQuantityTab() {
+
+        $(".details tr input").focus(function () {
+            if ($(this).parent().index() == 4) {
+                $(this).parents('tr').first().next().find('input').eq(1).select().focus();
+            }
+        });
+    }
+
+    function SetTextChangeEvent() {
+        $(".details tr input").change(function () {
+
+            $row = $(this).parents('tr').first();
+            
+            if ($(this).parent().index() == 2 || $(this).parent().index() == 3) {
+                
+                var $q = $row.find("input").eq(3);
+                if (!$.isNumeric($q.val()) || $q.val() < 0) {
+                    $q.val(0).focus().select();
+                    return;
+                }
+                var $p = $row.find("input").eq(4);
+                if (!$.isNumeric($p.val()) || $p.val() < 0) {
+                    $p.val(0).focus().select();
+                    return;
+                }
+
+                var t = $p.val() * $q.val();
+                $row.find("input").eq(5).val(CommaNumber(t));
+                
+
+                SumTotal();
+
+                if ($row.index() == $(".details tr").length - 1) {
+                    AddNewRow();
+                }
+                
+
+                $.ajax({
+                    url: "Update/Add",
+                    type: 'post',
+                    data: { pid: $row.find("input[type=text]").eq(0).val(), pname: $row.find("input[type=text]").eq(1).val(), unit: $row.find("input[type=text]").eq(2).val(), q: $q.val(), p: $p.val() },
+                    success: function (response) {
+                        if (t > 0) {
+                            $(this).parents('tr').first().next().find('input').eq(1).select().focus();
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+
+                    }
+                });
+
+            }
+
+        });
+        
+    }
+
+
+    function SumTotal() {
+        var sumtotal = 0;
+        $('.details .total').each(function () {
+            var t = $(this).val().replace(/,/g, "");
+            if ($.isNumeric(t)) {
+                sumtotal += parseFloat(t);
+                $(this).val(CommaNumber(t));
+            } else {
+                $(this).val(0);
+            }
+        });
+        $("#details_total").html(CommaNumber(sumtotal));
+    }
+
+    function CommaNumber(t) {
+        return t.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function SetRemoveEvent() {
+        $('.details .remove').each(function () {
+            $(this).show();
+        });
+        $('.details .remove').last().hide();
+
+        $('.details .remove').click(function () {
+            if (confirm("Are you sure to remove this product?")) {
+                //post to server
+                //if post ok then
+                $(this).parents('tr').first().remove();
+                SumTotal();
+            }
+            return false;
+        });
+
+    }
 </script>

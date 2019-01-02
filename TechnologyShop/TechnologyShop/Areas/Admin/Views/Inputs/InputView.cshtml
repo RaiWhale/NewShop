@@ -10,9 +10,9 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal row">
+    <div class="form-horizontal">
 
-    <div>
+
         <div class="row">
             <div class="form-group col-md-4">
                 @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-3" })
@@ -33,7 +33,7 @@
                 <div class="col-md-9">
                     <div class="row">
                         @Html.DropDownList("SupplierId", null, htmlAttributes: new { @class = "form-control col-md-9" })
-                        @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
+                       
                         <input type="button" id="supplierExt" value=">" class="btn btn-info" />
                     </div>
                 </div>
@@ -75,28 +75,30 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <h3 id="details_total">Total: 0</h3>
+                <h3>Total: <span id="details_total">0</span></h3>
             </div>
         </div>
 
     </div>
 
-    <div id="supplier_products">
-
-    </div>
 
 
     <div class="row">
         <div class="form-group col-md-10">
             <div class="col-md-10">
-                <input type="submit" value="Finish" class="btn btn-info" />
+                <input type="button" value="Finish" class="btn btn-info" />
                 <input type="button" value="Print" class="btn btn-info ml-2" />
                 <input type="button" value="Close" class="btn btn-danger ml-2" data-dismiss="modal" />
 
             </div>
         </div>
     </div>
-</div>
+
+
+
+    <div id="supplier_products">
+
+    </div>
 
 }
 
@@ -125,9 +127,9 @@
                 }
 
             });
-            
 
-            
+
+
         });
     });
 </script>
