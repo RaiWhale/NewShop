@@ -52,7 +52,7 @@ namespace TechnologyShop.Controllers
         }
 
         // GET: Admin/Products/Details/5
-        public ActionResult Details(int? id ,byte Gender)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {

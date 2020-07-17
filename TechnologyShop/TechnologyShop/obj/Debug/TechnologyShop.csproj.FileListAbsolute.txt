@@ -329,3 +329,4 @@ D:\Aptech Demo\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.cs
 D:\Aptech Demo\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csproj.CopyComplete
 D:\Aptech Demo\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.dll
 D:\Aptech Demo\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.pdb
+D:\Aptech Demo\NewShop\TechnologyShop\TechnologyShop\obj\Debug\TechnologyShop.csproj.CoreCompileInputs.cache
